@@ -5,8 +5,6 @@ Date: 2021-01-19 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import argparse
-
 from dabu.scripts import pydabu_main
 
 def main():

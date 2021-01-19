@@ -85,6 +85,7 @@ setup(
     package_dir={'': 'src'},
     packages=[
         'dabu',
+        'dabu.analyse_data_structure',
         'dabu.scripts'],
     scripts=[
         'src/scripts/pydabu.py'],
@@ -105,6 +106,9 @@ setup(
     # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | egrep -i --only-matching "import .*$" | sort -u
     requires=[
         'argparse',
-        'distutils'],
+        'distutils',
+        'os',
+        'os.path',
+        'json'],
     provides=['dabu']
     )

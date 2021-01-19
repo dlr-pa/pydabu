@@ -1,16 +1,13 @@
 """
-:mod:`dabu.scripts`
-===================
-   :synopsis: :mod:`dabu.scripts` is a python module to store the code for
-              scripts belonging to pydabu.
-
+:mod:`dabu.analyse_data_structure`
+==================================
 .. moduleauthor:: Daniel Mohr
 .. contents::
 
 functions
 ---------
-.. currentmodule:: dabu.scripts
-.. autofunction:: pydabu_main
+.. currentmodule:: dabu.analyse_data_structure
+.. autofunction:: analyse_data_structure
 
 copyright + license
 ===================
@@ -35,4 +32,4 @@ Copyright (C) 2021 Daniel Mohr
  along with this program; if not, see
  http://www.gnu.org/licenses/
 """
-from .pydabu_main import pydabu_main
+from .analyse_data_structure import analyse_data_structure
