@@ -9,6 +9,7 @@ import argparse
 import os.path
 
 from .run_check_data_structure import run_check_data_structure
+from .run_check_file_format import run_check_file_format
 
 
 def check_arg_directory(data):
@@ -35,8 +36,8 @@ def pydabu_main():
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     # parent parser to describe common argument
-    parent_parser = argparse.ArgumentParser(add_help=False)
-    parent_parser.add_argument(
+    common_parser1 = argparse.ArgumentParser(add_help=False)
+    common_parser1.add_argument(
         '-directory',
         nargs="+",
         type=check_arg_directory,
@@ -47,7 +48,7 @@ def pydabu_main():
         'You can also give a list of directories separated by space. ' +
         'default: .',
         metavar='d')
-    parent_parser.add_argument(
+    common_parser1.add_argument(
         '-output_format',
         nargs="+",
         type=str,
@@ -69,9 +70,17 @@ def pydabu_main():
         help='For more help: pydabu.py check_data_structure -h',
         description='',
         epilog='',
-        parents=[parent_parser])
+        parents=[common_parser1])
     parser_check_data_structure.set_defaults(func=run_check_data_structure)
-    # -directory
+    # subparser check_file_format
+    parser_check_file_format = subparsers.add_parser(
+        'check_file_format',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        help='For more help: pydabu.py check_file_format -h',
+        description='',
+        epilog='',
+        parents=[common_parser1])
+    parser_check_file_format.set_defaults(func=run_check_file_format)
     # parse arguments
     args = parser.parse_args()
     if args.subparser_name is not None:

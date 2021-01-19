@@ -95,6 +95,7 @@ setup(
     packages=[
         'dabu',
         'dabu.analyse_data_structure',
+        'dabu.analyse_file_format',
         'dabu.scripts'],
     scripts=[
         'src/scripts/pydabu.py'],
@@ -116,8 +117,9 @@ setup(
     requires=[
         'argparse',
         'distutils',
+        'json',
         'os',
         'os.path',
-        'json'],
+        're'],
     provides=['dabu']
 )
