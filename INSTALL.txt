@@ -1,0 +1,160 @@
+======================================
+INSTALL: pydabu -- Python data bubble
+======================================
+
+:Version: 2021-01-19
+:Author: Daniel Mohr
+:Email: daniel.mohr@dlr.de
+
+.. contents::
+
+.. footer::
+
+   ###Page### / ###Total###
+
+
+INSTALL: pydabu
++++++++++++++++
+
+
+info
+====
+
+
+before you install
+==================
+
+
+Modules
+-------
+
+pydabu needs the following python modules (most of them are standard and
+already in your python installation from a package management)
+
+ * argparse
+ * distutils
+
+and the own modules which comes with this package.
+
+You can also asked the installation routine/script for the python modules::
+
+  env python3 setup.py --help
+  env python3 setup.py --requires
+
+There is also a small extra command to check for availability of
+necessary python modules::
+
+  env python3 setup.py check_modules
+
+If you want to use this complete software you should have no modules
+which are not available.
+
+Much more information you get from the following small extra command
+by using the modulefinder::
+
+  env python3 setup.py check_modules_modulefinder
+
+It is normal that there are many missing modules reported. Please look
+at the details.
+
+
+install by setup.py with distutils
+==================================
+
+global-install
+--------------
+To install this software global to / the following steps are to perform::
+
+  tar xzf pydabu-*.tar.*
+  cd pydabu-*/
+  env python3 setup.py install
+
+You can also store the installed files, e. g.::
+
+  env python3 setup.py install --record installed_files.txt
+
+Then you can uninstall with this information.
+
+
+home-install
+------------
+To install this software to your $HOME the following steps are to perform::
+
+  tar xzf pydabu-*.tar.*
+  cd pydabu-*/
+  env python3 setup.py install --home=~
+
+You can also store the installed files, e. g.::
+
+  env python3 setup.py install --home=~ --record installed_files.txt
+
+Then you can uninstall with this information.
+
+
+uninstall
+---------
+
+If you have done the above installation and recorded the installed files,
+you can just remove them to uninstall, e. g.::
+
+  cat installed_files.txt | xargs rm -rf
+
+In principle there is a problem with extraordinary file names, e. g. if
+spaces are part of. This should not be the case here.
+
+
+hints
+-----
+
+Keep in mind to have the right pathes.
+
+  For the above installation to $HOME the software installs in::
+
+    ~/bin
+    ~/lib/python
+
+  Please make sure to have these pathes in $PATH and $PYTHONPATH, respectively.
+  For example::
+
+    export PATH=$PATH:~/bin
+    export PYTHONPATH=~/lib/python
+
+
+install with pip
+================
+
+You can also use the python package manager system pip. This allows you to
+handle dependencies, too.
+
+
+install
+-------
+
+You can use pip to install::
+
+  pip3 install .
+
+
+uninstall
+---------
+
+You can use pip to uninstall::
+
+  pip3 uninstall pydabu
+
+
+hints
+-----
+
+Keep in mind to have the right pathes.
+
+  For the above installation to $HOME the software installs in::
+
+    ~/.local/bin
+    ~/.local/lib/python*
+
+  Please make sure to have these pathes in $PATH and $PYTHONPATH, respectively.
+  For example::
+
+    export PATH=$PATH:~/.local/bin
+    export PYTHONPATH=~/.local/lib/python3.6
