@@ -7,6 +7,7 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 from dabu.scripts import pydabu_main
 
+
 def main():
     """
     :Author: Daniel Mohr
@@ -15,6 +16,7 @@ def main():
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
     """
     pass
+
 
 if __name__ == "__main__":
     pydabu_main()

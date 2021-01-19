@@ -10,11 +10,13 @@ import os.path
 
 from .run_check_data_structure import run_check_data_structure
 
+
 def check_arg_directory(data):
     if not os.path.isdir(data):
         msg = '"%s" is not a directory' % data
         raise argparse.ArgumentTypeError(msg)
     return data
+
 
 def pydabu_main():
     """
@@ -39,7 +41,7 @@ def pydabu_main():
         nargs="+",
         type=check_arg_directory,
         required=False,
-        default=['.'], # this is not checked against the required type
+        default=['.'],  # this is not checked against the required type
         dest='directory',
         help='Set the directory to use. ' +
         'You can also give a list of directories separated by space. ' +

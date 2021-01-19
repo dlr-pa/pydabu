@@ -7,6 +7,7 @@
 
 from distutils.core import setup, Command
 
+
 class CheckModules(Command):
     """
     :Author: Daniel Mohr
@@ -18,10 +19,13 @@ class CheckModules(Command):
     """
     description = "checking for modules need to run the software"
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
         import importlib
         summary = ""
@@ -44,6 +48,7 @@ class CheckModules(Command):
             "\nSummary\n%d modules are not available (not unique)\n%s\n" % (
                 i, summary))
 
+
 class CheckModulesModulefinder(Command):
     """
     :Author: Daniel Mohr
@@ -55,10 +60,13 @@ class CheckModulesModulefinder(Command):
     """
     description = "checking for modules need to run the scripts (modulefinder)"
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
         import modulefinder
         for script in self.distribution.scripts:
@@ -66,6 +74,7 @@ class CheckModulesModulefinder(Command):
             finder = modulefinder.ModuleFinder()
             finder.run_script(script)
             finder.report()
+
 
 setup(
     name='pydabu',
@@ -111,4 +120,4 @@ setup(
         'os.path',
         'json'],
     provides=['dabu']
-    )
+)
