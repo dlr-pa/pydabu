@@ -5,3 +5,5 @@ dist
 *.pyc
 *.pyo
 installed_files.txt
+manual_pydabu.pdf
+manual_pydabu_html/

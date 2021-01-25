@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+cd doc
+make latexpdf && make latexpdf && cp -p build/latex/pydabu.pdf ../manual_pydabu.pdf
+cd ..

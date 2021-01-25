@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+./create_doc_pdf
+./create_doc_html

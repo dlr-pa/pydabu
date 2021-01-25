@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+d="manual_pydabu_html"
+if [ ! -d $d ]; then
+    mkdir $d
+fi
+
+cd doc
+make html && rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum build/html/ ../$d/
+cd ..
