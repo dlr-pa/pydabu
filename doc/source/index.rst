@@ -14,6 +14,8 @@ Welcome to pydabu's documentation!
    INSTALL.txt
    script_pydabu
    module_dabu
+   license_link
+   gpl
 
 Indices and tables
 ==================
