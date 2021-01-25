@@ -10,7 +10,8 @@ Welcome to pydabu's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   README.md
+   INSTALL.txt
 
 Indices and tables
 ==================

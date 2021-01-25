@@ -4,6 +4,16 @@ if [ ! -d $d ]; then
     mkdir $d
 fi
 
+skipcp='false'
+if [ ! $# -eq 0 ]; then
+    if [ 'skipcp' = $1 ]; then
+	skipcp='true'
+    fi
+fi
+if [ $skipcp != "true" ]; then
+    cp -p README.md INSTALL.txt doc/source/
+fi
+
 cd doc
 make html && rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum build/html/ ../$d/
 cd ..

@@ -1,18 +1,14 @@
-README: pydabu -- Python Data Bubble
-++++++++++++++++++++++++++++++++++++
+# README: pydabu -- Python Data Bubble
 
-intro
-=====
+## intro
 
 'pydabu' is an acronym for Python Data Bubble.
 
-install
-=======
+## install
 
-see :doc:`INSTALL` 
+see [INSTALL](INSTALL)
 
-copyright + license
-===================
+## copyright + license
 
 Author: Daniel Mohr.
 

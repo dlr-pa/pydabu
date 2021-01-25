@@ -1,4 +1,15 @@
 #!/usr/bin/env sh
+
+skipcp='false'
+if [ ! $# -eq 0 ]; then
+    if [ 'skipcp' = $1 ]; then
+	skipcp='true'
+    fi
+fi
+if [ $skipcp != "true" ]; then
+    cp -p README.md INSTALL.txt doc/source/
+fi
+
 cd doc
 make latexpdf && make latexpdf && cp -p build/latex/pydabu.pdf ../manual_pydabu.pdf
 cd ..

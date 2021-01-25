@@ -7,3 +7,5 @@ dist
 installed_files.txt
 manual_pydabu.pdf
 manual_pydabu_html/
+doc/source/INSTALL.txt
+doc/source/README.md
