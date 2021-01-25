@@ -1,2 +1,3 @@
 #!/usr/bin/env sh
+./create_doc_pdf
 python setup.py sdist --owner nobody --group nobody

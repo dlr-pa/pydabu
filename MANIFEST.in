@@ -2,4 +2,13 @@ include LICENSE.txt
 include gpl.txt
 include INSTALL.txt
 include install2home
-include README.txt
+include README.md
+include manual_pydabu.pdf
+include doc/make.bat
+include doc/Makefile
+include doc/source/conf.py
+include doc/source/index.rst
+include doc/source/module_dabu.rst
+include doc/source/script_pydabu.rst
+include doc/source/license_link.rst
+include doc/source/gpl.rst
