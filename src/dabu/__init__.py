@@ -9,12 +9,14 @@ This is the description for the module dabu belonging to the project pydabu.
 submodules
 ==========
 .. automodule:: dabu.scripts
+.. automodule:: dabu.analyse_data_structure
+.. automodule:: dabu.analyse_file_format
 
 copyright + license
 ===================
 Author: Daniel Mohr
 
-Date: 2021-01-19 (last change).
+Date: 2021-01-25 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
