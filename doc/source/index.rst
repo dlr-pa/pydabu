@@ -12,6 +12,7 @@ Welcome to pydabu's documentation!
 
    README.md
    INSTALL.txt
+   script_pydabu
    module_dabu
 
 Indices and tables

@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-01-19 (last change).
+:Date: 2021-01-25 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,22 +13,26 @@ from .run_check_file_format import run_check_file_format
 
 
 def check_arg_directory(data):
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2021-01-19 (last change).
+    """
     if not os.path.isdir(data):
         msg = '"%s" is not a directory' % data
         raise argparse.ArgumentTypeError(msg)
     return data
 
 
-def pydabu_main():
+def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-01-19 (last change).
+    :Date: 2021-01-25 (last change).
     """
-    # command line arguments:
     epilog = ""
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-01-19\n"
+    epilog += "Date: 2021-01-25\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -57,7 +61,7 @@ def pydabu_main():
         default=['human_readable'],
         dest='output_format',
         help='Set the output format to use. ' +
-        'default: json',
+        'default: human_readable',
         metavar='f')
     # subparsers
     subparsers = parser.add_subparsers(
@@ -81,6 +85,17 @@ def pydabu_main():
         epilog='',
         parents=[common_parser1])
     parser_check_file_format.set_defaults(func=run_check_file_format)
+    return parser
+
+
+def pydabu_main():
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2021-01-25 (last change).
+    """
+    # command line arguments:
+    parser = my_argument_parser()
     # parse arguments
     args = parser.parse_args()
     if args.subparser_name is not None:

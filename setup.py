@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-01-19
+:Date: 2021-01-25
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -78,7 +78,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pydabu',
-    version='2021-01-19',
+    version='2021-01-25',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder},
