@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-01-19
+:Version: 2021-01-29
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -34,7 +34,8 @@ already in your python installation from a package management)
  * argparse
  * distutils
 
-and the own modules which comes with this package.
+and the own modules which comes with this package. Most of the modules
+are only necessary at runtime and only in some components.
 
 You can also asked the installation routine/script for the python modules::
 

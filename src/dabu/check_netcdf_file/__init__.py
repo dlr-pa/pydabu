@@ -1,17 +1,13 @@
-"""pydabu -- python data bubble
-
+"""
+:mod:`dabu.check_netcdf_file`
+==================================
+.. moduleauthor:: Daniel Mohr
 .. contents::
 
-description
-===========
-This is the description for the module dabu belonging to the project pydabu.
-
-submodules
-==========
-.. automodule:: dabu.scripts
-.. automodule:: dabu.analyse_data_structure
-.. automodule:: dabu.check_netcdf_file
-.. automodule:: dabu.analyse_file_format
+functions
+---------
+.. currentmodule:: dabu.check_netcdf_file
+.. autofunction:: check_netcdf_file
 
 copyright + license
 ===================
@@ -36,3 +32,5 @@ Copyright (C) 2021 Daniel Mohr
  along with this program; if not, see
  http://www.gnu.org/licenses/
 """
+
+from .check_netcdf_file import check_netcdf_file

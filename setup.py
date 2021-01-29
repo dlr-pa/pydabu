@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-01-25
+:Date: 2021-01-29
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -78,7 +78,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pydabu',
-    version='2021-01-25',
+    version='2021-01-29',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder},
@@ -95,6 +95,7 @@ setup(
     packages=[
         'dabu',
         'dabu.analyse_data_structure',
+        'dabu.check_netcdf_file',
         'dabu.analyse_file_format',
         'dabu.scripts'],
     scripts=[
@@ -116,10 +117,13 @@ setup(
     # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | egrep -i --only-matching "import .*$" | sort -u
     requires=[
         'argparse',
+        'cfchecker.cfchecks',
         'distutils',
         'json',
         'os',
         'os.path',
-        're'],
+        're',
+        'tempfile',
+        'time'],
     provides=['dabu']
 )
