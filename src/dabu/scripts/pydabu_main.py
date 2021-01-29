@@ -125,6 +125,8 @@ def my_argument_parser():
     description += 'command "check_data_structure" does.'
     description += 'Each file is checked by a tool choosen by the '
     description += 'file extension.'
+    description += 'For the file extension ".nc" the command '
+    description += 'check_netcdf_file is used.'
     parser_check_file_format = subparsers.add_parser(
         'check_file_format',
         formatter_class=argparse.RawDescriptionHelpFormatter,

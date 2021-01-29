@@ -124,6 +124,7 @@ setup(
         'os',
         'os.path',
         're',
+        'sys',
         'tempfile',
         'time'],
     provides=['dabu']

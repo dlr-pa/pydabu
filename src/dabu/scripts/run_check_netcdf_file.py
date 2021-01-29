@@ -9,6 +9,7 @@ import json
 
 from dabu.check_netcdf_file import check_netcdf_file
 
+
 def run_check_netcdf_file(args):
     """
     :Author: Daniel Mohr
@@ -17,7 +18,6 @@ def run_check_netcdf_file(args):
 
     :param args: namespace return from ArgumentParser.parse_args
     """
-    # print(args);exit()
     result = dict()
     result['data'] = []
     for file in args.file:  # for every given file
