@@ -159,3 +159,15 @@ Keep in mind to have the right pathes.
 
     export PATH=$PATH:~/.local/bin
     export PYTHONPATH=~/.local/lib/python3.6
+
+
+hints
+=====
+
+Ubuntu 18.04
+------------
+
+The command check_netcdf_file of pydabu.py needs the package cfchecker.cfchecks
+which is not in the package managment. You can install it with pip, e. g.::
+
+    pip3 install cfchecker
