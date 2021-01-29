@@ -120,6 +120,7 @@ setup(
         'cfchecker.cfchecks',
         'distutils',
         'json',
+        'netCDF4',
         'os',
         'os.path',
         're',

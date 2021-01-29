@@ -9,8 +9,6 @@ import os
 import tempfile
 import time
 
-import cfchecker.cfchecks
-
 
 def check_netcdf_file(file):
     """
@@ -23,6 +21,7 @@ def check_netcdf_file(file):
 
     :param file: file to analyse
     """
+    import cfchecker.cfchecks
     from netCDF4 import Dataset
     rootgrp = Dataset("cops_nebt_ubt1etg_mast_d_045.nc", "r")
     version = rootgrp.Conventions
@@ -37,8 +36,8 @@ def check_netcdf_file(file):
         cfStandardNamesXML=cfchecker.cfchecks.STANDARDNAME,
         cfAreaTypesXML=cfchecker.cfchecks.AREATYPES,
         cacheDir=tempfile.gettempdir(),
-        cacheTables=False, # True for many files
-        cacheTime=24*3600, # 1 day as hard coded in cfchecker.cfchecks
+        cacheTables=False,  # True for many files
+        cacheTime=24*3600,  # 1 day as hard coded in cfchecker.cfchecks
         version=version,
         debug=False,
         silent=True)

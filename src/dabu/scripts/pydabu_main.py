@@ -42,6 +42,16 @@ def my_argument_parser():
     :Date: 2021-01-29 (last change).
     """
     epilog = ""
+    epilog += "You can few the json output for example in firefox, "
+    epilog += "e. g. in bash:\n\n"
+    epilog += "output=$(tempfile --suffix='.json'); "
+    epilog += "pydabu.py check_file_format -output_format json > "
+    epilog += "$output && firefox $output; "
+    epilog += "sleep 3; rm $output\n\n"
+    epilog += "output=$(tempfile --suffix='.json'); "
+    epilog += "pydabu.py check_netcdf_file -f $(find . -iname '*.nc') "
+    epilog += "-output_format json > $output && firefox $output; "
+    epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
     epilog += "Date: 2021-01-29\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
@@ -54,7 +64,7 @@ def my_argument_parser():
     common_parser1 = argparse.ArgumentParser(add_help=False)
     common_parser1.add_argument(
         '-output_format',
-        nargs="+",
+        nargs=1,
         type=str,
         choices=['human_readable', 'json'],
         required=False,

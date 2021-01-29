@@ -58,6 +58,11 @@ by using the modulefinder::
 It is normal that there are many missing modules reported. Please look
 at the details.
 
+The following modules are optional:
+
+  * cfchecker.cfchecks
+  * netCDF4
+
 
 install by setup.py with distutils
 ==================================
