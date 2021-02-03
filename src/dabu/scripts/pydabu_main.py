@@ -93,7 +93,7 @@ def my_argument_parser():
         required=True,
         dest='file',
         help='Set the file(s) to use. ',
-        metavar='d')
+        metavar='f')
     # subparsers
     subparsers = parser.add_subparsers(
         dest='subparser_name',
@@ -111,12 +111,18 @@ def my_argument_parser():
     description = 'This command checks a file in the format netCDF.'
     description += 'It uses the CF Checker: '
     description += 'https://github.com/cedadev/cf-checker'
+    epilog = 'Example:\n\n'
+    epilog += '  pydabu.py check_netcdf_file -f a.nc > dabu_netcdf.json\n'
+    epilog += '  jsonschema -i dabu_netcdf.json '
+    epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
+    epilog += '  jsonschema -i dabu_netcdf.json '
+    epilog += '~/lib/python/dabu/schemas/examples/dabu_requires.schema\n'
     parser_check_netcdf_file = subparsers.add_parser(
         'check_netcdf_file',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         help='For more help: pydabu.py check_netcdf_file -h',
         description=description,
-        epilog='',
+        epilog=epilog,
         parents=[common_parser1, common_parser3])
     parser_check_netcdf_file.set_defaults(func=run_check_netcdf_file)
     # subparser check_file_format
@@ -126,13 +132,19 @@ def my_argument_parser():
     description += 'Each file is checked by a tool choosen by the '
     description += 'file extension. '
     description += 'For the file extension ".nc" the command '
-    description += 'check_netcdf_file is used.'
+    description += 'check_netcdf_file is used. '
+    epilog = 'Example:\n\n'
+    epilog += '  pydabu.py check_file_format -d . > dabu.json\n'
+    epilog += '  jsonschema -i dabu.json '
+    epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
+    epilog += '  jsonschema -i dabu.json '
+    epilog += '~/lib/python/dabu/schemas/examples/dabu_requires.schema\n'
     parser_check_file_format = subparsers.add_parser(
         'check_file_format',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         help='For more help: pydabu.py check_file_format -h',
         description=description,
-        epilog='',
+        epilog=epilog,
         parents=[common_parser1, common_parser2])
     parser_check_file_format.set_defaults(func=run_check_file_format)
     return parser

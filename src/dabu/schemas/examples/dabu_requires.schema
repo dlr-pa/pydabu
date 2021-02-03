@@ -1,0 +1,51 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+	"file": {
+	    "type": "object",
+	    "properties": {
+		"name": {"type": "string"},
+		"file_extension": {"oneOf": [{"type": "null"},
+		                             {"type": "string"}]},
+		"netcdf check": {
+		    "type": "object",
+		    "properties": {
+			"CF Checker Version 4.0.0": {
+			    "type": "object",
+			    "properties": {
+				"created": {"type": "number",
+					    "minimum": 1612373545.1527348},
+				"error": {"type": "integer",
+					  "minimum": 0,
+					  "maximum": 0},
+				"warning": {"type": "integer",
+					    "minimum": 0}
+			    }
+			}
+		    }
+		}
+	    },
+	    "required": ["name"]
+	}
+    },
+    "type": "object",
+    "properties": {
+	"readme": {"type": "string"},
+	"license": {"type": "string"},
+	"manifest": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+	"data integrity control": {"type": "string",
+				   "pattern": "^repository|checksums$"},
+	"repository": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+	"checksums": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+	"data": {
+	    "type": "array",
+	    "items": {"$ref": "#/definitions/file"},
+	    "uniqueItems": true
+	}
+    },
+    "required": ["license", "data integrity control"],
+    "dependencies": {
+	"repository": ["data integrity control"],
+	"checksums": ["data integrity control"]
+    }
+}

@@ -100,6 +100,7 @@ setup(
         'dabu.scripts'],
     scripts=[
         'src/scripts/pydabu.py'],
+    package_data={'dabu': ['schemas/dabu.schema', 'schemas/examples/dabu_requires.schema']},
     license='GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007',
     classifiers=[
         'Development Status :: 3 - Alpha',
