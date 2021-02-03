@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-01-29 (last change).
+:Date: 2021-02-03 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -39,7 +39,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-01-29 (last change).
+    :Date: 2021-02-03 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -120,11 +120,11 @@ def my_argument_parser():
         parents=[common_parser1, common_parser3])
     parser_check_netcdf_file.set_defaults(func=run_check_netcdf_file)
     # subparser check_file_format
-    description = 'This command checks the file formats.'
+    description = 'This command checks the file formats. '
     description += 'In a first step the data structure is analysed like the '
-    description += 'command "check_data_structure" does.'
+    description += 'command "check_data_structure" does. '
     description += 'Each file is checked by a tool choosen by the '
-    description += 'file extension.'
+    description += 'file extension. '
     description += 'For the file extension ".nc" the command '
     description += 'check_netcdf_file is used.'
     parser_check_file_format = subparsers.add_parser(
