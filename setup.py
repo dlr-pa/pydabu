@@ -189,6 +189,7 @@ setup(
         'os.path',
         'pkgutil',
         're',
+        'subprocess',
         'sys',
         'tempfile',
         'time',
