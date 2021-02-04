@@ -21,10 +21,11 @@ class TestWithUnittest(Command):
     user_options = [
         ("src=",
          None,
-         'chose what should be tested; installed: ' +
+         'Choose what should be tested; installed: ' +
          'test installed package and scripts (default); ' +
          'local: test package direct from sources ' +
          '(installing is not necessary). ' +
+         'The command line scripts are not testes for local. ' +
          'default: installed')]
 
     def initialize_options(self):
@@ -52,7 +53,6 @@ class TestWithUnittest(Command):
             pass
         elif self.src == 'local':
             sys.path.insert(0, os.path.abspath('src'))
-            # sys.path.append(os.path.abspath('src'))
         else:
             raise distutils.core.DistutilsArgError(
                 "error in command line: " +
@@ -62,8 +62,8 @@ class TestWithUnittest(Command):
         suite = unittest.TestSuite()
         import pydabu_unittests
         pydabu_unittests.module(suite)
-        # if self.src == 'installed':
-        #    pydabu_unittests.scripts(suite)
+        if self.src == 'installed':
+            pydabu_unittests.scripts(suite)
         unittest.TextTestRunner(verbosity=2).run(suite)
 
 
