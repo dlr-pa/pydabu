@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-03 (last change).
+:Date: 2021-02-04 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -39,7 +39,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-03 (last change).
+    :Date: 2021-02-04 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -53,7 +53,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-01-29\n"
+    epilog += "Date: 2021-02-04\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -116,7 +116,7 @@ def my_argument_parser():
     epilog += '  jsonschema -i dabu_netcdf.json '
     epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
     epilog += '  jsonschema -i dabu_netcdf.json '
-    epilog += '~/lib/python/dabu/schemas/examples/dabu_requires.schema\n'
+    epilog += '~/lib/python/dabu/schemas/dabu_requires.schema\n'
     parser_check_netcdf_file = subparsers.add_parser(
         'check_netcdf_file',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -138,7 +138,7 @@ def my_argument_parser():
     epilog += '  jsonschema -i dabu.json '
     epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
     epilog += '  jsonschema -i dabu.json '
-    epilog += '~/lib/python/dabu/schemas/examples/dabu_requires.schema\n'
+    epilog += '~/lib/python/dabu/schemas/dabu_requires.schema\n'
     parser_check_file_format = subparsers.add_parser(
         'check_file_format',
         formatter_class=argparse.RawDescriptionHelpFormatter,

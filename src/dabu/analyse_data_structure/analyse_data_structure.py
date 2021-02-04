@@ -23,6 +23,23 @@ def check_file_available(files, key):
             break
     return res
 
+def add_append_integrate_data(store, key, data):
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2021-02-04 (last change).
+    """
+    if ((key in store) and
+        store[key] != data):
+        if type(store[key]) in (list, tuple):
+            if data not in store[key]:
+                store[key].append(data)
+        else:
+            store[key] = [
+                store[key],
+                data]
+    else:
+        store[key] = data
 
 def analyse_data_structure(path, result=dict()):
     """
@@ -51,6 +68,8 @@ def analyse_data_structure(path, result=dict()):
             # assume repository
             result['repository'] = f
             analysed_files.append(f)
+            add_append_integrate_data(
+                result, 'data integrity control', 'repository')
             break
     # analyse if checksums are available (look for checksums)
     #result['checksums'] = None
@@ -59,8 +78,10 @@ def analyse_data_structure(path, result=dict()):
         flags=re.IGNORECASE)
     for f in files:
         if regexp.findall(f):
-            result['CHECKSUMS'] = f
+            result['checksums'] = f
             analysed_files.append(f)
+            add_append_integrate_data(
+                result, 'data integrity control', 'checksums')
             break
     result['data'] = list(set(files).difference(analysed_files))
     # result['author'] = [{'name': 'foo', 'email': 'bar'},

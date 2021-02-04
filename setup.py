@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-03
+:Date: 2021-02-04
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -78,7 +78,7 @@ class CheckModulesModulefinder(Command):
 
 setup(
     name='pydabu',
-    version='2021-02-03',
+    version='2021-02-04',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder},
@@ -100,7 +100,7 @@ setup(
         'dabu.scripts'],
     scripts=[
         'src/scripts/pydabu.py'],
-    package_data={'dabu': ['schemas/dabu.schema', 'schemas/examples/dabu_requires.schema']},
+    package_data={'dabu': ['schemas/dabu.schema', 'schemas/dabu_requires.schema']},
     license='GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007',
     classifiers=[
         'Development Status :: 3 - Alpha',
