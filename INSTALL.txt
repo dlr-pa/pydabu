@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-01-29
+:Version: 2021-02-04
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -62,6 +62,18 @@ The following modules are optional:
 
   * cfchecker.cfchecks
   * netCDF4
+
+
+unittests
+---------
+
+You can run a few unittests::
+
+  env python3 setup.py run_unittests --src local
+
+But the scripts are not tested before installing.
+After installation you can run unittests on the scripts as well
+(see :ref:`after you install.unittests`).
 
 
 install by setup.py with distutils
@@ -164,6 +176,19 @@ Keep in mind to have the right pathes.
 
     export PATH=$PATH:~/.local/bin
     export PYTHONPATH=~/.local/lib/python3.6
+
+
+after you install
+=================
+
+.. _after you install.unittests:
+
+unittests
+---------
+
+Now you can run all available unittests (including scripts)::
+
+  env python3 setup.py run_unittests
 
 
 hints
