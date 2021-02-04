@@ -124,14 +124,14 @@ spaces are part of. This should not be the case here.
 hints
 -----
 
-Keep in mind to have the right pathes.
+Keep in mind to have the right paths.
 
   For the above installation to $HOME the software installs in::
 
     ~/bin
     ~/lib/python
 
-  Please make sure to have these pathes in $PATH and $PYTHONPATH, respectively.
+  Please make sure to have these paths in $PATH and $PYTHONPATH, respectively.
   For example::
 
     export PATH=$PATH:~/bin
@@ -164,14 +164,14 @@ You can use pip to uninstall::
 hints
 -----
 
-Keep in mind to have the right pathes.
+Keep in mind to have the right paths.
 
   For the above installation to $HOME the software installs in::
 
     ~/.local/bin
     ~/.local/lib/python*
 
-  Please make sure to have these pathes in $PATH and $PYTHONPATH, respectively.
+  Please make sure to have these paths in $PATH and $PYTHONPATH, respectively.
   For example::
 
     export PATH=$PATH:~/.local/bin
@@ -198,6 +198,6 @@ Ubuntu 18.04
 ------------
 
 The command check_netcdf_file of pydabu.py needs the package cfchecker.cfchecks
-which is not in the package managment. You can install it with pip, e. g.::
+which is not in the package management. You can install it with pip, e. g.::
 
     pip3 install cfchecker
