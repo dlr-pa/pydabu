@@ -74,7 +74,9 @@ class scripty_pydabu(unittest.TestCase):
         import json
         import jsonschema
         import os.path
+        import pkgutil
         import sys
+        # data bubble 01
         test_dir_path = os.path.join(
             os.path.dirname(sys.modules['pydabu_unittests'].__file__),
             'data', 'data_bubble', '01')
@@ -91,18 +93,25 @@ class scripty_pydabu(unittest.TestCase):
             ['pydabu.py check_data_structure -o json'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=3, check=True)
-        # we need a schema here to test!
+        schema = json.loads(
+            pkgutil.get_data(
+                'dabu', 'schemas/check_data_structure_output.schema'))
+        instance1 = json.loads(cp1.stdout)
+        instance2 = json.loads(cp2.stdout)
+        instance3 = json.loads(cp3.stdout)
+        for instance in [instance1, instance2, instance3]:
+            jsonschema.validate(instance, schema)
+        # data bubble 02
         test_dir_path = os.path.join(
             os.path.dirname(sys.modules['pydabu_unittests'].__file__),
             'data', 'data_bubble', '02')
         self.assertTrue(os.path.isdir(test_dir_path))
         self.assertTrue(
             os.path.isfile(os.path.join(test_dir_path, 'README.md')))
-        cp1 = subprocess.run(
+        cp = subprocess.run(
             ['pydabu.py check_data_structure'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=3, check=True)
-        # we need a schema here to test!
 
     def test_check_netcdf_file(self):
         """
@@ -117,6 +126,7 @@ class scripty_pydabu(unittest.TestCase):
         import os.path
         import pkgutil
         import sys
+        # data bubble 02
         test_dir_path = os.path.join(
             os.path.dirname(sys.modules['pydabu_unittests'].__file__),
             'data', 'data_bubble', '02')
@@ -144,6 +154,7 @@ class scripty_pydabu(unittest.TestCase):
         import pkgutil
         import os.path
         import sys
+        # data bubble 01
         test_dir_path = os.path.join(
             os.path.dirname(sys.modules['pydabu_unittests'].__file__),
             'data', 'data_bubble', '01')
@@ -180,6 +191,7 @@ class scripty_pydabu(unittest.TestCase):
         import os.path
         import pkgutil
         import sys
+        # data bubble 02
         test_dir_path = os.path.join(
             os.path.dirname(sys.modules['pydabu_unittests'].__file__),
             'data', 'data_bubble', '02')

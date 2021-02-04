@@ -160,7 +160,8 @@ setup(
         'dabu.scripts'],
     scripts=[
         'src/scripts/pydabu.py'],
-    package_data={'dabu': ['schemas/dabu.schema',
+    package_data={'dabu': ['schemas/check_data_structure_output.schema',
+                           'schemas/dabu.schema',
                            'schemas/dabu_requires.schema']},
     license='GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007',
     classifiers=[
