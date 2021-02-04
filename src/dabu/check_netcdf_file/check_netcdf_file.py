@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-01-29 (last change).
+:Date: 2021-02-04 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -14,7 +14,7 @@ def check_netcdf_file(file):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-01-29 (last change).
+    :Date: 2021-02-04 (last change).
 
     Checks the give file for the format netCDF.
     It uses the CF Checker: https://github.com/cedadev/cf-checker
@@ -23,7 +23,7 @@ def check_netcdf_file(file):
     """
     import cfchecker.cfchecks
     from netCDF4 import Dataset
-    rootgrp = Dataset("cops_nebt_ubt1etg_mast_d_045.nc", "r")
+    rootgrp = Dataset(file, "r")
     version = rootgrp.Conventions
     rootgrp.close()
     result = dict()
