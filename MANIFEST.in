@@ -12,3 +12,5 @@ include doc/source/module_dabu.rst
 include doc/source/script_pydabu.rst
 include doc/source/license_link.rst
 include doc/source/gpl.rst
+include pydabu_unittests/*.py
+include pydabu_unittests/data/data_bubble/01/*

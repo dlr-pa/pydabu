@@ -61,9 +61,9 @@ def module(suite):
     :Date: 2021-02-04
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-    running tests for the module
+    add tests for the module
     """
-    print('running tests for the module')
+    print('add tests for the module')
     loader = unittest.defaultTestLoader
     suite.addTest(loader.loadTestsFromTestCase(test_module_import))
     # dabu.schemas
@@ -77,9 +77,9 @@ def scripts(suite):
     :Date: 2021-02-04
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-    running tests for the scripts
+    add tests for the scripts
     """
-    print('running tests for the scripts')
+    print('add tests for the scripts')
     loader = unittest.defaultTestLoader
     suite.addTest(loader.loadTestsFromTestCase(test_scripts_executable))
     # pydabu.py
