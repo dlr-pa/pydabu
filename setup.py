@@ -8,6 +8,65 @@
 from distutils.core import setup, Command
 
 
+class TestWithUnittest(Command):
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2021-02-04
+    :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+
+    running automatic tests with unittest
+    """
+    description = "running automatic tests with unittest"
+    user_options = [
+        ("src=",
+         None,
+         'chose what should be tested; installed: ' +
+         'test installed package and scripts (default); ' +
+         'local: test package direct from sources ' +
+         '(installing is not necessary). ' +
+         'default: installed')]
+
+    def initialize_options(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-04
+        """
+        self.src = 'installed'
+
+    def finalize_options(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-04
+        """
+        pass
+
+    def run(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-04
+        """
+        import sys
+        import os.path
+        if self.src == 'installed':
+            pass
+        elif self.src == 'local':
+            sys.path.insert(0, os.path.abspath('src'))
+            # sys.path.append(os.path.abspath('src'))
+        else:
+            raise distutils.core.DistutilsArgError(
+                "error in command line: " +
+                "value for option 'src' is not 'installed' or 'local'")
+        sys.path.append(os.path.abspath('.'))
+        import unittest
+        suite = unittest.TestSuite()
+        import pydabu_unittests
+        pydabu_unittests.module(suite)
+        # if self.src == 'installed':
+        #    pydabu_unittests.scripts(suite)
+        unittest.TextTestRunner(verbosity=2).run(suite)
+
+
 class CheckModules(Command):
     """
     :Author: Daniel Mohr
@@ -81,7 +140,8 @@ setup(
     version='2021-02-04',
     cmdclass={
         'check_modules': CheckModules,
-        'check_modules_modulefinder': CheckModulesModulefinder},
+        'check_modules_modulefinder': CheckModulesModulefinder,
+        'run_unittests': TestWithUnittest},
     description='software to check a data bubble.',
     long_description='',
     keywords='data managment',
@@ -100,7 +160,8 @@ setup(
         'dabu.scripts'],
     scripts=[
         'src/scripts/pydabu.py'],
-    package_data={'dabu': ['schemas/dabu.schema', 'schemas/dabu_requires.schema']},
+    package_data={'dabu': ['schemas/dabu.schema',
+                           'schemas/dabu_requires.schema']},
     license='GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007',
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -121,12 +182,15 @@ setup(
         'cfchecker.cfchecks',
         'distutils',
         'json',
+        'jsonschema',
         'netCDF4',
         'os',
         'os.path',
+        'pkgutil',
         're',
         'sys',
         'tempfile',
-        'time'],
+        'time',
+        'unittest'],
     provides=['dabu']
 )
