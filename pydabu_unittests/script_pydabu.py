@@ -73,7 +73,7 @@ class scripty_pydabu(unittest.TestCase):
         """
         # data bubble 01
         test_dir_path = self.test_dir_path[0]
-        cps = [] # completed process instances
+        cps = []  # completed process instances
         cps.append(subprocess.run(
             ['pydabu.py check_data_structure'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -134,7 +134,7 @@ class scripty_pydabu(unittest.TestCase):
         """
         # data bubble 01
         test_dir_path = self.test_dir_path[0]
-        cps = [] # completed process instances
+        cps = []  # completed process instances
         cps.append(subprocess.run(
             ['pydabu.py check_file_format'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
