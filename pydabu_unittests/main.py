@@ -80,7 +80,6 @@ def scripts(suite):
     running tests for the scripts
     """
     print('running tests for the scripts')
-    #raise NotImplementedError
     loader = unittest.defaultTestLoader
     suite.addTest(loader.loadTestsFromTestCase(test_scripts_executable))
     # pydabu.py
