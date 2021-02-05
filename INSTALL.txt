@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-02-04
+:Version: 2021-02-05
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -201,3 +201,13 @@ The command check_netcdf_file of pydabu.py needs the package cfchecker.cfchecks
 which is not in the package management. You can install it with pip, e. g.::
 
     pip3 install cfchecker
+
+SuSE 15.3
+---------
+
+The command check_netcdf_file of pydabu.py needs the package cfchecker.cfchecks
+which is not in the package management. You can install it with pip, e. g.::
+
+    pip3 install --user cfchecker
+
+But you need udunits2 from the package managment from suse.
