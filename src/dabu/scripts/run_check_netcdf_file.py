@@ -9,6 +9,8 @@ import json
 
 from dabu.check_netcdf_file import check_netcdf_file
 
+from .print_json_output import print_json_output
+
 
 def run_check_netcdf_file(args):
     """
@@ -25,9 +27,4 @@ def run_check_netcdf_file(args):
         result['data'].append(
             {'name': file,
              'netcdf check': res})
-    if 'json' in args.output_format:
-        print(json.dumps(result))
-    elif 'json1' in args.output_format:
-        print(json.dumps(result, indent=1))
-    elif 'human_readable' in args.output_format:
-        print(json.dumps(result, indent=1))
+    print_json_output(result, args.output_format)

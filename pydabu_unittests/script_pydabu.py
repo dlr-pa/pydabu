@@ -229,3 +229,26 @@ class scripty_pydabu(unittest.TestCase):
         for filename in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
             schema = json.loads(pkgutil.get_data('dabu', filename))
             jsonschema.validate(instance, schema)
+
+    def test_check_file_format_03_output(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-08
+
+        This test uses the data in 'data/data_bubble' to test the output
+        of the script 'pydabu.py check_file_format'.
+        """
+        # data bubble 03
+        test_dir_path = self.test_dir_path[3]
+        schema = schema = json.loads(pkgutil.get_data(
+            'dabu', 'schemas/dabu.schema'))
+        required_schema = json.loads(pkgutil.get_data(
+            'dabu', 'schemas/dabu_requires.schema'))
+        for outputformat in ['', ' -o json', ' -o json1', ' -o human_readable']:
+            cp = subprocess.run(
+                ['pydabu.py check_file_format' + outputformat],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True, cwd=test_dir_path, timeout=3, check=True)
+            instance = json.loads(cp.stdout)
+            for myschema in [schema, required_schema]:
+                jsonschema.validate(instance, myschema)

@@ -9,6 +9,8 @@ import json
 
 from dabu.analyse_data_structure import analyse_data_structure
 
+from .print_json_output import print_json_output
+
 
 def run_check_data_structure(args):
     """
@@ -18,13 +20,6 @@ def run_check_data_structure(args):
 
     :param args: namespace return from ArgumentParser.parse_args
     """
-    # print(args);exit()
     for path in args.directory:  # for every given directory
         result = analyse_data_structure(path)
-        # print(result)
-        if 'json' in args.output_format:
-            print(json.dumps(result))
-        elif 'json1' in args.output_format:
-            print(json.dumps(result, indent=1))
-        elif 'human_readable' in args.output_format:
-            print(json.dumps(result, indent=1))
+        print_json_output(result, args.output_format)
