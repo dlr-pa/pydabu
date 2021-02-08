@@ -1,30 +1,77 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {
-	"file": {"type": "string"}
+        "file": {
+            "type": "string"
+        }
     },
     "type": "object",
     "properties": {
-	"readme": {"type": "string"},
-	"license": {"type": "string"},
-	"manifest": {"oneOf": [{"type": "null"}, {"type": "string"}]},
-	"data integrity control": {"oneOf": [
-	    {"type": "string",
-	     "pattern": "^repository|checksums$"},
-	    {"type": "array",
-	     "items": {"type": "string",
-		       "pattern": "^repository|checksums$"}}
-	]},
-	"repository": {"oneOf": [{"type": "null"}, {"type": "string"}]},
-	"checksums": {"oneOf": [{"type": "null"}, {"type": "string"}]},
-	"data": {
-	    "type": "array",
-	    "items": {"$ref": "#/definitions/file"},
-	    "uniqueItems": true
-	}
+        "readme": {
+            "type": "string"
+        },
+        "license": {
+            "type": "string"
+        },
+        "manifest": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "data integrity control": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "pattern": "^repository|checksums$"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "pattern": "^repository|checksums$"
+                    }
+                }
+            ]
+        },
+        "repository": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "checksums": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "data": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/file"
+            },
+            "uniqueItems": true
+        }
     },
     "dependencies": {
-	"repository": ["data integrity control"],
-	"checksums": ["data integrity control"]
+        "repository": [
+            "data integrity control"
+        ],
+        "checksums": [
+            "data integrity control"
+        ]
     }
 }

@@ -1,106 +1,229 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {
-	"file": {
-	    "type": "object",
-	    "properties": {
-		"name": {"type": "string"},
-		"file_extension": {"oneOf": [{"type": "null"},
-		                             {"type": "string"}]},
-		"nasa ames format check": {
-		    "type": "object",
-		    "properties": {
-		        "pydabu (basic)": {
-			    "type": "object",
-			    "properties": {
-				"created": {"type": "number",
-					    "minimum": 1612792668.8894613},
-				"error": {"type": "integer",
-					  "minimum": 0,
-					  "maximum": 0},
-				"warning": {"type": "integer",
-					    "minimum": 0},
-				"log": {"type": "array",
-				        "items": {"type": "string"}},
-				"NLHEAD": {"type": "integer"},
-				"FFI": {"type": "integer"},
-				"ONAME": {"type": "string"},
-				"ORG": {"type": "string"},
-				"SNAME": {"type": "string"},
-				"MNAME": {"type": "string"},
-				"NVOL": {"type": "integer"},
-				"IVOL": {"type": "integer"},
-				"DATE": {"type": "string",
-				         "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
-				"RDATE": {"type": "string",
-				          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}
-			    },
-			    "required": ["created", "ONAME", "ORG", "SNAME", "MNAME", "DATE"]
-			}
-		    }
-		},
-		"netcdf check": {
-		    "type": "object",
-		    "properties": {
-		        "pydabu (basic)": {
-			    "type": "object",
-			    "properties": {
-				"created": {"type": "number",
-					    "minimum": 1612471455.3552904},
-				"file_format": {"type": "string"},
-				"data_model": {"type": "string",
-				               "pattern": "^NETCDF3_CLASSIC|NETCDF4|NETCDF4_CLASSIC|NETCDF3_64BIT_OFFSET|NETCDF3_64BIT_DATA$"},
-				"disk_format": {"type": "string"},
-				"error": {"type": "integer",
-					  "minimum": 0,
-					  "maximum": 0},
-				"warning": {"type": "integer",
-					    "minimum": 0}
-			    },
-			    "required": ["created", "data_model", "disk_format"]
-			},
-			"CF Checker Version 4.0.0": {
-			    "type": "object",
-			    "properties": {
-				"created": {"type": "number",
-					    "minimum": 1612373545.1527348},
-				"error": {"type": "integer",
-					  "minimum": 0,
-					  "maximum": 0},
-				"warning": {"type": "integer",
-					    "minimum": 0}
-			    },
-			    "required": ["created", "error", "warning"]
-			}
-		    }
-		}
-	    },
-	    "required": ["name"]
-	}
+        "file": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "file_extension": {
+                    "oneOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "nasa ames format check": {
+                    "type": "object",
+                    "properties": {
+                        "pydabu (basic)": {
+                            "type": "object",
+                            "properties": {
+                                "created": {
+                                    "type": "number",
+                                    "minimum": 1612792668.8894613
+                                },
+                                "error": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 0
+                                },
+                                "warning": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "log": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "NLHEAD": {
+                                    "type": "integer"
+                                },
+                                "FFI": {
+                                    "type": "integer"
+                                },
+                                "ONAME": {
+                                    "type": "string"
+                                },
+                                "ORG": {
+                                    "type": "string"
+                                },
+                                "SNAME": {
+                                    "type": "string"
+                                },
+                                "MNAME": {
+                                    "type": "string"
+                                },
+                                "NVOL": {
+                                    "type": "integer"
+                                },
+                                "IVOL": {
+                                    "type": "integer"
+                                },
+                                "DATE": {
+                                    "type": "string",
+                                    "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                                },
+                                "RDATE": {
+                                    "type": "string",
+                                    "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                                }
+                            },
+                            "required": [
+                                "created",
+                                "ONAME",
+                                "ORG",
+                                "SNAME",
+                                "MNAME",
+                                "DATE"
+                            ]
+                        }
+                    }
+                },
+                "netcdf check": {
+                    "type": "object",
+                    "properties": {
+                        "pydabu (basic)": {
+                            "type": "object",
+                            "properties": {
+                                "created": {
+                                    "type": "number",
+                                    "minimum": 1612471455.3552904
+                                },
+                                "file_format": {
+                                    "type": "string"
+                                },
+                                "data_model": {
+                                    "type": "string",
+                                    "pattern": "^NETCDF3_CLASSIC|NETCDF4|NETCDF4_CLASSIC|NETCDF3_64BIT_OFFSET|NETCDF3_64BIT_DATA$"
+                                },
+                                "disk_format": {
+                                    "type": "string"
+                                },
+                                "error": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 0
+                                },
+                                "warning": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            },
+                            "required": [
+                                "created",
+                                "data_model",
+                                "disk_format"
+                            ]
+                        },
+                        "CF Checker Version 4.0.0": {
+                            "type": "object",
+                            "properties": {
+                                "created": {
+                                    "type": "number",
+                                    "minimum": 1612373545.1527348
+                                },
+                                "error": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 0
+                                },
+                                "warning": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            },
+                            "required": [
+                                "created",
+                                "error",
+                                "warning"
+                            ]
+                        }
+                    }
+                }
+            },
+            "required": [
+                "name"
+            ]
+        }
     },
     "type": "object",
     "properties": {
-	"readme": {"type": "string"},
-	"license": {"type": "string"},
-	"manifest": {"oneOf": [{"type": "null"}, {"type": "string"}]},
-	"data integrity control": {"oneOf": [
-	    {"type": "string",
-	     "pattern": "^repository|checksums$"},
-	    {"type": "array",
-	     "items": {"type": "string",
-		       "pattern": "^repository|checksums$"}}
-	]},
-	"repository": {"oneOf": [{"type": "null"}, {"type": "string"}]},
-	"checksums": {"oneOf": [{"type": "null"}, {"type": "string"}]},
-	"data": {
-	    "type": "array",
-	    "items": {"$ref": "#/definitions/file"},
-	    "uniqueItems": true
-	}
+        "readme": {
+            "type": "string"
+        },
+        "license": {
+            "type": "string"
+        },
+        "manifest": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "data integrity control": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "pattern": "^repository|checksums$"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "pattern": "^repository|checksums$"
+                    }
+                }
+            ]
+        },
+        "repository": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "checksums": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "data": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/file"
+            },
+            "uniqueItems": true
+        }
     },
-    "required": ["license", "data integrity control"],
+    "required": [
+        "license",
+        "data integrity control"
+    ],
     "dependencies": {
-	"repository": ["data integrity control"],
-	"checksums": ["data integrity control"]
+        "repository": [
+            "data integrity control"
+        ],
+        "checksums": [
+            "data integrity control"
+        ]
     }
 }
