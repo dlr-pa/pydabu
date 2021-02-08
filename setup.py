@@ -134,6 +134,7 @@ class CheckModulesModulefinder(Command):
             finder.run_script(script)
             finder.report()
 
+
 # necessary modules
 required_modules = ['argparse',
                     'distutils',

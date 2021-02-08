@@ -8,6 +8,7 @@
 #from distutils.core import setup, Command
 from setuptools import setup, Command
 
+
 class TestWithUnittest(Command):
     """
     :Author: Daniel Mohr
@@ -135,6 +136,39 @@ class CheckModulesModulefinder(Command):
             finder.report()
 
 
+# necessary modules
+required_modules = ['argparse>=1.1',
+                    'distutils',
+                    'json',
+                    'jsonschema',
+                    'os',
+                    'os.path',
+                    'pkgutil',
+                    're',
+                    'subprocess',
+                    'sys',
+                    'tempfile',
+                    'time',
+                    'unittest']
+install_requires = ['argparse',
+                    'distutils',
+                    'json',
+                    'jsonschema',
+                    'os',
+                    'os.path',
+                    'pkgutil',
+                    're',
+                    'subprocess',
+                    'sys',
+                    'tempfile',
+                    'time',
+                    'unittest']
+# optional modules
+required_modules += ['cfchecker.cfchecks', 'netCDF4']
+install_requires += ['cfchecker.cfchecks', 'netCDF4']
+# modules to build doc
+required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
+
 setup(
     name='pydabu',
     version='2021-02-04',
@@ -178,24 +212,12 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3'],
     # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | egrep -i --only-matching "import .*$" | sort -u
-    requires=[
-        'argparse',
-        'cfchecker.cfchecks',
-        'distutils',
-        'json',
-        'jsonschema',
-        'netCDF4',
-        'os',
-        'os.path',
-        'pkgutil',
-        're',
-        'subprocess',
-        'sys',
-        'tempfile',
-        'time',
-        'unittest'],
-    install_requires=[ # using python, this does not use pip!
-        'argparse>=1.1', # using python, this is installed even if it is already installed (e. g. system wide)
-        'setuptools'], # using pip, this is installed even if it is already installed (e. g. system wide)
+    requires=required_modules,
+    install_requires=install_requires,  # this does not work:
+    # using python, this does not use pip!
+    # using python, these packages are installed even if it is already
+    #               installed (e. g. system wide)
+    # using pip, these packages are installed even if it is already
+    #            installed (e. g. system wide)
     provides=['dabu']
 )
