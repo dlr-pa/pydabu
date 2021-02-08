@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-05
+:Date: 2021-02-08
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -137,7 +137,7 @@ class CheckModulesModulefinder(Command):
 
 
 # necessary modules
-required_modules = ['argparse>=1.1',
+required_modules = ['argparse',
                     'distutils',
                     'json',
                     'jsonschema',
@@ -150,12 +150,11 @@ required_modules = ['argparse>=1.1',
                     'tempfile',
                     'time',
                     'unittest']
-install_requires = ['argparse',
+install_requires = ['argparse>=1.1',
                     'distutils',
                     'json',
                     'jsonschema',
                     'os',
-                    'os.path',
                     'pkgutil',
                     're',
                     'subprocess',
@@ -165,13 +164,13 @@ install_requires = ['argparse',
                     'unittest']
 # optional modules
 required_modules += ['cfchecker.cfchecks', 'netCDF4']
-install_requires += ['cfchecker.cfchecks', 'netCDF4']
+install_requires += ['cfchecker', 'netCDF4']
 # modules to build doc
 required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 
 setup(
     name='pydabu',
-    version='2021-02-04',
+    version='2021-02-08',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,

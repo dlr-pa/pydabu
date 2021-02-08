@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-02-05
+:Version: 2021-02-08
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -109,8 +109,8 @@ You can also store the installed files, e. g.::
 Then you can uninstall with this information.
 
 
-uninstall
----------
+uninstall (distutils)
+---------------------
 
 If you have done the above installation and recorded the installed files,
 you can just remove them to uninstall, e. g.::
@@ -121,8 +121,8 @@ In principle there is a problem with extraordinary file names, e. g. if
 spaces are part of. This should not be the case here.
 
 
-hints
------
+hints (distutils)
+-----------------
 
 Keep in mind to have the right paths.
 
@@ -145,24 +145,28 @@ You can also use the python package manager system pip. This allows you to
 handle dependencies, too.
 
 
-install
--------
+install (pip)
+-------------
 
 You can use pip to install::
 
   pip3 install .
 
+For older versions of pip you need to choose explicit a home install::
 
-uninstall
----------
+  pip3 install --user .
+
+
+uninstall (pip)
+---------------
 
 You can use pip to uninstall::
 
   pip3 uninstall pydabu
 
 
-hints
------
+hints (pip)
+-----------
 
 Keep in mind to have the right paths.
 
@@ -183,8 +187,8 @@ after you install
 
 .. _after you install.unittests:
 
-unittests
----------
+unittests (after installation)
+------------------------------
 
 Now you can run all available unittests (including scripts)::
 
@@ -196,6 +200,12 @@ hints
 
 Ubuntu 18.04
 ------------
+
+You can find most necessary modules in the package management of Ubuntu 18.04, e. g. ::
+
+    sudo app install python3-jsonschema
+    sudo app install python3-netcdf4
+    sudo app install python3-sphinx python3-sphinx-argparse python3-recommonmark
 
 The command check_netcdf_file of pydabu.py needs the package cfchecker.cfchecks
 which is not in the package management. You can install it with pip, e. g.::
@@ -210,4 +220,4 @@ which is not in the package management. You can install it with pip, e. g.::
 
     pip3 install --user cfchecker
 
-But you need udunits2 from the package managment from suse.
+But you need udunits2 from the package managment from SuSE.
