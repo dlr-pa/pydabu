@@ -28,11 +28,11 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
     :Email: daniel.mohr@dlr.de
     :Date: 2021-02-08 (last change).
 
-    Checks the given file for the nasa ames format.
+    Checks the given file for the nasa ames format, see:
 
-    http://cedadocs.ceda.ac.uk/73/
-    http://cedadocs.ceda.ac.uk/73/4/index.html
-    http://cedadocs.ceda.ac.uk/73/4/FFI-summary.html
+      * http://cedadocs.ceda.ac.uk/73/
+      * http://cedadocs.ceda.ac.uk/73/4/index.html
+      * http://cedadocs.ceda.ac.uk/73/4/FFI-summary.html
 
     :param filename: file to analyse
     """
