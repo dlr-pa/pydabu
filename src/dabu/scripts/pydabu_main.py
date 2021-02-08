@@ -11,6 +11,7 @@ import os.path
 from .run_check_data_structure import run_check_data_structure
 from .run_check_file_format import run_check_file_format
 from .run_check_netcdf_file import run_check_netcdf_file
+from .run_check_nasa_ames_format import run_check_nasa_ames_format
 
 def check_arg_directory(data):
     """
@@ -110,6 +111,22 @@ def my_argument_parser():
         epilog='',
         parents=[common_parser1, common_parser2])
     parser_check_data_structure.set_defaults(func=run_check_data_structure)
+    # subparser check_nasa_ames_format
+    description = 'This command checks a file in the nasa ames format.'
+    epilog = 'Example:\n\n'
+    epilog += '  pydabu.py check_nasa_ames_format -f a.na > dabu_ames.json\n'
+    epilog += '  jsonschema -i dabu_ames.json '
+    epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
+    epilog += '  jsonschema -i dabu_ames.json '
+    epilog += '~/lib/python/dabu/schemas/dabu_requires.schema\n'
+    parser_check_nasa_ames_format = subparsers.add_parser(
+        'check_nasa_ames_format',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        help='For more help: pydabu.py check_nasa_ames_format -h',
+        description=description,
+        epilog=epilog,
+        parents=[common_parser1, common_parser3])
+    parser_check_nasa_ames_format.set_defaults(func=run_check_nasa_ames_format)
     # subparser check_netcdf_file
     description = 'This command checks a file in the format netCDF.'
     description += 'It uses the CF Checker: '

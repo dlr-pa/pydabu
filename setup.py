@@ -174,6 +174,7 @@ setup(
     packages=[
         'dabu',
         'dabu.analyse_data_structure',
+        'dabu.check_nasa_ames_format',
         'dabu.check_netcdf_file',
         'dabu.analyse_file_format',
         'dabu.scripts'],

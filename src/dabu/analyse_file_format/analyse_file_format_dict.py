@@ -11,6 +11,7 @@ import sys
 
 from .analyse_file_format import analyse_file_format
 from dabu.check_netcdf_file import check_netcdf_file
+from dabu.check_nasa_ames_format import check_nasa_ames_format
 
 
 def analyse_file_format_dict(path, result, output_format):
@@ -31,12 +32,12 @@ def analyse_file_format_dict(path, result, output_format):
         resitem = {'name': f, 'file_extension': file_extension}
         if file_extension.lower() == ".nc":  # NetCDF file
             try:
-                res = check_netcdf_file(f)
-                if 'human_readable' in output_format:
-                    del res[checker_name]['result']
-                resitem['netcdf check'] = res
+                resitem['netcdf check'] = check_netcdf_file(f, output_format)
             except:
                 sys.stderr.write('Could not check NetCDF file.\n')
                 resitem['netcdf check'] = dict()
+        if file_extension.lower() in ['.nas', '.na']:  # NASA Ames Format
+            resitem['nasa ames format check'] = check_nasa_ames_format(
+                f, output_format)
         result['data'].append(resitem)
     return result

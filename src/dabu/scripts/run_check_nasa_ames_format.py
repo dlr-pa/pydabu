@@ -1,0 +1,32 @@
+"""
+:Author: Daniel Mohr
+:Email: daniel.mohr@dlr.de
+:Date: 2021-02-08 (last change).
+:License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+"""
+import json
+
+from dabu.check_nasa_ames_format import check_nasa_ames_format
+
+
+def run_check_nasa_ames_format(args):
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2021-02-08 (last change).
+
+    :param args: namespace return from ArgumentParser.parse_args
+    """
+    result = dict()
+    result['data'] = []
+    for file in args.file:  # for every given file
+        res = check_nasa_ames_format(file, args.output_format[0])
+        result['data'].append(
+            {'name': file,
+             'nasa ames format check': res})
+    if 'json' in args.output_format:
+        print(json.dumps(result))
+    elif 'json1' in args.output_format:
+        print(json.dumps(result, indent=1))
+    elif 'human_readable' in args.output_format:
+        print(json.dumps(result, indent=1))
