@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-04 (last change).
+:Date: 2021-02-08 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -14,7 +14,7 @@ def run_check_netcdf_file(args):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-04 (last change).
+    :Date: 2021-02-08 (last change).
 
     :param args: namespace return from ArgumentParser.parse_args
     """
@@ -27,5 +27,7 @@ def run_check_netcdf_file(args):
              'netcdf check': res})
     if 'json' in args.output_format:
         print(json.dumps(result))
-    if 'human_readable' in args.output_format:
+    elif 'json1' in args.output_format:
+        print(json.dumps(result, indent=1))
+    elif 'human_readable' in args.output_format:
         print(json.dumps(result, indent=1))

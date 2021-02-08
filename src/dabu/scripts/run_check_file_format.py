@@ -26,7 +26,7 @@ def run_check_file_format(args):
         # print(result)
         if 'json' in args.output_format:
             print(json.dumps(result))
-        if 'json1' in args.output_format:
+        elif 'json1' in args.output_format:
             print(json.dumps(result, indent=1))
-        if 'human_readable' in args.output_format:
+        eöif 'human_readable' in args.output_format:
             print(json.dumps(result, indent=1))
