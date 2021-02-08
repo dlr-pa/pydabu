@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-04
+:Date: 2021-02-08
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the package data of the module dabu
@@ -19,10 +19,10 @@ import unittest
 class scripty_pydabu(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-02-04
+    :Date: 2021-02-08
     """
     test_dir_path = []
-    for dir_name in ['00', '01', '02']:
+    for dir_name in ['00', '01', '02', '03']:
         test_dir_path.append(os.path.join(
             os.path.dirname(sys.modules['pydabu_unittests'].__file__),
             'data', 'data_bubble', dir_name))
@@ -124,6 +124,26 @@ class scripty_pydabu(unittest.TestCase):
             shell=True, cwd=test_dir_path, timeout=3, check=False)
         self.assertEqual(cp.returncode, 2)  # check for error
 
+    def test_check_nasa_ames_format(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-08
+
+        This test uses the data in 'data/data_bubble' to test the output
+        of the script 'pydabu.py check_nasa_ames_format'.
+        """
+        # data bubble 03
+        test_dir_path = self.test_dir_path[3]
+        cp = subprocess.run(
+            ['pydabu.py check_nasa_ames_format -f foo'],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            shell=True, cwd=test_dir_path, timeout=3, check=False)
+        self.assertEqual(cp.returncode, 2)  # check for error
+        cp = subprocess.run(
+            ['pydabu.py check_nasa_ames_format -f a.na'],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            shell=True, cwd=test_dir_path, timeout=3, check=True)
+
     def test_check_file_format_00(self):
         """
         :Author: Daniel Mohr
@@ -172,7 +192,7 @@ class scripty_pydabu(unittest.TestCase):
             schema = json.loads(pkgutil.get_data('dabu', filename))
             jsonschema.validate(instance, schema)
 
-    def test_check_file_format_01(self):
+    def test_check_file_format_02(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-02-04
@@ -182,6 +202,25 @@ class scripty_pydabu(unittest.TestCase):
         """
         # data bubble 02
         test_dir_path = self.test_dir_path[2]
+        cp = subprocess.run(
+            ['pydabu.py check_file_format -o json'],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            shell=True, cwd=test_dir_path, timeout=3, check=True)
+        instance = json.loads(cp.stdout)
+        for filename in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
+            schema = json.loads(pkgutil.get_data('dabu', filename))
+            jsonschema.validate(instance, schema)
+
+    def test_check_file_format_03(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-08
+
+        This test uses the data in 'data/data_bubble' to test the output
+        of the script 'pydabu.py check_file_format'.
+        """
+        # data bubble 03
+        test_dir_path = self.test_dir_path[3]
         cp = subprocess.run(
             ['pydabu.py check_file_format -o json'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
