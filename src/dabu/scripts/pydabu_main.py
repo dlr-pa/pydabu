@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-04 (last change).
+:Date: 2021-02-08 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -39,7 +39,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-04 (last change).
+    :Date: 2021-02-08 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -53,7 +53,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-02-04\n"
+    epilog += "Date: 2021-02-08\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -66,12 +66,15 @@ def my_argument_parser():
         '-output_format',
         nargs=1,
         type=str,
-        choices=['human_readable', 'json'],
+        choices=['human_readable', 'json', 'json1'],
         required=False,
         default=['human_readable'],
         dest='output_format',
         help='Set the output format to use. ' +
-        'default: human_readable',
+        'human_readable gives a nice json output with skipped data. ' +
+        'json is the normal json output. json1 is the full data with ' +
+        'nice output like human_readable. ' + 
+        'default: json1',
         metavar='f')
     common_parser2 = argparse.ArgumentParser(add_help=False)
     common_parser2.add_argument(
