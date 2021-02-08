@@ -47,10 +47,21 @@ templates_path = ['_templates']
 #
 # source_suffix = ['.rst', '.md']
 #source_suffix = '.rst'
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'restructuredtext',
-    '.md': 'markdown',
+
+# use README.md in markdown here:
+#
+# for sphinx 3.4.3, we could do something like
+# source_suffix = {
+#     '.rst': 'restructuredtext',
+#     '.txt': 'restructuredtext',
+#     '.md': 'markdown',
+# }
+#
+# for sphinx 1.6.7, we need to do:
+source_suffix = ['.rst', '.txt', '.md']
+from recommonmark.parser import CommonMarkParser
+source_parsers = {
+    '.md': CommonMarkParser,
 }
 
 # The master toctree document.
@@ -66,7 +77,7 @@ author = 'Daniel Mohr'
 # built documents.
 #
 # The short X.Y version.
-version = '2021-01-19'
+version = '2021-02-08'
 # The full version, including alpha/beta/rc tags.
 release = version
 

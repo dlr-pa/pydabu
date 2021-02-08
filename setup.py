@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-04
+:Date: 2021-02-08
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -134,10 +134,28 @@ class CheckModulesModulefinder(Command):
             finder.run_script(script)
             finder.report()
 
+# necessary modules
+required_modules = ['argparse',
+                    'distutils',
+                    'json',
+                    'jsonschema',
+                    'os',
+                    'os.path',
+                    'pkgutil',
+                    're',
+                    'subprocess',
+                    'sys',
+                    'tempfile',
+                    'time',
+                    'unittest']
+# optional modules
+required_modules += ['cfchecker.cfchecks', 'netCDF4']
+# modules to build doc
+required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 
 setup(
     name='pydabu',
-    version='2021-02-04',
+    version='2021-02-08',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
@@ -178,21 +196,6 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3'],
     # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | egrep -i --only-matching "import .*$" | sort -u
-    requires=[
-        'argparse',
-        'cfchecker.cfchecks',
-        'distutils',
-        'json',
-        'jsonschema',
-        'netCDF4',
-        'os',
-        'os.path',
-        'pkgutil',
-        're',
-        'subprocess',
-        'sys',
-        'tempfile',
-        'time',
-        'unittest'],
+    requires=required_modules,
     provides=['dabu']
 )
