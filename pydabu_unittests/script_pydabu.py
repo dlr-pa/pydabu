@@ -71,7 +71,7 @@ class scripty_pydabu(unittest.TestCase):
         This test uses the data in 'data/data_bubble' to test the output
         of the script 'pydabu.py check_data_structure'.
         """
-        # data bubble 01
+        # data bubble 00
         test_dir_path = self.test_dir_path[0]
         cps = []  # completed process instances
         cps.append(subprocess.run(
@@ -93,7 +93,7 @@ class scripty_pydabu(unittest.TestCase):
         for cp in cps:
             instance = json.loads(cp.stdout)
             jsonschema.validate(instance, schema)
-        # data bubble 02
+        # data bubble 01
         test_dir_path = self.test_dir_path[1]
         self.assertTrue(os.path.isdir(test_dir_path))
         self.assertTrue(
@@ -111,7 +111,7 @@ class scripty_pydabu(unittest.TestCase):
         This test uses the data in 'data/data_bubble' to test the output
         of the script 'pydabu.py check_netcdf_file'.
         """
-        # data bubble 02
+        # data bubble 01
         test_dir_path = self.test_dir_path[1]
         cp = subprocess.run(
             ['pydabu.py check_netcdf_file -f README.md'],
