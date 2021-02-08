@@ -4,7 +4,6 @@
 :Date: 2021-02-08 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
-import json
 
 from dabu.check_nasa_ames_format import check_nasa_ames_format
 

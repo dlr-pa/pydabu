@@ -5,8 +5,6 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import json
-
 from dabu.analyse_data_structure import analyse_data_structure
 from dabu.analyse_file_format import analyse_file_format_dict
 

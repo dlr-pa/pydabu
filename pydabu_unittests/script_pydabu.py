@@ -240,7 +240,7 @@ class scripty_pydabu(unittest.TestCase):
         """
         # data bubble 03
         test_dir_path = self.test_dir_path[3]
-        schema = schema = json.loads(pkgutil.get_data(
+        schema = json.loads(pkgutil.get_data(
             'dabu', 'schemas/dabu.schema'))
         required_schema = json.loads(pkgutil.get_data(
             'dabu', 'schemas/dabu_requires.schema'))

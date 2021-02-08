@@ -5,8 +5,6 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import json
-
 from dabu.check_netcdf_file import check_netcdf_file
 
 from .print_json_output import print_json_output

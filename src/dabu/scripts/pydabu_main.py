@@ -8,10 +8,16 @@
 import argparse
 import os.path
 
+from .check_arg_file_not_exisits import check_arg_file_not_exisits
+from .check_arg_file import check_arg_file
 from .run_check_data_structure import run_check_data_structure
 from .run_check_file_format import run_check_file_format
 from .run_check_netcdf_file import run_check_netcdf_file
 from .run_check_nasa_ames_format import run_check_nasa_ames_format
+from .run_common_json_format import run_common_json_format
+from .run_create_data_bubble import run_create_data_bubble
+from .run_check_data_bubble import run_check_data_bubble
+
 
 def check_arg_directory(data):
     """
@@ -21,17 +27,6 @@ def check_arg_directory(data):
     """
     if not os.path.isdir(data):
         msg = '"%s" is not a directory' % data
-        raise argparse.ArgumentTypeError(msg)
-    return data
-
-def check_arg_file(data):
-    """
-    :Author: Daniel Mohr
-    :Email: daniel.mohr@dlr.de
-    :Date: 2021-01-29 (last change).
-    """
-    if not os.path.isfile(data):
-        msg = '"%s" is not a file' % data
         raise argparse.ArgumentTypeError(msg)
     return data
 
@@ -74,7 +69,7 @@ def my_argument_parser():
         help='Set the output format to use. ' +
         'human_readable gives a nice json output with skipped data. ' +
         'json is the normal json output. json1 is the full data with ' +
-        'nice output like human_readable. ' + 
+        'nice output like human_readable. ' +
         'default: json1',
         metavar='f')
     common_parser2 = argparse.ArgumentParser(add_help=False)
@@ -89,6 +84,16 @@ def my_argument_parser():
         'You can also give a list of directories separated by space. ' +
         'default: .',
         metavar='d')
+    common_parser2_required = argparse.ArgumentParser(add_help=False)
+    common_parser2_required.add_argument(
+        '-directory',
+        nargs="+",
+        type=check_arg_directory,
+        required=True,
+        dest='directory',
+        help='Set the directory to use. ' +
+        'You can also give a list of directories separated by space.',
+        metavar='d')
     common_parser3 = argparse.ArgumentParser(add_help=False)
     common_parser3.add_argument(
         '-file',
@@ -98,6 +103,17 @@ def my_argument_parser():
         dest='file',
         help='Set the file(s) to use. ',
         metavar='f')
+    common_parser4 = argparse.ArgumentParser(add_help=False)
+    common_parser4.add_argument(
+        '-indent',
+        nargs=1,
+        type=int,
+        required=False,
+        default=[4],
+        dest='indent',
+        help='In the output the elements will be indented ' +
+        'by this number of spaces.',
+        metavar='i')
     # subparsers
     subparsers = parser.add_subparsers(
         dest='subparser_name',
@@ -167,6 +183,99 @@ def my_argument_parser():
         epilog=epilog,
         parents=[common_parser1, common_parser2])
     parser_check_file_format.set_defaults(func=run_check_file_format)
+    # subparser common_json_format
+    description = 'This command read the given json file and writes it '
+    description += 'in a common format to stdout.'
+    epilog = 'Example:\n\n'
+    epilog += '  pydabu.py common_json_format -f .dabu.json\n\n'
+    epilog += '  pydabu.py common_json_format -f .dabu.json > foo\n'
+    epilog += '  mv foo .dabu.json\n'
+    parser_common_json_format = subparsers.add_parser(
+        'common_json_format',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        help='For more help: pydabu.py common_json_format -h',
+        description=description,
+        epilog=epilog,
+        parents=[common_parser3, common_parser4])
+    parser_common_json_format.set_defaults(func=run_common_json_format)
+    # subparser create_data_bubble
+    description = 'This command creates a data bubble in the give directory. '
+    description += 'The data is generated with the command "check_file_format" '
+    description += 'from the data in the directory. '
+    description += 'Also the resulting files are not a data management plan, '
+    description += 'you can enhance it to become one.'
+    epilog = 'Example:\n\n'
+    epilog += '  pydabu.py create_data_bubble -d mydata\n\n'
+    epilog += '  pydabu.py create_data_bubble -d .\n'
+    epilog += '  jsonschema -i .dabu.json .dabu.schema\n'
+    parser_create_data_bubble = subparsers.add_parser(
+        'create_data_bubble',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        help='For more help: pydabu.py create_data_bubble -h',
+        description=description,
+        epilog=epilog,
+        parents=[common_parser2_required, common_parser4])
+    parser_create_data_bubble.set_defaults(func=run_create_data_bubble)
+    parser_create_data_bubble.add_argument(
+        '-dabu_instance_file',
+        nargs=1,
+        type=check_arg_file_not_exisits,
+        required=False,
+        default=['.dabu.json'],   # this is not checked
+        dest='dabu_instance_file',
+        help='Gives the name of the file describing the content ' +
+        'of a data bubble. If this file already exists an erroris raised. ' +
+        ' The name is relative to the given directory.',
+        metavar='f')
+    parser_create_data_bubble.add_argument(
+        '-dabu_schema_file',
+        nargs=1,
+        type=check_arg_file_not_exisits,
+        required=False,
+        default=['.dabu.schema'],  # this is not checked
+        dest='dabu_schema_file',
+        help='Gives the name of the file describing the necessary content ' +
+        'of a data bubble. If this file already exists an erroris raised. ' +
+        ' The name is relative to the given directory.',
+        metavar='f')
+    # subparser check_data_bubble
+    description = 'This command checks a data bubble in the give directory. '
+    description += 'The data bubble should be created with '
+    description += '"pydabu.py create_data_bubble" and manually enhanced.'
+    description += 'Instead of this script you can also use your preferred '
+    description += 'tool to check a json instance (e. g. .dabu.json) against '
+    description += 'a json schema (e. g. (.dabu.schema), e. g.:\n\n'
+    description += '  jsonschema -i .dabu.json .dabu.schema'
+    epilog = 'Example:\n\n'
+    epilog += '  pydabu.py check_data_bubble -d mydata\n\n'
+    parser_check_data_bubble = subparsers.add_parser(
+        'check_data_bubble',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        help='For more help: pydabu.py check_data_bubble -h',
+        description=description,
+        epilog=epilog,
+        parents=[common_parser2_required])
+    parser_check_data_bubble.set_defaults(func=run_check_data_bubble)
+    parser_check_data_bubble.add_argument(
+        '-dabu_instance_file',
+        nargs=1,
+        type=check_arg_file,
+        required=False,
+        default=['.dabu.json'],   # this is not checked
+        dest='dabu_instance_file',
+        help='Gives the name of the file describing the content ' +
+        'of a data bubble. The name is relative to the given directory.',
+        metavar='f')
+    parser_check_data_bubble.add_argument(
+        '-dabu_schema_file',
+        nargs=1,
+        type=check_arg_file,
+        required=False,
+        default=['.dabu.schema'],  # this is not checked
+        dest='dabu_schema_file',
+        help='Gives the name of the file describing the necessary content ' +
+        'of a data bubble. The name is relative to the given directory.',
+        metavar='f')
     return parser
 
 
