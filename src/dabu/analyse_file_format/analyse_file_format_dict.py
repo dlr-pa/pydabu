@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-01-29 (last change).
+:Date: 2021-02-08 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -17,7 +17,7 @@ def analyse_file_format_dict(path, result, output_format):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-01-29 (last change).
+    :Date: 2021-02-08 (last change).
 
     Analyse the file format of the files stored in result.
 
@@ -31,7 +31,7 @@ def analyse_file_format_dict(path, result, output_format):
         resitem = {'name': f, 'file_extension': file_extension}
         if file_extension.lower() == ".nc":  # NetCDF file
             try:
-                res, checker_name = check_netcdf_file(f)
+                res = check_netcdf_file(f)
                 if 'human_readable' in output_format:
                     del res[checker_name]['result']
                 resitem['netcdf check'] = res
