@@ -7,6 +7,38 @@
 		"name": {"type": "string"},
 		"file_extension": {"oneOf": [{"type": "null"},
 		                             {"type": "string"}]},
+		"nasa ames format check": {
+		    "type": "object",
+		    "properties": {
+		        "pydabu (basic)": {
+			    "type": "object",
+			    "properties": {
+				"created": {"type": "number",
+					    "minimum": 1612792668.8894613},
+				"error": {"type": "integer",
+					  "minimum": 0,
+					  "maximum": 0},
+				"warning": {"type": "integer",
+					    "minimum": 0},
+				"log": {"type": "array",
+				        "items": {"type": "string"}},
+				"NLHEAD": {"type": "integer"},
+				"FFI": {"type": "integer"},
+				"ONAME": {"type": "string"},
+				"ORG": {"type": "string"},
+				"SNAME": {"type": "string"},
+				"MNAME": {"type": "string"},
+				"NVOL": {"type": "integer"},
+				"IVOL": {"type": "integer"},
+				"DATE": {"type": "string",
+				         "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+				"RDATE": {"type": "string",
+				          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}
+			    },
+			    "required": ["created", "ONAME", "ORG", "SNAME", "MNAME", "DATE"]
+			}
+		    }
+		},
 		"netcdf check": {
 		    "type": "object",
 		    "properties": {
