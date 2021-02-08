@@ -68,7 +68,7 @@ def my_argument_parser():
         type=str,
         choices=['human_readable', 'json', 'json1'],
         required=False,
-        default=['human_readable'],
+        default=['json1'],
         dest='output_format',
         help='Set the output format to use. ' +
         'human_readable gives a nice json output with skipped data. ' +
