@@ -5,11 +5,24 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import datetime
 import re
 import time
 
 
-def check_nasa_ames_format(file, output_format='human_readable'):
+def DATE_RDATE2isoformat(data):
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2021-02-08 (last change).
+    """
+    splited = data.split()
+    return datetime.date(int(splited[0]),
+                         int(splited[1]),
+                         int(splited[2])).isoformat()
+
+
+def check_nasa_ames_format(filename, output_format='human_readable'):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
@@ -21,7 +34,7 @@ def check_nasa_ames_format(file, output_format='human_readable'):
     http://cedadocs.ceda.ac.uk/73/4/index.html
     http://cedadocs.ceda.ac.uk/73/4/FFI-summary.html
 
-    :param file: file to analyse
+    :param filename: file to analyse
     """
     result = dict()
     checker_name = 'pydabu (basic)'
@@ -31,7 +44,7 @@ def check_nasa_ames_format(file, output_format='human_readable'):
     result[checker_name]['warning'] = 0
     result[checker_name]['log'] = []
     metadata_part = []
-    with open(file, mode='r') as fd:
+    with open(filename, mode='r') as fd:
         for i in range(7):
             metadata_part += [fd.readline()]
     if len(metadata_part) == 7:
@@ -57,7 +70,7 @@ def check_nasa_ames_format(file, output_format='human_readable'):
                     #       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).
                     IVOL, NVOL = IVOL_NVOL
                     if ((int(NVOL) >= 1) and
-                        (1 <= int(IVOL)) and (int(IVOL) <= int(NVOL))):
+                            (1 <= int(IVOL)) and (int(IVOL) <= int(NVOL))):
                         addresult['IVOL'] = int(IVOL)
                         addresult['NVOL'] = int(NVOL)
                     else:
@@ -118,7 +131,7 @@ def check_nasa_ames_format(file, output_format='human_readable'):
                         'warning: too many "dates" in DATE RDATE']
                     result[checker_name]['warning'] += 1
                 elif len(DATE_RDATE) == 1:
-                    addresult['DATE'] = DATE_RDATE[0]
+                    addresult['DATE'] = DATE_RDATE2isoformat(DATE_RDATE[0])
                 elif len(DATE_RDATE) == 2:
                     DATE_RDATE = re.findall(
                         r'([0-9]{4}[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})'
@@ -126,8 +139,10 @@ def check_nasa_ames_format(file, output_format='human_readable'):
                         r'([0-9]{4}[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})',
                         metadata_part[6].strip())
                     if re:
-                        addresult['DATE'] = DATE_RDATE[0][0]
-                        addresult['RDATE'] = DATE_RDATE[0][1]
+                        addresult['DATE'] = DATE_RDATE2isoformat(
+                            DATE_RDATE[0][0])
+                        addresult['RDATE'] = DATE_RDATE2isoformat(
+                            DATE_RDATE[0][1])
                     else:
                         result[checker_name]['log'] += [
                             'warning: do not understand DATE RDATE']
