@@ -19,6 +19,8 @@ pages:
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - ./create_doc_html
     - rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum manual_pydabu_html/ public/
+    - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
+    - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec brotli -f -k {} \;
 
   artifacts:
     paths:
