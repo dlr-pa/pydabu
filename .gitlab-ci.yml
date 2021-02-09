@@ -18,7 +18,7 @@ pages:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - ./create_doc_html
-    - rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum manual_staub_html/ public/
+    - rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum manual_pydabu_html/ public/
 
   artifacts:
     paths:
