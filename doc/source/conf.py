@@ -101,6 +101,7 @@ todo_include_todos = False
 
 
 # -- Options for HTML output ----------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
@@ -126,10 +127,13 @@ html_static_path = ['_static']
 html_sidebars = {
     '**': [
         'relations.html',  # needs 'show_related': True theme option to display
+        'globaltoc.html',
         'searchbox.html',
+        'sourcelink.html'
     ]
 }
 
+html_use_opensearch = 'https://mohr_da.pages.gitlab.dlr.de/pydabu'
 
 # -- Options for HTMLHelp output ------------------------------------------
 
