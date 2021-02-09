@@ -239,15 +239,15 @@ def my_argument_parser():
         ' The name is relative to the given directory.',
         metavar='f')
     # subparser check_data_bubble
-    description = 'This command checks a data bubble in the give directory. '
+    description = 'This command checks a data bubble in the given directory. '
     description += 'The data bubble should be created with '
-    description += '"pydabu.py create_data_bubble" and manually enhanced.'
+    description += '"pydabu.py create_data_bubble" and manually enhanced. '
     description += 'Instead of this script you can also use your preferred '
     description += 'tool to check a json instance (e. g. .dabu.json) against '
-    description += 'a json schema (e. g. (.dabu.schema), e. g.:\n\n'
-    description += '  jsonschema -i .dabu.json .dabu.schema'
-    epilog = 'Example:\n\n'
+    description += 'a json schema (e. g. .dabu.schema) -- see examples.'
+    epilog = 'Examples:\n\n'
     epilog += '  pydabu.py check_data_bubble -d mydata\n\n'
+    epilog += '  cd mydata && jsonschema -i .dabu.json .dabu.schema\n\n'
     parser_check_data_bubble = subparsers.add_parser(
         'check_data_bubble',
         formatter_class=argparse.RawDescriptionHelpFormatter,
