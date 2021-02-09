@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-08 (last change).
+:Date: 2021-02-09 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -10,7 +10,7 @@ import os.path
 
 from .check_arg_file_not_exisits import check_arg_file_not_exisits
 from .check_arg_file import check_arg_file
-from .run_check_data_structure import run_check_data_structure
+from .run_analyse_data_structure import run_analyse_data_structure
 from .run_check_file_format import run_check_file_format
 from .run_check_netcdf_file import run_check_netcdf_file
 from .run_check_nasa_ames_format import run_check_nasa_ames_format
@@ -35,7 +35,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-08 (last change).
+    :Date: 2021-02-09 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -49,7 +49,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-02-08\n"
+    epilog += "Date: 2021-02-09\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -118,15 +118,15 @@ def my_argument_parser():
     subparsers = parser.add_subparsers(
         dest='subparser_name',
         help='There are different sub-commands with there own flags.')
-    # subparser check_data_structure
-    parser_check_data_structure = subparsers.add_parser(
-        'check_data_structure',
+    # subparser analyse_data_structure
+    parser_analyse_data_structure = subparsers.add_parser(
+        'analyse_data_structure',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py check_data_structure -h',
+        help='For more help: pydabu.py analyse_data_structure -h',
         description='',
         epilog='',
         parents=[common_parser1, common_parser2])
-    parser_check_data_structure.set_defaults(func=run_check_data_structure)
+    parser_analyse_data_structure.set_defaults(func=run_analyse_data_structure)
     # subparser check_nasa_ames_format
     description = 'This command checks a file in the nasa ames format.'
     epilog = 'Example:\n\n'
@@ -164,7 +164,7 @@ def my_argument_parser():
     # subparser check_file_format
     description = 'This command checks the file formats. '
     description += 'In a first step the data structure is analysed like the '
-    description += 'command "check_data_structure" does. '
+    description += 'command "analyse_data_structure" does. '
     description += 'Each file is checked by a tool choosen by the '
     description += 'file extension. '
     description += 'For the file extension ".nc" the command '

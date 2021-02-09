@@ -43,7 +43,7 @@ def add_append_integrate_data(store, key, data):
         store[key] = data
 
 
-def analyse_data_structure(path_name, result=dict()):
+def analyse_data_structure(path_name='.', result=dict()):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de

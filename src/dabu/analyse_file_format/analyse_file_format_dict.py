@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-08 (last change).
+:Date: 2021-02-09 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -18,13 +18,15 @@ def analyse_file_format_dict(path, result, output_format):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-08 (last change).
+    :Date: 2021-02-09 (last change).
 
     Analyse the file format of the files stored in result.
 
     :param path: directory path to analyse
     :param result: a dict; only the key 'data' will be read
     """
+    if not 'data' in result:
+        return result  # nothing to do, no data files available
     files = result['data'].copy()
     result['data'] = []
     for f in files:

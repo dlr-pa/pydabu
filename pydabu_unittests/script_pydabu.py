@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-08
+:Date: 2021-02-09
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the package data of the module dabu
@@ -30,13 +30,13 @@ class scripty_pydabu(unittest.TestCase):
     def test_basic_sub_commands(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-04
+        :Date: 2021-02-09
 
         This test checks for the available sub-commands of pydabu.py
         """
         # check basic sub-commands
         cp = subprocess.run(
-            ["pydabu.py check_data_structure"],
+            ["pydabu.py analyse_data_structure"],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
         cp = subprocess.run(
@@ -63,33 +63,33 @@ class scripty_pydabu(unittest.TestCase):
             self.assertTrue(
                 os.path.isfile(os.path.join(test_dir_path, 'README.md')))
 
-    def test_check_data_structure(self):
+    def test_analyse_data_structure(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-04
+        :Date: 2021-02-09
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_data_structure'.
+        of the script 'pydabu.py analyse_data_structure'.
         """
         # data bubble 00
         test_dir_path = self.test_dir_path[0]
         cps = []  # completed process instances
         cps.append(subprocess.run(
-            ['pydabu.py check_data_structure'],
+            ['pydabu.py analyse_data_structure'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=3, check=True))
         cps.append(subprocess.run(
-            ['pydabu.py check_data_structure -d ' + test_dir_path],
+            ['pydabu.py analyse_data_structure -d ' + test_dir_path],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True))
         self.assertEqual(cps[0].stdout, cps[1].stdout)
         cps.append(subprocess.run(
-            ['pydabu.py check_data_structure -o json'],
+            ['pydabu.py analyse_data_structure -o json'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=3, check=True))
         schema = json.loads(
             pkgutil.get_data(
-                'dabu', 'schemas/check_data_structure_output.schema'))
+                'dabu', 'schemas/analyse_data_structure_output.schema'))
         for cp in cps:
             instance = json.loads(cp.stdout)
             jsonschema.validate(instance, schema)
@@ -99,7 +99,7 @@ class scripty_pydabu(unittest.TestCase):
         self.assertTrue(
             os.path.isfile(os.path.join(test_dir_path, 'README.md')))
         cp = subprocess.run(
-            ['pydabu.py check_data_structure'],
+            ['pydabu.py analyse_data_structure'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=3, check=True)
 
