@@ -56,13 +56,15 @@ def analyse_data_structure(path_name='.', result=dict()):
                    or overridden
     """
     file_names = []  # only files in the actual directory
+    dir_names = [] # only directory in the actual directory
     all_file_names = []  # all other files in the directory tree
-    for (dirpath, _, filenames) in os.walk(path_name):
-        for file_name in filenames:
-            if os.path.samefile(dirpath, '.'):
+    for (dirpath, dirs, filenames) in os.walk(path_name):
+        if os.path.samefile(dirpath, '.'):
+            for file_name in filenames:
                 file_names.append(file_name)
-            else:
-                all_file_names.append(os.path.join(dirpath, file_name))
+            dir_names = dirs
+        else:
+            all_file_names.append(os.path.join(dirpath, file_name))
     analysed_file_names = []
     # find README, LICENSE, MANIFEST
     for key in ['readme', 'license', 'manifest']:
@@ -71,11 +73,11 @@ def analyse_data_structure(path_name='.', result=dict()):
             result[key] = res
             analysed_file_names.append(res)
     # analyse if directory is a repository
-    for f in file_names:
-        if (f in ['.git', '.bzr']) and os.path.isdir(f):
+    for d in dir_names:
+        if (d in ['.git', '.bzr']) and os.path.isdir(d):
             # assume repository
-            result['repository'] = f
-            analysed_file_names.append(f)
+            result['repository'] = d
+            analysed_file_names.append(d)
             add_append_integrate_data(
                 result, 'data integrity control', 'repository')
             break
