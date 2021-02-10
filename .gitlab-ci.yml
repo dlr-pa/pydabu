@@ -3,7 +3,7 @@ default:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
 #    - pip3 install cfchecker
-    - pip3 install sphinx-jsonschema
+#    - pip3 install sphinx-jsonschema
     - ./install2home
   after_script:
     - export PATH=$PATH:~/bin:~/.local/bin
