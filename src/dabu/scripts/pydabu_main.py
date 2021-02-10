@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-09 (last change).
+:Date: 2021-02-10 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -17,6 +17,7 @@ from .run_check_nasa_ames_format import run_check_nasa_ames_format
 from .run_common_json_format import run_common_json_format
 from .run_create_data_bubble import run_create_data_bubble
 from .run_check_data_bubble import run_check_data_bubble
+from .run_listschemas import run_listschemas
 
 
 def check_arg_directory(data):
@@ -35,7 +36,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-09 (last change).
+    :Date: 2021-02-10 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -144,7 +145,7 @@ def my_argument_parser():
         parents=[common_parser1, common_parser3])
     parser_check_nasa_ames_format.set_defaults(func=run_check_nasa_ames_format)
     # subparser check_netcdf_file
-    description = 'This command checks a file in the format netCDF.'
+    description = 'This command checks a file in the format netCDF. '
     description += 'It uses the CF Checker: '
     description += 'https://github.com/cedadev/cf-checker'
     epilog = 'Example:\n\n'
@@ -276,6 +277,17 @@ def my_argument_parser():
         help='Gives the name of the file describing the necessary content ' +
         'of a data bubble. The name is relative to the given directory.',
         metavar='f')
+    # subparser listschemas
+    description = 'This command lists the provided and used json schemas.'
+    epilog = 'Examples:\n\n'
+    epilog += '  pydabu.py listschemas\n\n'
+    parser_listschemas = subparsers.add_parser(
+        'listschemas',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        help='For more help: pydabu.py listschemas -h',
+        description=description,
+        epilog=epilog)
+    parser_listschemas.set_defaults(func=run_listschemas)
     return parser
 
 
