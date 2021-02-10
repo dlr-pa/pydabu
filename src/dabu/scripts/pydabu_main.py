@@ -288,6 +288,21 @@ def my_argument_parser():
         description=description,
         epilog=epilog)
     parser_listschemas.set_defaults(func=run_listschemas)
+    # the following artificial parameter is necessary to build the documentation
+    # with sphinx-argparse or rather sphinxarg.ext
+    parser_listschemas.add_argument(
+        '-output_format',
+        nargs=1,
+        type=str,
+        choices=['simple', 'json'],
+        required=False,
+        default=['simple'],
+        dest='output_format',
+        help='Set the output format to use. ' +
+        'simple lists the json schmeas in lines. ' +
+        'json leads to a json output. ' +
+        'default: simple',
+        metavar='f')
     return parser
 
 
