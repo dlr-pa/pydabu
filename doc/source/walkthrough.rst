@@ -77,7 +77,7 @@ Or storing big data it could look like::
   signals.pdf
   twanrc_rf_trigger_AK06FZRP.log
 
-Now let us create some description with :program:`pydabu.py`::
+Now let us create some description with :option:`pydabu.py create_data_bubble`::
 
   pydabu.py create_data_bubble -dir .
 
@@ -107,7 +107,7 @@ You can check if your json instance is valid regarding the schema
   jsonschema -i .dabu.json .dabu.schema
   pydabu.py check_data_bubble -dir .
 
-At the moment the command "check_data_bubble" of :program:`pydabu.py` is only
+At the moment the command :option:`pydabu.py check_data_bubble` is only
 a stub. Mainly you will see missing properties, which are required.
 
 For example for the data in the directory "foo" (from above), you will get::

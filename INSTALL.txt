@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-02-08
+:Version: 2021-02-10
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -212,6 +212,11 @@ which is not in the package management. You can install it with pip, e. g.::
 
     pip3 install cfchecker
 
+To build the documentation you do not only need the above packages. In addition
+we use sphinx-jsonschema, e. g.::
+
+    pip3 install sphinx-jsonschema
+
 SuSE 15.3
 ---------
 
@@ -220,4 +225,5 @@ which is not in the package management. You can install it with pip, e. g.::
 
     pip3 install --user cfchecker
 
-But you need udunits2 from the package managment from SuSE.
+But you need udunits2 from the package managment from SuSE to use cfunits,
+which is required by cfchecker.

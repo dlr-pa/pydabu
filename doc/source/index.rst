@@ -29,6 +29,7 @@ which is good research practice (cf. [DFG]_; [Helmholtz]_).
    INSTALL.txt
    walkthrough
    script_pydabu
+   schemas
    module_dabu
    license_link
    gpl
