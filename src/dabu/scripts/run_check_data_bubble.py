@@ -51,8 +51,16 @@ def run_check_data_bubble(args):
             exit()
         for err in sorted(validater.iter_errors(instance), key=str):
             if len(err.path) > 0:
+                filenameoutput = ''
+                if ((err.path[0] == 'data') and
+                    isinstance(err.path[1], int) and
+                    ('name' in instance['data'][err.path[1]])):
+                    filenameoutput = \
+                      " (file: '%s')" % instance['data'][err.path[1]]['name']
                 print(
-                    '%s in:\n    %s' % (
-                        err.message, ' -> '.join(map(str, err.path))))
+                    '%s in%s:\n    %s' % (
+                        err.message,
+                        filenameoutput,
+                        ' -> '.join(map(str, err.path))))
             else:
                 print(err.message)
