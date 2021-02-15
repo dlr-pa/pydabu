@@ -14,7 +14,7 @@ from dabu.check_netcdf_file import check_netcdf_file
 from dabu.check_nasa_ames_format import check_nasa_ames_format
 
 
-def analyse_file_format_dict(path, result, output_format):
+def analyse_file_format_dict(result, output_format):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
@@ -22,7 +22,6 @@ def analyse_file_format_dict(path, result, output_format):
 
     Analyse the file format of the files stored in result.
 
-    :param path: directory path to analyse
     :param result: a dict; only the key 'data' will be read
     """
     if not 'data' in result:

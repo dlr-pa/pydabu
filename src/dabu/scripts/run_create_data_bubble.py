@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-08 (last change).
+:Date: 2021-02-15 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -19,7 +19,7 @@ def run_create_data_bubble(args):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-08 (last change).
+    :Date: 2021-02-15 (last change).
 
     :param args: namespace return from ArgumentParser.parse_args
     """
@@ -29,7 +29,7 @@ def run_create_data_bubble(args):
         check_arg_file_not_exisits(
             os.path.join(path, args.dabu_schema_file[0]))
         result = analyse_data_structure(path)
-        result = analyse_file_format_dict(path, result, 'json')
+        result = analyse_file_format_dict(result, 'json')
         fd = open(os.path.join(path, args.dabu_instance_file[0]), mode='w')
         json.dump(result, fd)
         fd.close()
