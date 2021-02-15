@@ -19,7 +19,7 @@ copyright + license
 ===================
 Author: Daniel Mohr
 
-Date: 2021-02-08 (last change).
+Date: 2021-02-15 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
@@ -38,3 +38,10 @@ Copyright (C) 2021 Daniel Mohr
  along with this program; if not, see
  http://www.gnu.org/licenses/
 """
+
+try:
+    # try to get version from package metadata
+    import pkg_resources
+    __version__ = pkg_resources.require('pydabu')[0].version
+except:
+    pass
