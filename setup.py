@@ -148,7 +148,8 @@ required_modules = ['argparse',
                     'sys',
                     'tempfile',
                     'time',
-                    'unittest']
+                    'unittest',
+                    'warnings']
 # optional modules
 required_modules += ['cfchecker.cfchecks', 'netCDF4']
 # modules to build doc
