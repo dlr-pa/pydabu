@@ -247,7 +247,7 @@ def my_argument_parser():
     description += 'tool to check a json instance (e. g. .dabu.json) against '
     description += 'a json schema (e. g. .dabu.schema) -- see examples.'
     epilog = 'Examples:\n\n'
-    epilog += '  pydabu.py check_data_bubble -d mydata\n\n'
+    epilog += '  pydabu.py check_data_bubble -dir mydata\n\n'
     epilog += '  cd mydata && jsonschema -i .dabu.json .dabu.schema\n\n'
     parser_check_data_bubble = subparsers.add_parser(
         'check_data_bubble',
