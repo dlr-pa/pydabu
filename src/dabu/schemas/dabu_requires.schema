@@ -20,7 +20,7 @@
                 "nasa ames format check": {
                     "type": "object",
                     "properties": {
-                        "pydabu (basic)": {
+                        "pydabu (nasa ames format check)": {
                             "type": "object",
                             "properties": {
                                 "created": {
@@ -89,7 +89,18 @@
                 "netcdf check": {
                     "type": "object",
                     "properties": {
-                        "pydabu (basic)": {
+                        "error": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 0
+                        },
+                        "log": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "pydabu (netcdf check)": {
                             "type": "object",
                             "properties": {
                                 "created": {
@@ -105,15 +116,6 @@
                                 },
                                 "disk_format": {
                                     "type": "string"
-                                },
-                                "error": {
-                                    "type": "integer",
-                                    "minimum": 0,
-                                    "maximum": 0
-                                },
-                                "warning": {
-                                    "type": "integer",
-                                    "minimum": 0
                                 }
                             },
                             "required": [
@@ -145,7 +147,11 @@
                                 "warning"
                             ]
                         }
-                    }
+                    },
+                    "required": [
+                        "error",
+                        "log"
+                    ]
                 }
             },
             "required": [

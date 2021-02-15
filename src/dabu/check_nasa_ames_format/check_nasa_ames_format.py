@@ -37,7 +37,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
     :param filename: file to analyse
     """
     result = dict()
-    checker_name = 'pydabu (basic)'
+    checker_name = 'pydabu (nasa ames format check)'
     addresult = dict()
     result[checker_name] = dict()
     result[checker_name]['error'] = 0

@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-09 (last change).
+:Date: 2021-02-15 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -18,7 +18,7 @@ def analyse_file_format_dict(path, result, output_format):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-09 (last change).
+    :Date: 2021-02-15 (last change).
 
     Analyse the file format of the files stored in result.
 
@@ -38,6 +38,9 @@ def analyse_file_format_dict(path, result, output_format):
             except:
                 sys.stderr.write('Could not check NetCDF file.\n')
                 resitem['netcdf check'] = dict()
+                resitem['netcdf check']['error'] = 1
+                resitem['netcdf check']['log'] = \
+                  ['Could not check NetCDF file.']
         if file_extension.lower() in ['.nas', '.na']:  # NASA Ames Format
             resitem['nasa ames format check'] = check_nasa_ames_format(
                 f, output_format)
