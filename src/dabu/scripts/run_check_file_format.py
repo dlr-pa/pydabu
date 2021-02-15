@@ -24,5 +24,12 @@ def run_check_file_format(args):
     for path in args.directory:  # for every given directory
         os.chdir(path)
         result = analyse_data_structure(path)
-        result = analyse_file_format_dict(result, args.output_format)
+        checksum_file = None
+        if args.checksum_from_file is not None:
+            checksum_file = args.checksum_from_file[0]
+        result = analyse_file_format_dict(
+            result,
+            args.output_format,
+            not args.skip_creating_checksums,
+            checksum_file)
         print_json_output(result, args.output_format)

@@ -13,8 +13,8 @@ from .analyse_file_format import analyse_file_format
 from dabu.check_netcdf_file import check_netcdf_file
 from dabu.check_nasa_ames_format import check_nasa_ames_format
 
-
-def analyse_file_format_dict(result, output_format):
+def analyse_file_format_dict(
+        result, output_format, store_checksums=True, checksum_file=None):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
@@ -22,7 +22,10 @@ def analyse_file_format_dict(result, output_format):
 
     Analyse the file format of the files stored in result.
 
-    :param result: a dict; only the key 'data' will be read
+    :param result: a dict; only the key 'data' will be adapted
+    :param output_format: describes the output format in a list
+    :param store_checksums: if True find/calculate checksums for each file
+    :param checksum_file: the file to import the checksums from
     """
     if not 'data' in result:
         return result  # nothing to do, no data files available
@@ -31,6 +34,14 @@ def analyse_file_format_dict(result, output_format):
     for f in files:
         file_extension = analyse_file_format(f)
         resitem = {'name': f, 'file_extension': file_extension}
+        if store_checksums:
+            checksum = None
+            if checksum_file is not None:
+                raise NotImplementedError
+                # adapt pfu_module.check_checksum.CheckChecksumsClass
+            if checksum is None:
+                raise NotImplementedError
+                # adapt pfu_module.create_checksum.CreateChecksumsClass
         if file_extension.lower() == ".nc":  # NetCDF file
             try:
                 resitem['netcdf check'] = check_netcdf_file(f, output_format)

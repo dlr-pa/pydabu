@@ -170,12 +170,14 @@ def my_argument_parser():
     description += 'file extension. '
     description += 'For the file extension ".nc" the command '
     description += 'check_netcdf_file is used. '
-    epilog = 'Example:\n\n'
+    epilog = 'Examples:\n\n'
     epilog += '  pydabu.py check_file_format -d . > dabu.json\n'
     epilog += '  jsonschema -i dabu.json '
     epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
     epilog += '  jsonschema -i dabu.json '
-    epilog += '~/lib/python/dabu/schemas/dabu_requires.schema\n'
+    epilog += '~/lib/python/dabu/schemas/dabu_requires.schema\n\n'
+    epilog += '  pydabu.py check_file_format -skip_creating_checksums\n\n'
+    epilog += '  pydabu.py check_file_format -checksum_from_file .checksum.sha512'
     parser_check_file_format = subparsers.add_parser(
         'check_file_format',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -184,6 +186,20 @@ def my_argument_parser():
         epilog=epilog,
         parents=[common_parser1, common_parser2])
     parser_check_file_format.set_defaults(func=run_check_file_format)
+    parser_check_file_format.add_argument(
+        '-skip_creating_checksums',
+        action='store_true',
+        required=False,
+        dest='skip_creating_checksums',
+        help='Skip creating checksums, which could take a while.')
+    parser_check_file_format.add_argument(
+        '-checksum_from_file',
+        nargs=1,
+        type=check_arg_file,
+        required=False,
+        dest='checksum_from_file',
+        help='Try to get checksums from the given file.',
+        metavar='f')
     # subparser common_json_format
     description = 'This command read the given json file and writes it '
     description += 'in a common format to stdout.'
