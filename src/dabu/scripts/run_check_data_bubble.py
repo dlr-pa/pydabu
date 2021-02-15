@@ -43,14 +43,16 @@ def run_check_data_bubble(args):
                     'Schema "' + schema[u"$schema"] +
                     '" not found in implemented validators of jsonschema.')
         #jsonschema.validate(instance, schema)
-        v = jsonschema.Draft4Validator(schema)
+        validater = jsonschema.Draft4Validator(schema)
         try:
             jsonschema.Draft4Validator.check_schema(schema)
         except jsonschema.exceptions.SchemaError as msg:
             print(msg)
             exit()
-        for err in sorted(v.iter_errors(instance), key=str):
+        for err in sorted(validater.iter_errors(instance), key=str):
             if len(err.path) > 0:
-                print('%s in:\n    %s' % (err.message, ' -> '.join(map(str, err.path))))
+                print(
+                    '%s in:\n    %s' % (
+                        err.message, ' -> '.join(map(str, err.path))))
             else:
                 print(err.message)
