@@ -107,8 +107,9 @@ You can check if your json instance is valid regarding the schema
   jsonschema -i .dabu.json .dabu.schema
   pydabu.py check_data_bubble -dir .
 
-At the moment the command :option:`pydabu.py check_data_bubble` is only
-a stub. Mainly you will see missing properties, which are required.
+At the moment the command :option:`pydabu.py check_data_bubble` gives
+an overview of errors/warnings. Mainly you will see missing properties,
+which are required.
 
 For example for the data in the directory "foo" (from above), you will get::
 
@@ -119,7 +120,7 @@ Since, at this point we did not edit ".dabu.json" manually it is easy to fix.
 Use [pfu]_ to create some checksums (if you have a few GB or more, this could
 take a while) and recreate the data bubble::
 
-  $ pfu.py create_checksum -directory . -store single
+  $ pfu.py create_checksum -dir . -store single
   $ rm .dabu.json .dabu.schema
   $ pydabu.py create_data_bubble -dir .
   $ jsonschema -i .dabu.json .dabu.schema
