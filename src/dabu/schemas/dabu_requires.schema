@@ -1,6 +1,27 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {
+        "checksum": {
+            "type": "object",
+            "properties": {
+                "hash": {
+                    "type": "string"
+                },
+                "algorithm": {
+                    "type": "string",
+                    "pattern": "^sha256|sha512$"
+                },
+                "encoding": {
+                    "type": "string",
+                    "pattern": "^hex|base16|Base16|base32|Base32|base64|Base64$"
+                }
+            },
+            "required": [
+                "hash",
+                "algorithm",
+                "encoding"
+            ]
+        },
         "file": {
             "type": "object",
             "properties": {
@@ -16,6 +37,9 @@
                             "type": "string"
                         }
                     ]
+                },
+                "checksum": {
+                    "$ref": "#/definitions/checksum"
                 },
                 "nasa ames format check": {
                     "type": "object",
@@ -202,7 +226,7 @@
                 }
             ]
         },
-        "checksums": {
+        "checksum file": {
             "oneOf": [
                 {
                     "type": "null"

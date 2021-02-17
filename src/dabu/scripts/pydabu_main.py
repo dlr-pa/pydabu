@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-15 (last change).
+:Date: 2021-02-17 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -36,7 +36,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-15 (last change).
+    :Date: 2021-02-17 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -115,6 +115,21 @@ def my_argument_parser():
         help='In the output the elements will be indented ' +
         'by this number of spaces.',
         metavar='i')
+    common_parser5 = argparse.ArgumentParser(add_help=False)
+    common_parser5.add_argument(
+        '-skip_creating_checksums',
+        action='store_true',
+        required=False,
+        dest='skip_creating_checksums',
+        help='Skip creating checksums, which could take a while.')
+    common_parser5.add_argument(
+        '-checksum_from_file',
+        nargs=1,
+        type=check_arg_file,
+        required=False,
+        dest='checksum_from_file',
+        help='Try to get checksums from the given file.',
+        metavar='f')
     # subparsers
     subparsers = parser.add_subparsers(
         dest='subparser_name',
@@ -184,22 +199,8 @@ def my_argument_parser():
         help='For more help: pydabu.py check_file_format -h',
         description=description,
         epilog=epilog,
-        parents=[common_parser1, common_parser2])
+        parents=[common_parser1, common_parser2, common_parser5])
     parser_check_file_format.set_defaults(func=run_check_file_format)
-    parser_check_file_format.add_argument(
-        '-skip_creating_checksums',
-        action='store_true',
-        required=False,
-        dest='skip_creating_checksums',
-        help='Skip creating checksums, which could take a while.')
-    parser_check_file_format.add_argument(
-        '-checksum_from_file',
-        nargs=1,
-        type=check_arg_file,
-        required=False,
-        dest='checksum_from_file',
-        help='Try to get checksums from the given file.',
-        metavar='f')
     # subparser common_json_format
     description = 'This command read the given json file and writes it '
     description += 'in a common format to stdout.'
@@ -231,7 +232,7 @@ def my_argument_parser():
         help='For more help: pydabu.py create_data_bubble -h',
         description=description,
         epilog=epilog,
-        parents=[common_parser2_required, common_parser4])
+        parents=[common_parser2_required, common_parser4, common_parser5])
     parser_create_data_bubble.set_defaults(func=run_create_data_bubble)
     parser_create_data_bubble.add_argument(
         '-dabu_instance_file',

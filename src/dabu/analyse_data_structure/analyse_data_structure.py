@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-09 (last change).
+:Date: 2021-02-17 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -47,7 +47,7 @@ def analyse_data_structure(path_name='.', result=dict()):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-09 (last change).
+    :Date: 2021-02-17 (last change).
 
     Analyse the data structure of the given path.
 
@@ -87,7 +87,7 @@ def analyse_data_structure(path_name='.', result=dict()):
         flags=re.IGNORECASE)
     for f in file_names:
         if regexp.findall(f):
-            result['checksums'] = f
+            result['checksum file'] = f
             analysed_file_names.append(f)
             add_append_integrate_data(
                 result, 'data integrity control', 'checksums')
