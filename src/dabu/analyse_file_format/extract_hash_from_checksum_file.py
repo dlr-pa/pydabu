@@ -25,7 +25,6 @@ class extract_hash_from_checksum_file():
 
     class to extract check checksums from a file
     """
-    # pylint: disable=too-many-instance-attributes
     hashfcts = {'sha512': hashlib.sha512,
                 'sha256': hashlib.sha256,
                 'md5': hashlib.md5,
