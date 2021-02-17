@@ -64,7 +64,8 @@ def analyse_data_structure(path_name='.', result=dict()):
                 file_names.append(file_name)
             dir_names = dirs
         else:
-            all_file_names.append(os.path.join(dirpath, file_name))
+            for file_name in filenames:
+                all_file_names.append(os.path.join(dirpath, file_name))
     analysed_file_names = []
     # find README, LICENSE, MANIFEST
     for key in ['readme', 'license', 'manifest']:
