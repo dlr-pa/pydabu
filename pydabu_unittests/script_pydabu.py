@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-09
+:Date: 2021-02-17
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the package data of the module dabu
@@ -19,7 +19,7 @@ import unittest
 class scripty_pydabu(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-02-08
+    :Date: 2021-02-17
     """
     test_dir_path = []
     for dir_name in ['00', '01', '02', '03']:
@@ -54,11 +54,11 @@ class scripty_pydabu(unittest.TestCase):
     def test_data_data_bubble(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-04
+        :Date: 2021-02-17
 
         This test checks the available test data.
         """
-        for test_dir_path in [self.test_dir_path[0], self.test_dir_path[1]]:
+        for test_dir_path in self.test_dir_path[0:4]:
             self.assertTrue(os.path.isdir(test_dir_path))
             self.assertTrue(
                 os.path.isfile(os.path.join(test_dir_path, 'README.md')))
@@ -252,3 +252,61 @@ class scripty_pydabu(unittest.TestCase):
             instance = json.loads(cp.stdout)
             for myschema in [schema, required_schema]:
                 jsonschema.validate(instance, myschema)
+
+    def test_check_file_format_01_02_03_checksums(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-17
+
+        This test uses the data in 'data/data_bubble' to test the checksums
+        of the script 'pydabu.py check_file_format'.
+        """
+        # data bubble 01, 02, 03
+        schema = json.loads(pkgutil.get_data(
+            'dabu', 'schemas/dabu.schema'))
+        required_schema = json.loads(pkgutil.get_data(
+            'dabu', 'schemas/dabu_requires.schema'))
+        checksum_files = ['',
+                          '.checksum.sha512',  # 01
+                          '.checksum',  # 02
+                          '.checksum.sha256']  # 03
+        for test_path_n in range(1, 4):
+            test_dir_path = self.test_dir_path[test_path_n]
+            for flags in [' -skip_creating_checksums',
+                          ' -checksum_from_file ' + checksum_files[test_path_n]]:
+                # check some command line parameters
+                cp = subprocess.run(
+                    ['pydabu.py check_file_format' + flags],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    shell=True, cwd=test_dir_path, timeout=3, check=True)
+                instance = json.loads(cp.stdout)
+                for myschema in [schema, required_schema]:
+                    jsonschema.validate(instance, myschema)
+
+    def test_check_file_format_02_checksums(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-17
+
+        This test uses the data in 'data/data_bubble' to test the checksums
+        of the script 'pydabu.py check_file_format'.
+        """
+        # data bubble 02
+        cp1 = subprocess.run(
+            ['pydabu.py check_file_format'],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            shell=True, cwd=self.test_dir_path[2], timeout=3, check=True)
+        instance1 = json.loads(cp1.stdout)
+        cp2 = subprocess.run(
+            ['pydabu.py check_file_format -checksum_from_file .checksum'],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            shell=True, cwd=self.test_dir_path[2], timeout=3, check=True)
+        instance2 = json.loads(cp2.stdout)
+        for i in range(len(instance1['data'])):
+            for j in range(len(instance2['data'])):
+                if instance1['data'][i]['name'] == instance2['data'][j]['name']:
+                    i1 = i
+                    i2 = j
+                    break
+            self.assertEqual(instance1['data'][i1]['checksum']['hash'],
+                             instance2['data'][i2]['checksum']['hash'])

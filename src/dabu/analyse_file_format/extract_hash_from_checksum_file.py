@@ -9,6 +9,7 @@ Ported from pfu on 2021-02-17 by Daniel Mohr
 (author of original code and main author of this file).
 """
 
+import base64
 import hashlib
 import logging
 import os
@@ -36,6 +37,20 @@ class extract_hash_from_checksum_file():
                 44: ('sha256', 'base64'),
                 32: ('md5', 'base16 or base32'),
                 24: ('md5', 'base64')}
+    decodings = {'hex': base64.b16decode,
+                 'base16': base64.b16decode,
+                 'Base16': base64.b16decode,
+                 'base32': base64.b32decode,
+                 'Base32': base64.b32decode,
+                 'base64': base64.b64decode,
+                 'Base64': base64.b64decode}
+    codings = {'hex': base64.b16encode,
+               'base16': base64.b16encode,
+               'Base16': base64.b16encode,
+               'base32': base64.b32encode,
+               'Base32': base64.b32encode,
+               'base64': base64.b64encode,
+               'Base64': base64.b64encode}
     regexps = [
         re.compile(
             r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$"),
@@ -72,7 +87,7 @@ class extract_hash_from_checksum_file():
         self.hash_dict = dict()
         self._read_hash_file()  # read and analyse checksum file
 
-    def __call__(self, file_name):
+    def __call__(self, file_name, encoding=None):
         """
         :Author: Daniel Mohr
         :Email: daniel.mohr@dlr.de
@@ -80,13 +95,32 @@ class extract_hash_from_checksum_file():
         :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
         :param file_name: file_name to search
+        :param encoding: define the encoding of the returned hash string
 
         :return: return the hash string, the hash encoding and the source
                  file name (where the data was read from)
                  or None (if file_name not available)
         """
         if file_name in self.hash_dict:
-            return self.hash_dict[file_name][0]  # only return first hash
+            # only return first hash
+            hash_info = self.hash_dict[file_name][0]
+            if encoding is not None:  # adapt hash string
+                hash_info = list(hash_info)
+                # RFC 3548 defines the following alphabets:
+                # base64: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                #         abcdefghijklmnopqrstuvwxyz0123456789-_
+                # base32: abcdefghijklmnopqrstuvwxyz234567
+                # base16: 0123456789ABCDEF
+                if hash_info[1][1] in ['hex', 'base16', 'Base16']:
+                    hash_info[0] = hash_info[0].upper()
+                elif hash_info[1][1] in ['base32', 'Base32']:
+                    hash_info[0] = hash_info[0].lower()
+                hash_info[0] = self.decodings[hash_info[1][1]](hash_info[0])
+                hash_info[0] = self.codings[encoding](hash_info[0])
+                if isinstance(hash_info[0], bytes):
+                    hash_info[0] = hash_info[0].decode(encoding='utf-8')
+                hash_info = tuple(hash_info)
+            return hash_info
         else:
             return None
 
@@ -121,7 +155,8 @@ class extract_hash_from_checksum_file():
                 # assume file extension gives the hash type
                 # the coding is really hard to detect, therefore assume base16
                 # RFC 3548 defines the following alphabets:
-                # base64: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_
+                # base64: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                #         abcdefghijklmnopqrstuvwxyz0123456789-_
                 # base32: abcdefghijklmnopqrstuvwxyz234567
                 # base16: 0123456789ABCDEF
                 # Unfortunately typical used tools like *sum (e. g. md5sum)

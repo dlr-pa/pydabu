@@ -43,7 +43,7 @@ def analyse_file_format_dict(
         if store_checksums:
             checksum = None
             if checksum_file is not None:
-                hash_info = hash_from_checksum_file(f)
+                hash_info = hash_from_checksum_file(f, encoding='base64')
                 if hash_info is not None:
                     checksum = {'hash': hash_info[0],
                                 'algorithm': hash_info[1][0],
