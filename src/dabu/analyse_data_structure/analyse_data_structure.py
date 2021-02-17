@@ -56,7 +56,7 @@ def analyse_data_structure(path_name='.', result=dict()):
                    or overridden
     """
     file_names = []  # only files in the actual directory
-    dir_names = [] # only directory in the actual directory
+    dir_names = []  # only directory in the actual directory
     all_file_names = []  # all other files in the directory tree
     for (dirpath, dirs, filenames) in os.walk(path_name):
         if os.path.samefile(dirpath, '.'):

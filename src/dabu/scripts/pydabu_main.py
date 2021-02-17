@@ -50,7 +50,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-02-15\n"
+    epilog += "Date: 2021-02-17\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
