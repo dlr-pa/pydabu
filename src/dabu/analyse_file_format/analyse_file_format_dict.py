@@ -11,6 +11,7 @@ import sys
 
 from .analyse_file_format import analyse_file_format
 from .extract_hash_from_checksum_file import extract_hash_from_checksum_file
+from .create_checksum import create_checksum
 from dabu.check_netcdf_file import check_netcdf_file
 from dabu.check_nasa_ames_format import check_nasa_ames_format
 
@@ -42,15 +43,18 @@ def analyse_file_format_dict(
         if store_checksums:
             checksum = None
             if checksum_file is not None:
-                #hash_string, hash_encode, _ = hash_from_checksum_file(f)
                 hash_info = hash_from_checksum_file(f)
                 if hash_info is not None:
                     checksum = {'hash': hash_info[0],
                                 'algorithm': hash_info[1][0],
                                 'encoding': hash_info[1][1]}
             if checksum is None:
-                raise NotImplementedError
-                # adapt pfu_module.create_checksum.CreateChecksumsClass
+                hash_byte_array = create_checksum(f,
+                                                  algorithm='sha512',
+                                                  encoding='base64')
+                checksum = {'hash': hash_byte_array.decode(encoding='utf-8'),
+                            'algorithm': 'sha512',
+                            'encoding': 'base64'}
             if checksum is not None:
                 resitem['checksum'] = checksum
         if file_extension.lower() == ".nc":  # NetCDF file

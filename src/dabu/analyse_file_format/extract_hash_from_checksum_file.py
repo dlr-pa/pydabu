@@ -201,7 +201,7 @@ class extract_hash_from_checksum_file():
         if (os.path.isfile(self.hash_file_name) and
                 os.access(self.hash_file_name, os.R_OK)):
             self.log.debug("read hash file \"%s\"", self.hash_file_name)
-            with open(self.hash_file_name, 'rU') as hash_file:
+            with open(self.hash_file_name, 'r', newline=None) as hash_file:
                 for line in hash_file:
                     sres = self.regexps[0].search(line)
                     if sres:  # hash of a chunk
@@ -242,6 +242,6 @@ class extract_hash_from_checksum_file():
                  or None (if file_name not available)
         """
         if file_name in self.hash_dict:
-            return self.hash_dict[file_name][0]  # only return one hash
+            return self.hash_dict[file_name][0]  # only return first hash
         else:
             return None
