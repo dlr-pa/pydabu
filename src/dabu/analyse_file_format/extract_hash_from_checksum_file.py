@@ -9,7 +9,6 @@ Ported from pfu on 2021-02-17 by Daniel Mohr
 (author of original code and main author of this file).
 """
 
-import base64
 import hashlib
 import logging
 import os
@@ -25,21 +24,12 @@ class extract_hash_from_checksum_file():
 
     class to extract check checksums from a file
     """
-    hashfcts = {'sha512': hashlib.sha512,
-                'sha256': hashlib.sha256,
-                'md5': hashlib.md5,
-                'sha1': hashlib.sha1,
-                'sha224': hashlib.sha224,
-                'sha384': hashlib.sha384}
-    encodes = {'hex': base64.b16encode,
-               'base16': base64.b16encode,
-               'Base16': base64.b16encode,
-               'base32': base64.b32encode,
-               'Base32': base64.b32encode,
-               'base64': base64.b64encode,
-               'Base64': base64.b64encode}
-    hashtype = {128: ('sha512', 'base16'),
-                104: ('sha512', 'base32'),
+    # we allow here many hash functions, but better only use common ones, e. g.:
+    # md5, sha256, sha512
+    # (md5 is only acceptable for very small files!)
+    hashfcts = hashlib.algorithms_guaranteed
+    hashtype = {128: ('sha512', 'base16'),  # other hashes are hard to
+                104: ('sha512', 'base32'),  # detect by length
                 88: ('sha512', 'base64'),
                 64: ('sha256', 'base16'),
                 56: ('sha256', 'base32'),
@@ -79,9 +69,26 @@ class extract_hash_from_checksum_file():
         # extract hash from checksum file
         self.log = logging.getLogger("ehfcf")
         self.log.setLevel(self.level)
-        self.log.setLevel(1)
         self.hash_dict = dict()
         self._read_hash_file()  # read and analyse checksum file
+
+    def __call__(self, file_name):
+        """
+        :Author: Daniel Mohr
+        :Email: daniel.mohr@dlr.de
+        :Date: 2021-02-17 (last change).
+        :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+
+        :param file_name: file_name to search
+
+        :return: return the hash string, the hash encoding and the source
+                 file name (where the data was read from)
+                 or None (if file_name not available)
+        """
+        if file_name in self.hash_dict:
+            return self.hash_dict[file_name][0]  # only return first hash
+        else:
+            return None
 
     def _determine_hash_encode(self, hash_string, hashfilename=None):
         """
@@ -226,21 +233,3 @@ class extract_hash_from_checksum_file():
         else:
             self.log.warning('hash file "%s" not existing (anymore?)',
                              self.hash_file_name)
-
-    def __call__(self, file_name):
-        """
-        :Author: Daniel Mohr
-        :Email: daniel.mohr@dlr.de
-        :Date: 2017-02-25, 2021-02-17 (last change).
-        :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
-
-        :param file_name: file_name to search
-
-        :return: return the hash string, the hash encoding and the source
-                 file name (where the data was read from)
-                 or None (if file_name not available)
-        """
-        if file_name in self.hash_dict:
-            return self.hash_dict[file_name][0]  # only return first hash
-        else:
-            return None

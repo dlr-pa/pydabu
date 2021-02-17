@@ -28,15 +28,12 @@ def create_checksum(data_file_name,
 
     :param data_file_name: file name of the file to analyse
     :param algorithm: algorithm from hashlib to use
-    :param encoding: encoding to use
+                      (have to be in hashlib.algorithms_guaranteed)
+    :param encoding: encoding to use (one of base16, base32 or base64)
     :param buf_size: this number of Bytes is read and processed at once
+
+    :return: a byte array with the hash in the given encoding
     """
-    hashfcts = {'sha512': hashlib.sha512,
-                'sha256': hashlib.sha256,
-                'md5': hashlib.md5,
-                'sha1': hashlib.sha1,
-                'sha224': hashlib.sha224,
-                'sha384': hashlib.sha384}
     codings = {'hex': base64.b16encode,
                'base16': base64.b16encode,
                'Base16': base64.b16encode,
@@ -45,7 +42,7 @@ def create_checksum(data_file_name,
                'base64': base64.b64encode,
                'Base64': base64.b64encode}
     hash_byte_array = None
-    cal_hash = hashfcts[algorithm]()
+    cal_hash = hashlib.new(algorithm)
     encode = codings[encoding]
     with open(data_file_name, 'rb') as data_file:
         while data_file.tell() < os.path.getsize(data_file_name):
