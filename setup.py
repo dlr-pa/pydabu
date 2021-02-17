@@ -137,9 +137,12 @@ class CheckModulesModulefinder(Command):
 
 # necessary modules
 required_modules = ['argparse',
+                    'base64',
                     'distutils',
+                    'hashlib',
                     'json',
                     'jsonschema',
+                    'logging',
                     'os',
                     'os.path',
                     'pkgutil',

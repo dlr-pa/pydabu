@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-08
+:Date: 2021-02-17
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -138,9 +138,12 @@ class CheckModulesModulefinder(Command):
 
 # necessary modules
 required_modules = ['argparse',
+                    'base64',
                     'distutils',
+                    'hashlib',
                     'json',
                     'jsonschema',
+                    'logging',
                     'os',
                     'os.path',
                     'pkgutil',
@@ -149,11 +152,15 @@ required_modules = ['argparse',
                     'sys',
                     'tempfile',
                     'time',
-                    'unittest']
+                    'unittest',
+                    'warnings']
 install_requires = ['argparse>=1.1',
+                    'base64',
                     'distutils',
+                    'hashlib',
                     'json',
                     'jsonschema',
+                    'logging',
                     'os',
                     'pkgutil',
                     're',
@@ -170,7 +177,7 @@ required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 
 setup(
     name='pydabu',
-    version='2021-02-08',
+    version='2021-02-17',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
