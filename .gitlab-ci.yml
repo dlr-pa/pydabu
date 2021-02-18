@@ -18,9 +18,7 @@ default:
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - cat installed_files.txt | xargs rm -rf
     - rm installed_files.txt
-#    - pip3 install anybadge
-    - anybadge -l " " -v documentation -f documentation.svg -c fuchsia -o
-#    - rm -r build doc/build coverage_report
+    - rm -r build doc/build
 
 pytest_coverage:
   stage: test
@@ -28,22 +26,19 @@ pytest_coverage:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - env python3 setup.py run_pytest --coverage
-    - sleep 3
-    - pwd
-    - ls
 
 pages:
   stage: docu
   needs: ["pytest_coverage"]
   script:
-    - pwd
-    - ls
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - ./create_doc_html
     - rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum manual_pydabu_html/ public/
     - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
     - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec brotli -f -k {} \;
+#    - pip3 install anybadge
+    - anybadge -l " " -v documentation -f documentation.svg -c fuchsia -o
 
   artifacts:
     paths:
