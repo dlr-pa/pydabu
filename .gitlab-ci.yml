@@ -1,3 +1,7 @@
+stages:
+  - pytest_coverage
+  - pages
+
 default:
   before_script:
     - export PATH=$PATH:~/bin:~/.local/bin
@@ -6,18 +10,19 @@ default:
 #    - pip3 install sphinx-jsonschema
     - ./install2home
   after_script:
-    - export PATH=$PATH:~/bin:~/.local/bin
-    - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - cat installed_files.txt | xargs rm -rf
     - rm installed_files.txt
 #    - pip3 install anybadge
     - anybadge -l " " -v documentation -f documentation.svg -c fuchsia -o
-    - rm -r build doc/build
+    - rm -r build doc/build coverage_report
+
+pytest_coverage:
+  script:
+    - env python3 setup.py run_pytest --coverage
 
 pages:
+  needs: ["pytest_coverage"]
   script:
-    - export PATH=$PATH:~/bin:~/.local/bin
-    - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - ./create_doc_html
     - rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum manual_pydabu_html/ public/
     - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
