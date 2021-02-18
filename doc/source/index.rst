@@ -31,6 +31,7 @@ which is good research practice (cf. [DFG]_; [Helmholtz]_).
    script_pydabu
    schemas
    module_dabu
+   test_coverage_report/index
    license_link
    gpl
 

@@ -9,3 +9,7 @@ manual_pydabu.pdf
 manual_pydabu_html/
 doc/source/INSTALL.txt
 doc/source/README.md
+.coverage
+coverage_report/
+doc/source/test_coverage_report/index.html
+.cache/

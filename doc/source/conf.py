@@ -78,7 +78,7 @@ author = 'Daniel Mohr'
 # built documents.
 #
 # The short X.Y version.
-version = '2021-02-08'
+version = '2021-02-18'
 # The full version, including alpha/beta/rc tags.
 release = version
 

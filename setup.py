@@ -1,11 +1,95 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-17
+:Date: 2021-02-18
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import os
+
 from distutils.core import setup, Command
+
+
+class TestWithPytest(Command):
+    """
+    :Author: Daniel Mohr
+    :Email: daniel.mohr@dlr.de
+    :Date: 2021-02-18
+    :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
+
+    running automatic tests with pytest
+    """
+    description = "running automatic tests with pytest"
+    user_options = [
+        ('src=',
+         None,
+         'Choose what should be tested; installed: ' +
+         'test installed package and scripts (default); ' +
+         'local: test package direct from sources ' +
+         '(installing is not necessary). ' +
+         'The command line scripts are not tested for local. ' +
+         'default: installed'),
+        ('coverage', None, 'use pytest-cov to generate a coverage report'),
+        ('pylint', None, 'if given, run pylint'),
+        ('pytestverbose', None, 'increase verbosity of pytest')]
+
+    def initialize_options(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-18
+        """
+        self.src = 'installed'
+        self.coverage = False
+        self.pylint = False
+        self.pytestverbose = False
+
+    def finalize_options(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-04
+        """
+        pass
+
+    def run(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-02-18
+        """
+        import sys
+        import os.path
+        if self.src == 'installed':
+            pass
+        elif self.src == 'local':
+            sys.path.insert(0, os.path.abspath('src'))
+        else:
+            raise distutils.core.DistutilsArgError(
+                "error in command line: " +
+                "value for option 'src' is not 'installed' or 'local'")
+        sys.path.append(os.path.abspath('.'))
+        # https://docs.pytest.org/en/stable/contents.html
+        # https://pytest-cov.readthedocs.io/en/latest/
+        import pytest
+        pyargs = []
+        if self.coverage:
+            coverage_dir = 'coverage_report/'
+            # first we need to clean the target directory
+            if os.path.isdir(coverage_dir):
+                files = os.listdir(coverage_dir)
+                for f in files:
+                    os.remove(os.path.join(coverage_dir, f))
+            pyargs += ['--cov=dabu', '--no-cov-on-fail',
+                       '--cov-report=html:' + coverage_dir]
+        if self.pylint:
+            pyargs += ['--pylint']
+        if self.pytestverbose:
+            pyargs += ['--verbose']
+        pyargs += ['pydabu_unittests/main.py']
+        pyargs += ['pydabu_unittests/package_data.py']
+        if self.src == 'installed':
+            pyargs += ['pydabu_unittests/script_pydabu.py']
+        pyplugins = []
+        print('call: pytest', ' '.join(pyargs))
+        pytest.main(pyargs, pyplugins)
 
 
 class TestWithUnittest(Command):
@@ -25,7 +109,7 @@ class TestWithUnittest(Command):
          'test installed package and scripts (default); ' +
          'local: test package direct from sources ' +
          '(installing is not necessary). ' +
-         'The command line scripts are not testes for local. ' +
+         'The command line scripts are not tested for local. ' +
          'default: installed')]
 
     def initialize_options(self):
@@ -146,6 +230,8 @@ required_modules = ['argparse',
                     'os',
                     'os.path',
                     'pkgutil',
+                    'pytest',
+                    'pytest_cov',
                     're',
                     'subprocess',
                     'sys',
@@ -160,11 +246,12 @@ required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 
 setup(
     name='pydabu',
-    version='2021-02-17',
+    version='2021-02-18',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
-        'run_unittests': TestWithUnittest},
+        'run_unittests': TestWithUnittest,
+        'run_pytest': TestWithPytest},
     description='software to check a data bubble.',
     long_description='',
     keywords='data managment',

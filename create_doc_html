@@ -14,6 +14,20 @@ if [ $skipcp != "true" ]; then
     cp -p README.md INSTALL.txt doc/source/
 fi
 
+if [ -d coverage_report ]; then
+    cp -p coverage_report/index.html doc/source/test_coverage_report/
+fi
+
 cd doc
-make html && rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum build/html/ ../$d/
+make html
+if [ $? -eq 0 ]; then
+    rsp="--archive --one-file-system --links --hard-links --sparse --checksum"
+    bhp="build/html"
+    dd="$d/test_coverage_report"
+    rsync --delete-after $rsp $bhp/ ../$d/
+    if [ -d ../coverage_report ]; then
+	rsync --delete-after $rsp  ../coverage_report/ ../$dd/
+	cp -p $bhp/test_coverage_report/index.html ../$dd/index.html
+    fi
+fi
 cd ..
