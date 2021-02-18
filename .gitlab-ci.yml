@@ -1,6 +1,6 @@
 stages:
-  - pytest_coverage
-  - pages
+  - test
+  - docu
 
 default:
   before_script:
@@ -17,10 +17,12 @@ default:
     - rm -r build doc/build coverage_report
 
 pytest_coverage:
+  stage: test
   script:
     - env python3 setup.py run_pytest --coverage
 
 pages:
+  stage: docu
   needs: ["pytest_coverage"]
   script:
     - ./create_doc_html
