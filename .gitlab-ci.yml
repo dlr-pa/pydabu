@@ -2,6 +2,10 @@ stages:
   - test
   - docu
 
+cache:
+  paths:
+    - coverage_report
+
 default:
   before_script:
     - export PATH=$PATH:~/bin:~/.local/bin
