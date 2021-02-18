@@ -14,6 +14,9 @@ if [ $skipcp != "true" ]; then
     cp -p README.md INSTALL.txt doc/source/
 fi
 
+if [ -f doc/source/test_coverage_report/index.html ]; then
+    rm doc/source/test_coverage_report/index.html
+fi
 if [ -d coverage_report ]; then
     cp -p coverage_report/index.html doc/source/test_coverage_report/
 fi
