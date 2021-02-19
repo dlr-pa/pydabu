@@ -25,6 +25,7 @@ run_before_all_scripts:
 #    - pip3 install cfchecker
 #    - pip3 install sphinx-jsonschema
     - ./install2home
+    - sleep 3
 
 run_after_all_scripts:
   stage: after_all_scripts
@@ -35,6 +36,7 @@ run_after_all_scripts:
     - cat installed_files.txt | xargs rm -rf
     - rm installed_files.txt
     - rm -r build doc/build
+    - sleep 3
 
 pytest_coverage:
   stage: test
@@ -52,6 +54,7 @@ unittest:
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - pwd
     - env python3 setup.py run_unittest
+    - sleep 3
 
 pages:
   stage: docu
@@ -66,6 +69,7 @@ pages:
     - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec brotli -f -k {} \;
 #    - pip3 install anybadge
     - anybadge -l " " -v documentation -f documentation.svg -c fuchsia -o
+    - sleep 3
 
   artifacts:
     paths:
