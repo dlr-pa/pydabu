@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-02-18
+:Version: 2021-02-19
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -232,6 +232,7 @@ You can find most necessary modules in the package management of Ubuntu 18.04, e
     sudo app install python3-jsonschema
     sudo app install python3-netcdf4
     sudo app install python3-sphinx python3-sphinx-argparse python3-recommonmark
+    sudo app install python3-pytest python3-pytest-cov python3-pytest-xdist
 
 The command check_netcdf_file of pydabu.py needs the package cfchecker.cfchecks
 which is not in the package management. You can install it with pip, e. g.::

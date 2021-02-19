@@ -1,57 +1,66 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-17
+:Date: 2021-02-19
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the package data of the module dabu
 """
 
-import json
-import jsonschema
 import os.path
-import pkgutil
 import subprocess
 import sys
 import unittest
 
+from .mixin_analyse_data_structure import mixin_analyse_data_structure
+from .mixin_check_nasa_ames_format import mixin_check_nasa_ames_format
+from .mixin_check_netcdf_file import mixin_check_netcdf_file
+from .mixin_check_file_format import mixin_check_file_format
+from .mixin_common_json_format import mixin_common_json_format
+#from .mixin_create_data_bubble import mixin_create_data_bubble
+#from .mixin_check_data_bubble import mixin_check_data_bubble
+from .mixin_listschemas import mixin_listschemas
 
-class scripty_pydabu(unittest.TestCase):
+
+class mixin_basic_sub_commands():
     """
     :Author: Daniel Mohr
-    :Date: 2021-02-17
+    :Date: 2021-02-19
     """
-    test_dir_path = []
-    for dir_name in ['00', '01', '02', '03']:
-        test_dir_path.append(os.path.join(
-            os.path.dirname(sys.modules['pydabu_unittests'].__file__),
-            'data', 'data_bubble', dir_name))
 
     def test_basic_sub_commands(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-09
+        :Date: 2021-02-19
 
         This test checks for the available sub-commands of pydabu.py
         """
         # check basic sub-commands
-        cp = subprocess.run(
-            ["pydabu.py analyse_data_structure"],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
-        cp = subprocess.run(
-            ["pydabu.py check_netcdf_file"],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=False)
-        with self.assertRaises(subprocess.CalledProcessError):
-            # parameter is necessary
-            cp.check_returncode()
-        cp = subprocess.run(
-            ["pydabu.py check_file_format"],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
+        for cmd in ['analyse_data_structure', 'check_file_format',
+                    'listschemas']:
+            cp = subprocess.run(
+                ['pydabu.py ' + cmd],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True, timeout=self.subprocess_timeout, check=True)
+        for cmd in ['check_nasa_ames_format', 'check_netcdf_file',
+                    'common_json_format', 'create_data_bubble',
+                    'check_data_bubble']:
+            cp = subprocess.run(
+                ['pydabu.py ' + cmd],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True, timeout=self.subprocess_timeout, check=False)
+            with self.assertRaises(subprocess.CalledProcessError):
+                # parameter is necessary
+                cp.check_returncode()
 
-    def test_data_data_bubble(self):
+
+class mixin_data_bubble():
+    """
+    :Author: Daniel Mohr
+    :Date: 2021-02-19
+    """
+
+    def test_data_bubble(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-02-17
@@ -63,250 +72,20 @@ class scripty_pydabu(unittest.TestCase):
             self.assertTrue(
                 os.path.isfile(os.path.join(test_dir_path, 'README.md')))
 
-    def test_analyse_data_structure(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-09
 
-        This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py analyse_data_structure'.
-        """
-        # data bubble 00
-        test_dir_path = self.test_dir_path[0]
-        cps = []  # completed process instances
-        cps.append(subprocess.run(
-            ['pydabu.py analyse_data_structure'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True))
-        cps.append(subprocess.run(
-            ['pydabu.py analyse_data_structure -d ' + test_dir_path],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True))
-        self.assertEqual(cps[0].stdout, cps[1].stdout)
-        cps.append(subprocess.run(
-            ['pydabu.py analyse_data_structure -o json'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True))
-        schema = json.loads(
-            pkgutil.get_data(
-                'dabu', 'schemas/analyse_data_structure_output.schema'))
-        for cp in cps:
-            instance = json.loads(cp.stdout)
-            jsonschema.validate(instance, schema)
-        # data bubble 01
-        test_dir_path = self.test_dir_path[1]
-        self.assertTrue(os.path.isdir(test_dir_path))
-        self.assertTrue(
-            os.path.isfile(os.path.join(test_dir_path, 'README.md')))
-        cp = subprocess.run(
-            ['pydabu.py analyse_data_structure'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True)
-
-    def test_check_netcdf_file(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-04
-
-        This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_netcdf_file'.
-        """
-        # data bubble 01
-        test_dir_path = self.test_dir_path[1]
-        cp = subprocess.run(
-            ['pydabu.py check_netcdf_file -f README.md'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=False)
-        self.assertEqual(cp.returncode, 1)  # check for error
-        cp = subprocess.run(
-            ['pydabu.py check_netcdf_file -f foo'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=False)
-        self.assertEqual(cp.returncode, 2)  # check for error
-
-    def test_check_nasa_ames_format(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-08
-
-        This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_nasa_ames_format'.
-        """
-        # data bubble 03
-        test_dir_path = self.test_dir_path[3]
-        cp = subprocess.run(
-            ['pydabu.py check_nasa_ames_format -f foo'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=False)
-        self.assertEqual(cp.returncode, 2)  # check for error
-        cp = subprocess.run(
-            ['pydabu.py check_nasa_ames_format -f a.na'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True)
-
-    def test_check_file_format_00(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-04
-
-        This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
-        """
-        # data bubble 00
-        test_dir_path = self.test_dir_path[0]
-        cps = []  # completed process instances
-        cps.append(subprocess.run(
-            ['pydabu.py check_file_format'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True))
-        cps.append(subprocess.run(
-            ['pydabu.py check_file_format -d ' + test_dir_path],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True))
-        self.assertEqual(cps[0].stdout, cps[1].stdout)
-        cps.append(subprocess.run(
-            ['pydabu.py check_file_format -o json'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True))
-        schema = json.loads(pkgutil.get_data('dabu', 'schemas/dabu.schema'))
-        for cp in cps:
-            instance = json.loads(cp.stdout)
-            jsonschema.validate(instance, schema)
-
-    def test_check_file_format_01(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-04
-
-        This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
-        """
-        # data bubble 01
-        test_dir_path = self.test_dir_path[1]
-        cp = subprocess.run(
-            ['pydabu.py check_file_format -o json'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True)
-        instance = json.loads(cp.stdout)
-        for filename in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
-            schema = json.loads(pkgutil.get_data('dabu', filename))
-            jsonschema.validate(instance, schema)
-
-    def test_check_file_format_02(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-04
-
-        This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
-        """
-        # data bubble 02
-        test_dir_path = self.test_dir_path[2]
-        cp = subprocess.run(
-            ['pydabu.py check_file_format -o json'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True)
-        instance = json.loads(cp.stdout)
-        for filename in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
-            schema = json.loads(pkgutil.get_data('dabu', filename))
-            jsonschema.validate(instance, schema)
-
-    def test_check_file_format_03(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-08
-
-        This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
-        """
-        # data bubble 03
-        test_dir_path = self.test_dir_path[3]
-        cp = subprocess.run(
-            ['pydabu.py check_file_format -o json'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=test_dir_path, timeout=3, check=True)
-        instance = json.loads(cp.stdout)
-        for filename in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
-            schema = json.loads(pkgutil.get_data('dabu', filename))
-            jsonschema.validate(instance, schema)
-
-    def test_check_file_format_03_output(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-08
-
-        This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
-        """
-        # data bubble 03
-        test_dir_path = self.test_dir_path[3]
-        schema = json.loads(pkgutil.get_data(
-            'dabu', 'schemas/dabu.schema'))
-        required_schema = json.loads(pkgutil.get_data(
-            'dabu', 'schemas/dabu_requires.schema'))
-        for outputformat in ['', ' -o json', ' -o json1', ' -o human_readable']:
-            cp = subprocess.run(
-                ['pydabu.py check_file_format' + outputformat],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                shell=True, cwd=test_dir_path, timeout=3, check=True)
-            instance = json.loads(cp.stdout)
-            for myschema in [schema, required_schema]:
-                jsonschema.validate(instance, myschema)
-
-    def test_check_file_format_01_02_03_checksums(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-17
-
-        This test uses the data in 'data/data_bubble' to test the checksums
-        of the script 'pydabu.py check_file_format'.
-        """
-        # data bubble 01, 02, 03
-        schema = json.loads(pkgutil.get_data(
-            'dabu', 'schemas/dabu.schema'))
-        required_schema = json.loads(pkgutil.get_data(
-            'dabu', 'schemas/dabu_requires.schema'))
-        checksum_files = ['',
-                          '.checksum.sha512',  # 01
-                          '.checksum',  # 02
-                          '.checksum.sha256']  # 03
-        for test_path_n in range(1, 4):
-            test_dir_path = self.test_dir_path[test_path_n]
-            for flags in [' -skip_creating_checksums',
-                          ' -checksum_from_file ' + checksum_files[test_path_n]]:
-                # check some command line parameters
-                cp = subprocess.run(
-                    ['pydabu.py check_file_format' + flags],
-                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                    shell=True, cwd=test_dir_path, timeout=3, check=True)
-                instance = json.loads(cp.stdout)
-                for myschema in [schema, required_schema]:
-                    jsonschema.validate(instance, myschema)
-
-    def test_check_file_format_02_checksums(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-17
-
-        This test uses the data in 'data/data_bubble' to test the checksums
-        of the script 'pydabu.py check_file_format'.
-        """
-        # data bubble 02
-        cp1 = subprocess.run(
-            ['pydabu.py check_file_format'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=self.test_dir_path[2], timeout=3, check=True)
-        instance1 = json.loads(cp1.stdout)
-        cp2 = subprocess.run(
-            ['pydabu.py check_file_format -checksum_from_file .checksum'],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, cwd=self.test_dir_path[2], timeout=3, check=True)
-        instance2 = json.loads(cp2.stdout)
-        for i in range(len(instance1['data'])):
-            for j in range(len(instance2['data'])):
-                if instance1['data'][i]['name'] == instance2['data'][j]['name']:
-                    i1 = i
-                    i2 = j
-                    break
-            self.assertEqual(instance1['data'][i1]['checksum']['hash'],
-                             instance2['data'][i2]['checksum']['hash'])
+class scripty_pydabu(
+        unittest.TestCase,
+        mixin_basic_sub_commands, mixin_data_bubble,
+        mixin_analyse_data_structure, mixin_check_netcdf_file,
+        mixin_check_nasa_ames_format, mixin_check_file_format,
+        mixin_common_json_format, mixin_listschemas):
+    """
+    :Author: Daniel Mohr
+    :Date: 2021-02-19
+    """
+    test_dir_path = []
+    for dir_name in ['00', '01', '02', '03', '04']:
+        test_dir_path.append(os.path.join(
+            os.path.dirname(sys.modules['pydabu_unittests'].__file__),
+            'data', 'data_bubble', dir_name))
+    subprocess_timeout = 5

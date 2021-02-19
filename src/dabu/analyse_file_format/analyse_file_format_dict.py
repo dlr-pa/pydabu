@@ -1,12 +1,10 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-17 (last change).
+:Date: 2021-02-19 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import os
-import re
 import sys
 
 from .analyse_file_format import analyse_file_format

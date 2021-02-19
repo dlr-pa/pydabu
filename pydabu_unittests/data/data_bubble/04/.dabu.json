@@ -1,0 +1,54 @@
+{
+    "readme": "README.md",
+    "license": "LICENSE.txt",
+    "checksum file": ".checksum.sha256",
+    "data integrity control": "checksums",
+    "data": [
+        {
+            "name": "a.na",
+            "file_extension": ".na",
+            "checksum": {
+                "hash": "CZgzkcNy77d2n4W6vqbdRYFKp2rskJ3LCdRlVxiy3rmVt7w+YOmSDH0jxC6xp1AWs+HUCMbGqt6Z+dAN1dUpaA==",
+                "algorithm": "sha512",
+                "encoding": "base64"
+            },
+            "nasa ames format check": {
+                "pydabu (nasa ames format check)": {
+                    "error": 0,
+                    "warning": 0,
+                    "log": [],
+                    "created": 1613758358.5434813,
+                    "NLHEAD": 27,
+                    "FFI": 1001,
+                    "IVOL": 1,
+                    "NVOL": 1,
+                    "ONAME": "Mohr, Daniel",
+                    "ORG": "DLR",
+                    "SNAME": "Source of data, i.e. instrument, platform, model name, etc.",
+                    "MNAME": "Name of mission, campaign, programme and/or project.",
+                    "DATE": "2021-02-08",
+                    "RDATE": "2021-02-08"
+                }
+            }
+        },
+        {
+            "name": "test.nc",
+            "file_extension": ".nc",
+            "checksum": {
+                "hash": "TZFtcQwYo21vDHgc73CrPzyBokH1draBzBEZyzVmSsFAx7VHCN2rAuqKITZFiqVivJuBZnCQs7ec1kyGa1KXeg==",
+                "algorithm": "sha512",
+                "encoding": "base64"
+            },
+            "netcdf check": {
+                "error": 0,
+                "log": [],
+                "pydabu (netcdf check)": {
+                    "file_format": "NETCDF4",
+                    "data_model": "NETCDF4",
+                    "disk_format": "HDF5",
+                    "created": 1613758358.6894658
+                }
+            }
+        }
+    ]
+}
