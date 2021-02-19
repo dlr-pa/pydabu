@@ -28,6 +28,13 @@ pytest_coverage:
     - env python3 setup.py run_pytest --coverage
     - sleep 3
 
+unittest:
+  stage: test
+  script:
+    - export PATH=$PATH:~/bin:~/.local/bin
+    - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - env python3 setup.py run_unittest
+
 pages:
   stage: docu
   needs: ["pytest_coverage"]

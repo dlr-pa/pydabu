@@ -251,7 +251,7 @@ setup(
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
-        'run_unittests': TestWithUnittest,
+        'run_unittest': TestWithUnittest,
         'run_pytest': TestWithPytest},
     description='software to check a data bubble.',
     long_description='',
