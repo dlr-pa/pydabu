@@ -14,7 +14,7 @@ class TestWithPytest(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-18
+    :Date: 2021-02-19
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with pytest
@@ -31,7 +31,8 @@ class TestWithPytest(Command):
          'default: installed'),
         ('coverage', None, 'use pytest-cov to generate a coverage report'),
         ('pylint', None, 'if given, run pylint'),
-        ('pytestverbose', None, 'increase verbosity of pytest')]
+        ('pytestverbose', None, 'increase verbosity of pytest'),
+        ('parallel', None, 'run tests in parallel')]
 
     def initialize_options(self):
         """
@@ -42,6 +43,7 @@ class TestWithPytest(Command):
         self.coverage = False
         self.pylint = False
         self.pytestverbose = False
+        self.parallel = False
 
     def finalize_options(self):
         """
@@ -70,6 +72,23 @@ class TestWithPytest(Command):
         # https://pytest-cov.readthedocs.io/en/latest/
         import pytest
         pyargs = []
+        if self.parallel:
+            try:
+                # if available, using parallel test run
+                import xdist
+                import sys
+                if os.name == 'posix':
+                    # since we are only running seconds,
+                    # we use the load of the last minute:
+                    nthreads = int(os.cpu_count() - os.getloadavg()[0])
+                    # since we have only a few tests, limit overhead:
+                    nthreads = min(4, nthreads)
+                    nthreads = max(1, nthreads) # at least one thread
+                else:
+                    nthreads = max(1, int(0.5 * os.cpu_count()))
+                pyargs += ['-n %i' % nthreads]
+            except:
+                pass
         if self.coverage:
             coverage_dir = 'coverage_report/'
             # first we need to clean the target directory
@@ -239,7 +258,8 @@ required_modules = ['argparse',
                     'tempfile',
                     'time',
                     'unittest',
-                    'warnings']
+                    'warnings',
+                    'xdist']
 # optional modules
 required_modules += ['cfchecker.cfchecks', 'netCDF4']
 # modules to build doc
