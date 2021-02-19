@@ -29,6 +29,7 @@ run_before_all_scripts:
 #    - pip3 install sphinx-jsonschema
 #    - ./install2home
     - pip3 install .
+    - sleep 1
 
 run_after_all_scripts:
   stage: after_all_scripts
@@ -41,6 +42,7 @@ run_after_all_scripts:
 #    - rm installed_files.txt
 #    - rm -r build doc/build
     - pip3 uninstall --yes pydabu
+    - sleep 1
 
 pytest_coverage:
   stage: test
@@ -50,6 +52,7 @@ pytest_coverage:
     - export PATH=$PATH:~/.local/bin
     - pwd
     - env python3 setup.py run_pytest --coverage
+    - sleep 1
 
 unittest:
   stage: test
@@ -59,6 +62,7 @@ unittest:
     - export PATH=$PATH:~/.local/bin
     - pwd
     - env python3 setup.py run_unittest
+    - sleep 1
 
 pages:
   stage: docu
@@ -75,6 +79,7 @@ pages:
 #    - pip3 install anybadge
     - anybadge -l " " -v documentation -f documentation.svg -c fuchsia -o
     - rm -r doc/build manual_pydabu_html
+    - sleep 1
 
   artifacts:
     paths:
