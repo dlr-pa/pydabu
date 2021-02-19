@@ -30,6 +30,8 @@ run_before_all_scripts:
 #    - ./install2home
     - pip3 install .
     - sleep 3
+  only:
+    - master
 
 run_after_all_scripts:
   stage: after_all_scripts
@@ -43,6 +45,8 @@ run_after_all_scripts:
 #    - rm -r build doc/build
     - pip3 uninstall --yes pydabu
     - sleep 3
+  only:
+    - master
 
 pytest_coverage:
   stage: test
@@ -53,6 +57,8 @@ pytest_coverage:
     - pwd
     - env python3 setup.py run_pytest --coverage --parallel
     - sleep 3
+  only:
+    - master
 
 unittest:
   stage: test
@@ -63,6 +69,8 @@ unittest:
     - pwd
     - env python3 setup.py run_unittest
     - sleep 3
+  only:
+    - master
 
 pages:
   stage: docu
