@@ -12,19 +12,23 @@ default:
   before_script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - export PATH=$PATH:~/.local/bin
   after_script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - export PATH=$PATH:~/.local/bin
 
 run_before_all_scripts:
   stage: before_all_scripts
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - export PATH=$PATH:~/.local/bin
     - pwd
 #    - pip3 install cfchecker
 #    - pip3 install sphinx-jsonschema
-    - ./install2home
+#    - ./install2home
+    - pip3 install .
     - sleep 3
 
 run_after_all_scripts:
@@ -32,10 +36,12 @@ run_after_all_scripts:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - export PATH=$PATH:~/.local/bin
     - pwd
-    - cat installed_files.txt | xargs rm -rf
-    - rm installed_files.txt
-    - rm -r build doc/build
+#    - cat installed_files.txt | xargs rm -rf
+#    - rm installed_files.txt
+#    - rm -r build doc/build
+    - pip3 uninstall --yes pydabu
     - sleep 3
 
 pytest_coverage:
@@ -43,6 +49,7 @@ pytest_coverage:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - export PATH=$PATH:~/.local/bin
     - pwd
     - env python3 setup.py run_pytest --coverage
     - sleep 3
@@ -52,6 +59,7 @@ unittest:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - export PATH=$PATH:~/.local/bin
     - pwd
     - env python3 setup.py run_unittest
     - sleep 3
@@ -62,6 +70,7 @@ pages:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - export PATH=$PATH:~/.local/bin
     - pwd
     - ./create_doc_html
     - rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum manual_pydabu_html/ public/
@@ -69,6 +78,7 @@ pages:
     - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec brotli -f -k {} \;
 #    - pip3 install anybadge
     - anybadge -l " " -v documentation -f documentation.svg -c fuchsia -o
+    - rm -r doc/build manual_pydabu_html
     - sleep 3
 
   artifacts:
