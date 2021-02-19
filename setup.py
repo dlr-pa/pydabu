@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-18
+:Date: 2021-02-19
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -78,7 +78,8 @@ class TestWithPytest(Command):
                 for f in files:
                     os.remove(os.path.join(coverage_dir, f))
             pyargs += ['--cov=dabu', '--no-cov-on-fail',
-                       '--cov-report=html:' + coverage_dir]
+                       '--cov-report=html:' + coverage_dir,
+                       '--cov-report=term:skip-covered']
         if self.pylint:
             pyargs += ['--pylint']
         if self.pytestverbose:
@@ -246,7 +247,7 @@ required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 
 setup(
     name='pydabu',
-    version='2021-02-18',
+    version='2021-02-19',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
