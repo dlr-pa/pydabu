@@ -30,6 +30,7 @@ run_after_all_scripts:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - pwd
     - cat installed_files.txt | xargs rm -rf
     - rm installed_files.txt
     - rm -r build doc/build
