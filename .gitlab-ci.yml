@@ -51,7 +51,7 @@ pytest_coverage:
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - export PATH=$PATH:~/.local/bin
     - pwd
-    - env python3 setup.py run_pytest --coverage
+    - env python3 setup.py run_pytest --coverage --parallel
     - sleep 3
 
 unittest:
