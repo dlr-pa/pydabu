@@ -21,6 +21,7 @@ run_before_all_scripts:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - pwd
 #    - pip3 install cfchecker
 #    - pip3 install sphinx-jsonschema
     - ./install2home
@@ -40,6 +41,7 @@ pytest_coverage:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - pwd
     - env python3 setup.py run_pytest --coverage
     - sleep 3
 
@@ -48,6 +50,7 @@ unittest:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - pwd
     - env python3 setup.py run_unittest
 
 pages:
@@ -56,6 +59,7 @@ pages:
   script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+    - pwd
     - ./create_doc_html
     - rsync --archive --delete-after --one-file-system --links --hard-links --sparse --checksum manual_pydabu_html/ public/
     - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
