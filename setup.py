@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-19
+:Date: 2021-02-18
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -14,7 +14,7 @@ class TestWithPytest(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-19
+    :Date: 2021-02-18
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with pytest
@@ -53,7 +53,7 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-19
+        :Date: 2021-02-18
         """
         import sys
         import os.path
@@ -90,7 +90,6 @@ class TestWithPytest(Command):
         pyplugins = []
         print('call: pytest', ' '.join(pyargs))
         pytest.main(pyargs, pyplugins)
-        print()
 
 
 class TestWithUnittest(Command):
@@ -247,7 +246,7 @@ required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 
 setup(
     name='pydabu',
-    version='2021-02-19',
+    version='2021-02-18',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
