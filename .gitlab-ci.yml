@@ -1,6 +1,8 @@
 stages:
+  - before_all_scripts
   - test
   - docu
+  - after_all_scripts
 
 cache:
   paths:
@@ -10,10 +12,22 @@ default:
   before_script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
+  after_script:
+    - export PATH=$PATH:~/bin:~/.local/bin
+    - export PYTHONPATH=$PYTHONPATH:~/lib/python
+
+run_before_all_scripts:
+  stage: before_all_scripts
+  script:
+    - export PATH=$PATH:~/bin:~/.local/bin
+    - export PYTHONPATH=$PYTHONPATH:~/lib/python
 #    - pip3 install cfchecker
 #    - pip3 install sphinx-jsonschema
     - ./install2home
-  after_script:
+
+run_after_all_scripts:
+  stage: after_all_scripts
+  script:
     - export PATH=$PATH:~/bin:~/.local/bin
     - export PYTHONPATH=$PYTHONPATH:~/lib/python
     - cat installed_files.txt | xargs rm -rf
