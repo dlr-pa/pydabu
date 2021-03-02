@@ -78,56 +78,57 @@ def type_from_schema_id(data, newdata, i, draft='draft-04'):
     :Author: Daniel Mohr
     :Date: 2021-03-02
     """
-    skip = ["schema:Action", "schema:CreativeWork", "schema:MediaObject",
-            "schema:PropertyValue", "schema:Event", "schema:NewsArticle",
-            "schema:Distance", "schema:QuantitativeValue",
-            "schema:MediaSubscription",
-            "schema:Organization", "schema:Duration",
-            "schema:AggregateRating", "schema:Product",
-            "schema:DefinedTerm", "schema:InteractionCounter",
-            "schema:Demand", "schema:Offer", "schema:Rating",
-            "schema:ContactPoint", "schema:OfferCatalog",
-            "schema:EducationalOrganization", "schema:GenderType",
-            "schema:PostalAddress", "schema:EducationalOccupationalCredential",
-            "schema:Occupation", "schema:ProgramMembership",
-            "schema:MonetaryAmount", "schema:PriceSpecification",
-            "schema:Brand", "schema:Country", "schema:Language",
-            "schema:OwnershipInfo", "schema:OpeningHoursSpecification",
-            "schema:GeoCoordinates", "schema:GeoShape",
-            "schema:GeospatialGeometry", "schema:Map", "schema:Review",
-            "schema:Photograph", "schema:LocationFeatureSpecification",
-            "schema:CorrectionComment",
-            "schema:AudioObject", "schema:MusicRecording", "schema:Clip",
-            "schema:VideoObject", "schema:Audience", "schema:AlignmentObject",
-            "schema:PublicationEvent", "schema:ItemList"]
-    handle = ["schema:ImageObject", "schema:Thing", "schema:Person",
-              "schema:Place", "schema:Comment"]
-    schema2json = {"schema:Text": "string",
-                   "schema:Boolean": "boolean",
-                   "schema:Integer": "integer",
-                   "schema:Number": "number",
-                   "schema:Float": "number",
-                   "schema:URL": {"type": "string", "format": "uri"},
-                   "schema:DateTime": {"type": "string", "format": "date-time"}}
-    schema2json7 = {"schema:Date": {"type": "string", "format": "date"},
-                    "schema:Time": {"type": "string", "format": "datetime"}}
+    skip = ["Action", "CreativeWork", "MediaObject",
+            "PropertyValue", "Event", "NewsArticle",
+            "Distance", "QuantitativeValue",
+            "MediaSubscription",
+            "Organization", "Duration",
+            "AggregateRating", "Product",
+            "DefinedTerm", "InteractionCounter",
+            "Demand", "Offer", "Rating",
+            "ContactPoint", "OfferCatalog",
+            "EducationalOrganization", "GenderType",
+            "PostalAddress", "EducationalOccupationalCredential",
+            "Occupation", "ProgramMembership",
+            "MonetaryAmount", "PriceSpecification",
+            "Brand", "Country", "Language",
+            "OwnershipInfo", "OpeningHoursSpecification",
+            "GeoCoordinates", "GeoShape",
+            "GeospatialGeometry", "Map", "Review",
+            "Photograph", "LocationFeatureSpecification",
+            "CorrectionComment",
+            "AudioObject", "MusicRecording", "Clip",
+            "VideoObject", "Audience", "AlignmentObject",
+            "PublicationEvent", "ItemList"]
+    handle = ["ImageObject", "Thing", "Person",
+              "Place", "Comment"]
+    schema2json = {"Text": "string",
+                   "Boolean": "boolean",
+                   "Integer": "integer",
+                   "Number": "number",
+                   "Float": "number",
+                   "URL": {"type": "string", "format": "uri"},
+                   "DateTime": {"type": "string", "format": "date-time"}}
+    schema2json7 = {"Date": {"type": "string", "format": "date"},
+                    "Time": {"type": "string", "format": "datetime"}}
     if draft in ['draft-07', '2019-09']:
         for key in schema2json7:
             schema2json[key] = schema2json7[key]
     else:
         for key in schema2json7:
             schema2json[key] = "string"
-    if data in schema2json:
-        newdata["@id"] = "https://schema.org/" + data[7:]
-        if isinstance(schema2json[data], str):
-            newdata["type"] = schema2json[data]
+    word = data.split(':')[1]
+    if word in schema2json:
+        newdata["@id"] = "https://schema.org/" + word
+        if isinstance(schema2json[word], str):
+            newdata["type"] = schema2json[word]
         else:  # dict
-            for key in schema2json[data]:
-                newdata[key] = schema2json[data][key]
-    elif data in handle:
-        newdata["$ref"] = "#/definitions/" + data
-        return data
-    elif data in skip:
+            for key in schema2json[word]:
+                newdata[key] = schema2json[word][key]
+    elif word in handle:
+        newdata["$ref"] = "#/definitions/" + word
+        return word
+    elif word in skip:
         pass
     else:
         raise NotImplementedError(
@@ -143,27 +144,28 @@ def schema_org_rdfs_class(item, new_schema, data):
     missing_types = []
     subclasses = []
     for i in data:
-        if domainIncludes(i, item):
+        if domainIncludes(i, "schema:" + item):
             # found property
-            new_schema[item]["@context"][i["@id"]] = \
-              "https://schema.org/" + i["@id"].split(':')[1]
-            new_schema[item]["properties"][i["@id"]] = dict()
+            prop_name = i["@id"].split(':')[1]
+            new_schema[item]["@context"][prop_name] = \
+              "https://schema.org/" + prop_name
+            new_schema[item]["properties"][prop_name] = dict()
             if ("schema:rangeIncludes" in i):
                 missing_type = None
                 if isinstance(i["schema:rangeIncludes"], dict):
                     missing_type = type_from_schema_id(
                         i["schema:rangeIncludes"]["@id"],
-                        new_schema[item]["properties"][i["@id"]],
+                        new_schema[item]["properties"][prop_name],
                         i)
                 elif isinstance(i["schema:rangeIncludes"], list):
-                    new_schema[item]["properties"][i["@id"]]["oneOf"] = list()
+                    new_schema[item]["properties"][prop_name]["oneOf"] = \
+                      list()
                     for element in i["schema:rangeIncludes"]:
-                        new_schema[item]["properties"][i["@id"]]["oneOf"].append(
+                        new_schema[item]["properties"][prop_name]["oneOf"].append(
                             dict())
                         missing_type = type_from_schema_id(
                             element["@id"],
-                            new_schema[item]["properties"][i["@id"]
-                                                           ]["oneOf"][-1],
+                            new_schema[item]["properties"][prop_name]["oneOf"][-1],
                             i)
                 else:
                     raise NotImplementedError(
@@ -195,8 +197,8 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
     """
     missing_words = []
     for word in vocabulary:
-        if not word.startswith('schema:'):
-            word = 'schema:' + word
+        #if not word.startswith('schema:'):
+        #    word = 'schema:' + word
         missing_words.append(word)
     final_new_schema = dict()
     schema_declaration = {
@@ -225,12 +227,12 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
         new_schema[item] = dict()
         new_schema[item]["type"] = "object"
         final_new_schema["@context"][item] = \
-          "https://schema.org/" + item.split(':')[1]
+          "https://schema.org/" + item
         new_schema[item]["@context"] = dict()
         new_schema[item]["properties"] = dict()
         new_missing_words = []
         for i in schemaorg_data['@graph']:
-            if ("@id" in i) and (i["@id"] == item):
+            if ("@id" in i) and (i["@id"] == "schema:" + item):
                 if ("@type" in i) and (i["@type"] == "rdfs:Class"):
                     new_missing_words = schema_org_rdfs_class(
                         item, new_schema, schemaorg_data['@graph'])
@@ -239,10 +241,10 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
                         if isinstance(i["rdfs:subClassOf"]["@id"], str):
                             new_schema[item]["allOf"] = combine_properties(
                                 new_schema[item]["properties"],
-                                i["rdfs:subClassOf"]["@id"])
+                                i["rdfs:subClassOf"]["@id"].split(':')[1])
                             del new_schema[item]["properties"]
                             new_missing_words.append(
-                                i["rdfs:subClassOf"]["@id"])
+                                i["rdfs:subClassOf"]["@id"].split(':')[1])
                         else:
                             raise NotImplementedError(
                                 'type of "rdfs:subClassOf" not str')
