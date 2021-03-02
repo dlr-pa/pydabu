@@ -5,6 +5,8 @@ Date: 2021-03-02 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 ./json_schema_from_schema_org.py Thing
+./json_schema_from_schema_org.py Person
+./json_schema_from_schema_org.py email
 
 ./json_schema_from_schema_org.py Thing > t.json
 jsonschema t.json
@@ -351,10 +353,7 @@ def main():
     parser = my_argument_parser()
     # parse arguments
     args = parser.parse_args()
-    print(args.cachefilename)
-    print(args.vocabulary)
     schema_org_data = get_schemaorg_data(args.cachefilename[0])
-    # print(schema_org_data)
     new_schema = json_schema_from_schema_org(
         schema_org_data, args.vocabulary, draft='draft-04')
     print(json.dumps(new_schema, indent=args.indent[0]))
