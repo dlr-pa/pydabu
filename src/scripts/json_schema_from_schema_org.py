@@ -138,13 +138,15 @@ def type_from_schema_id(data, newdata, i, draft='draft-04'):
 def schema_org_rdfs_class(item, new_schema, data):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-01
+    :Date: 2021-03-02
     """
     missing_types = []
     subclasses = []
     for i in data:
         if domainIncludes(i, item):
             # found property
+            new_schema[item]["@context"][i["@id"]] = \
+              "https://schema.org/" + i["@id"].split(':')[1]
             new_schema[item]["properties"][i["@id"]] = dict()
             if ("schema:rangeIncludes" in i):
                 missing_type = None
@@ -171,15 +173,6 @@ def schema_org_rdfs_class(item, new_schema, data):
             else:
                 raise NotImplementedError(
                     f'no "schema:rangeIncludes" in:\n\n{i}')
-        # if (("rdfs:subClassOf" in i) and ("@id" in i["rdfs:subClassOf"])):
-        #    if isinstance(i["rdfs:subClassOf"]["@id"], str):
-        #        subclasses.append(i["rdfs:subClassOf"]["@id"])
-        #    else:
-        #        raise NotImplementedError('type of "rdfs:subClassOf" not str')
-    # if len(subclasses) > 0:
-    #    new_schema[item]["properties"] = {"allOf": [{"properties": new_schema[item]["properties"]}]}
-    #    for sc in subclasses:
-    #        new_schema[item]["properties"]["allOf"].append(sc)
     return missing_types
 
 
@@ -222,6 +215,7 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
         "from schema.org is defined as a json schema. " \
         "It should be a valid json-ld file. " \
         "All necessary words should be defined."
+    final_new_schema["@context"] = dict()
     final_new_schema["definitions"] = dict()
     new_schema = final_new_schema["definitions"]
     while len(missing_words) > 0:
@@ -230,6 +224,9 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
         #item = "schema:" + item
         new_schema[item] = dict()
         new_schema[item]["type"] = "object"
+        final_new_schema["@context"][item] = \
+          "https://schema.org/" + item.split(':')[1]
+        new_schema[item]["@context"] = dict()
         new_schema[item]["properties"] = dict()
         new_missing_words = []
         for i in schemaorg_data['@graph']:
