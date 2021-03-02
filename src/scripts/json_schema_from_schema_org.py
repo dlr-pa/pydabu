@@ -6,7 +6,6 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 ./json_schema_from_schema_org.py Thing
 ./json_schema_from_schema_org.py Person
-./json_schema_from_schema_org.py email
 
 ./json_schema_from_schema_org.py Thing > t.json
 jsonschema t.json
@@ -253,6 +252,8 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
                     break
                 elif ("@type" in i) and ("schema:DataType" in i["@type"]):
                     raise NotImplementedError('Your word is a data type.')
+                elif ("@type" in i) and ("rdf:Property" in i["@type"]):
+                    raise NotImplementedError('Your word is a property.')
                 else:
                     raise NotImplementedError(json.dumps(i))
         if len(new_missing_words) > 0:
