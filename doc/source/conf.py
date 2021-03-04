@@ -78,7 +78,7 @@ author = 'Daniel Mohr'
 # built documents.
 #
 # The short X.Y version.
-version = '2021-02-18'
+version = '2021-03-04'
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -161,6 +161,12 @@ latex_elements = {
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
+    #
+    # additional stuff for the LaTeX preamble:
+    #'preamble': '\setcounter{tocdepth}{7}'
+    #
+    # adapt maximal list depth:
+    'maxlistdepth' : '5',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
