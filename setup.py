@@ -107,6 +107,7 @@ class TestWithPytest(Command):
         pyargs += ['pydabu_unittests/package_data.py']
         if self.src == 'installed':
             pyargs += ['pydabu_unittests/script_pydabu.py']
+            pyargs += ['pydabu_unittests/script_json_schema_from_schema_org.py']
         pyplugins = []
         print('call: pytest', ' '.join(pyargs))
         pytest.main(pyargs, pyplugins)

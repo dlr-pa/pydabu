@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-04
+:Date: 2021-03-04
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 aggregation of tests
@@ -14,28 +14,32 @@ import unittest
 class test_module_import(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-02-04
+    :Date: 2021-03-04
     """
 
     def test_module_import(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-04
+        :Date: 2021-03-04
         """
         import dabu
         import dabu.analyse_data_structure
+        import dabu.check_nasa_ames_format
         import dabu.check_netcdf_file
         import dabu.analyse_file_format
+        import dabu.schema_org_data
         import dabu.scripts
+        import dabu.scripts.pydabu
+        import dabu.scripts.json_schema_from_schema_org
 
 
 class test_scripts_executable(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-02-04
+    :Date: 2021-03-04
     """
 
-    def test_scripts_executable(self):
+    def test_script_pydabu_executable(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-02-04
@@ -49,6 +53,38 @@ class test_scripts_executable(unittest.TestCase):
         self.assertTrue(len(cp.stdout) >= 1111)
         # check begin of help output
         self.assertTrue(cp.stdout.startswith(b'usage: pydabu.py'))
+        # check end of help output
+        self.assertTrue(cp.stdout.endswith(
+            b'License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n'))
+
+    def test_script_json_schema_from_schema_org_executable(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-03-04
+        """
+        import subprocess
+        # check error output
+        cp = subprocess.run(
+            ["json_schema_from_schema_org.py"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            shell=True, timeout=3, check=False)
+        with self.assertRaises(subprocess.CalledProcessError):
+            # parameter is necessary
+            cp.check_returncode()
+        self.assertEqual(len(cp.stdout), 0)
+        self.assertTrue(len(cp.stderr) >= 210)
+        # check begin of error output
+        self.assertTrue(
+            cp.stderr.startswith(b'usage: json_schema_from_schema_org.py'))
+        # check help output
+        cp = subprocess.run(
+            ["json_schema_from_schema_org.py -h"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            shell=True, timeout=3, check=True)
+        self.assertTrue(len(cp.stdout) >= 1019)
+        # check begin of help output
+        self.assertTrue(
+            cp.stdout.startswith(b'usage: json_schema_from_schema_org.py'))
         # check end of help output
         self.assertTrue(cp.stdout.endswith(
             b'License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n'))
@@ -74,7 +110,7 @@ def scripts(suite):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-04
+    :Date: 2021-03-04
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     add tests for the scripts
@@ -84,3 +120,7 @@ def scripts(suite):
     suite.addTest(loader.loadTestsFromTestCase(test_scripts_executable))
     # pydabu.py
     suite.addTest(loader.loadTestsFromName('pydabu_unittests.script_pydabu'))
+    suite.addTest(
+        loader.loadTestsFromName(
+            'pydabu_unittests.script_json_schema_from_schema_org'))
+    # json_schema_from_schema_org.py

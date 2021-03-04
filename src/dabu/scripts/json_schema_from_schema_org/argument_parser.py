@@ -14,9 +14,13 @@ def argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-02 (last change).
+    :Date: 2021-03-04 (last change).
     """
     epilog = ""
+    epilog += "Author: Daniel Mohr\n"
+    epilog += "Date: 2021-03-04\n"
+    epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
+    epilog += "\n\n"
     description = 'json_schema_from_schema_org.py is a script ' \
         'to define json-ld based on schema.org as a json schema.'
     parser = argparse.ArgumentParser(
