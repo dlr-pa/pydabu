@@ -8,7 +8,6 @@ This is the description for the module dabu belonging to the project pydabu.
 
 submodules
 ==========
-.. automodule:: dabu.scripts
 .. automodule:: dabu.analyse_data_structure
 .. automodule:: dabu.analyse_file_format
 .. automodule:: dabu.check_nasa_ames_format

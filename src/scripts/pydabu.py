@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 Author: Daniel Mohr.
-Date: 2021-01-19 (last change).
+Date: 2021-03-04 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-from dabu.scripts import pydabu_main
+from dabu.scripts.pydabu import pydabu_main
 
 
 def main():

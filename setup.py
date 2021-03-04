@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-19
+:Date: 2021-03-04
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -267,7 +267,7 @@ required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 
 setup(
     name='pydabu',
-    version='2021-02-19',
+    version='2021-03-04',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
@@ -289,7 +289,8 @@ setup(
         'dabu.check_nasa_ames_format',
         'dabu.check_netcdf_file',
         'dabu.analyse_file_format',
-        'dabu.scripts'],
+        'dabu.scripts',
+        'dabu.scripts.pydabu'],
     scripts=[
         'src/scripts/pydabu.py'],
     package_data={'dabu': ['schemas/analyse_data_structure_output.schema',
