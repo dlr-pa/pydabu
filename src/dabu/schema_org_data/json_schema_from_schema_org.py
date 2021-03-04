@@ -8,158 +8,8 @@
 import json
 import sys
 
-
-def _Includes_dict(object, content):
-    """
-    :Author: Daniel Mohr
-    :Date: 2021-02-26
-    """
-    if ("@id" in object) and (object["@id"] == content):
-        return True
-    else:
-        return False
-
-
-def _Includes_list(object, content):
-    """
-    :Author: Daniel Mohr
-    :Date: 2021-02-26
-    """
-    ret = False
-    for element in object:
-        ret = _Includes_dict(element, content)
-        if ret:
-            break
-    return ret
-
-
-def _Includes(object, content):
-    """
-    :Author: Daniel Mohr
-    :Date: 2021-02-26
-    """
-    if isinstance(object, dict):
-        return _Includes_dict(object, content)
-    elif isinstance(object, list):
-        return _Includes_list(object, content)
-    else:
-        return False
-
-
-def domainIncludes(object, content):
-    """
-    :Author: Daniel Mohr
-    :Date: 2021-02-26
-    """
-    if ("schema:domainIncludes" in object):
-        return _Includes(object["schema:domainIncludes"], content)
-    else:
-        return False
-
-
-def type_from_schema_id(data, newdata, i, draft='draft-04'):
-    """
-    :Author: Daniel Mohr
-    :Date: 2021-03-02
-    """
-    skip = ["Action", "CreativeWork", "MediaObject",
-            "PropertyValue", "Event", "NewsArticle",
-            "Distance", "QuantitativeValue",
-            "MediaSubscription",
-            "Organization", "Duration",
-            "AggregateRating", "Product",
-            "DefinedTerm", "InteractionCounter",
-            "Demand", "Offer", "Rating",
-            "ContactPoint", "OfferCatalog",
-            "EducationalOrganization", "GenderType",
-            "PostalAddress", "EducationalOccupationalCredential",
-            "Occupation", "ProgramMembership",
-            "MonetaryAmount", "PriceSpecification",
-            "Brand", "Country", "Language",
-            "OwnershipInfo", "OpeningHoursSpecification",
-            "GeoCoordinates", "GeoShape",
-            "GeospatialGeometry", "Map", "Review",
-            "Photograph", "LocationFeatureSpecification",
-            "CorrectionComment",
-            "AudioObject", "MusicRecording", "Clip",
-            "VideoObject", "Audience", "AlignmentObject",
-            "PublicationEvent", "ItemList"]
-    handle = ["ImageObject", "Thing", "Person",
-              "Place", "Comment"]
-    schema2json = {"Text": "string",
-                   "Boolean": "boolean",
-                   "Integer": "integer",
-                   "Number": "number",
-                   "Float": "number",
-                   "URL": {"type": "string", "format": "uri"},
-                   "DateTime": {"type": "string", "format": "date-time"}}
-    schema2json7 = {"Date": {"type": "string", "format": "date"},
-                    "Time": {"type": "string", "format": "datetime"}}
-    if draft in ['draft-07', '2019-09']:
-        for key in schema2json7:
-            schema2json[key] = schema2json7[key]
-    else:
-        for key in schema2json7:
-            schema2json[key] = "string"
-    word = data.split(':')[1]
-    if word in schema2json:
-        newdata["@id"] = "https://schema.org/" + word
-        if isinstance(schema2json[word], str):
-            newdata["type"] = schema2json[word]
-        else:  # dict
-            for key in schema2json[word]:
-                newdata[key] = schema2json[word][key]
-    elif word in handle:
-        newdata["$ref"] = "#/definitions/" + word
-        return word
-    elif word in skip:
-        pass
-    else:
-        raise NotImplementedError(
-            f'do not understand "@id" in:\n\n{data}\n\n{i}')
-    return None
-
-
-def schema_org_rdfs_class(item, new_schema, data):
-    """
-    :Author: Daniel Mohr
-    :Date: 2021-03-02
-    """
-    missing_types = []
-    subclasses = []
-    for i in data:
-        if domainIncludes(i, "schema:" + item):
-            # found property
-            prop_name = i["@id"].split(':')[1]
-            new_schema[item]["@context"][prop_name] = \
-                "https://schema.org/" + prop_name
-            new_schema[item]["properties"][prop_name] = dict()
-            if ("schema:rangeIncludes" in i):
-                missing_type = None
-                if isinstance(i["schema:rangeIncludes"], dict):
-                    missing_type = type_from_schema_id(
-                        i["schema:rangeIncludes"]["@id"],
-                        new_schema[item]["properties"][prop_name],
-                        i)
-                elif isinstance(i["schema:rangeIncludes"], list):
-                    new_schema[item]["properties"][prop_name]["oneOf"] = \
-                        list()
-                    for element in i["schema:rangeIncludes"]:
-                        new_schema[item]["properties"][prop_name]["oneOf"].append(
-                            dict())
-                        missing_type = type_from_schema_id(
-                            element["@id"],
-                            new_schema[item]["properties"][prop_name]["oneOf"][-1],
-                            i)
-                else:
-                    raise NotImplementedError(
-                        f'do not understand "schema:rangeIncludes" in:\n{i}')
-                if missing_type is not None:
-                    missing_types.append(missing_type)
-            else:
-                raise NotImplementedError(
-                    f'no "schema:rangeIncludes" in:\n\n{i}')
-    return missing_types
+from .add_context import add_context
+from .schema_org_rdfs_class import schema_org_rdfs_class
 
 
 def combine_properties(properties, subclass):
@@ -177,8 +27,25 @@ def combine_properties(properties, subclass):
 def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-02
+    :Date: 2021-03-04
+
+    This function generates a json schema from https://schema.org , which
+    desribes the vocabulary.
+
+    :param schemaorg_data: json-ld data from https://schema.org as returned
+                           from :func:`get_schema_org_data`.
+    :param vocabulary: list of words, which are a 
+                       Schema.org Type (Schema.org vocabulary )
+    :param draft: the used json schema, could be:
+
+                  * 'draft-04'
+                  * 'draft-06'
+                  * 'draft-07'
+                  * '2019-09'
+    :return: json schema describing a json-ld for the given vocabulary
     """
+    # https://www.jsonschemavalidator.net/
+    # https://json-ld.org/playground/
     missing_words = []
     for word in vocabulary:
         # if not word.startswith('schema:'):
@@ -201,7 +68,6 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
         "from schema.org is defined as a json schema. " \
         "It should be a valid json-ld file. " \
         "All necessary words should be defined."
-    final_new_schema["@context"] = dict()
     final_new_schema["definitions"] = dict()
     new_schema = final_new_schema["definitions"]
     while len(missing_words) > 0:
@@ -210,9 +76,8 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
         #item = "schema:" + item
         new_schema[item] = dict()
         new_schema[item]["type"] = "object"
-        final_new_schema["@context"][item] = \
-            "https://schema.org/" + item
-        new_schema[item]["@context"] = dict()
+        add_context(final_new_schema, item, "https://schema.org/")
+        #new_schema[item]["@context"] = dict()
         new_schema[item]["properties"] = dict()
         new_missing_words = []
         for i in schemaorg_data['@graph']:

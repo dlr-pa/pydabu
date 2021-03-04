@@ -14,10 +14,22 @@ import ssl
 import urllib.request
 
 
-def get_schema_org_data(cachefilename):
+def get_schema_org_data(cachefilename=''):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-02
+    :Date: 2021-03-04
+
+    This function returns the data from
+    https://schema.org/version/latest/schemaorg-current-https.jsonld
+    as a json-ld structure (parsed by the python module json).
+
+    :param cachefilename: If not set to an empty string, the data is read
+                          from this file. If this file does not exists,
+                          the data is loadd from the website and stored
+                          in this file.
+
+    :return: json-ld structure (parsed by the python module json) as 
+             dicts and lists
     """
     schema_org_data = None
     opencmds = {'default': open,
