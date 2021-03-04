@@ -120,7 +120,7 @@ def scripts(suite):
     suite.addTest(loader.loadTestsFromTestCase(test_scripts_executable))
     # pydabu.py
     suite.addTest(loader.loadTestsFromName('pydabu_unittests.script_pydabu'))
+    # json_schema_from_schema_org.py
     suite.addTest(
         loader.loadTestsFromName(
             'pydabu_unittests.script_json_schema_from_schema_org'))
-    # json_schema_from_schema_org.py
