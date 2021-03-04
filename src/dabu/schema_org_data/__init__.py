@@ -1,23 +1,14 @@
 """
-:mod:`dabu.scripts`
-===================
-   :synopsis: :mod:`dabu.scripts` is a python module to store the code for
-              scripts belonging to pydabu.
-
+:mod:`dabu.schema_org_data`
+==================================
+.. moduleauthor:: Daniel Mohr
 .. contents::
 
-description
-===========
-This is the description for the module :mod:`dabu.scripts` belonging to the
-project pydabu.
-
-:mod:`dabu.scripts` is a python module to store the code for scripts belonging
-to pydabu.
-
-submodules
-==========
-.. automodule:: dabu.scripts.pydabu
-.. automodule:: dabu.scripts.json_schema_from_schema_org
+functions
+---------
+.. currentmodule:: dabu.schema_org_data
+.. autofunction:: get_schema_org_data
+.. autofunction:: json_schema_from_schema_org
 
 copyright + license
 ===================
@@ -42,3 +33,6 @@ Copyright (C) 2021 Daniel Mohr
  along with this program; if not, see
  http://www.gnu.org/licenses/
 """
+
+from .json_schema_from_schema_org import json_schema_from_schema_org
+from .get_schema_org_data import get_schema_org_data

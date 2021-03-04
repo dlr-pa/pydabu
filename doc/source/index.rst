@@ -29,6 +29,7 @@ which is good research practice (cf. [DFG]_; [Helmholtz]_).
    INSTALL.txt
    walkthrough
    script_pydabu
+   script_json_schema_from_schema_org
    schemas
    module_dabu
    test_coverage_report/index

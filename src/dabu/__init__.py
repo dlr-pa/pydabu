@@ -12,13 +12,14 @@ submodules
 .. automodule:: dabu.analyse_file_format
 .. automodule:: dabu.check_nasa_ames_format
 .. automodule:: dabu.check_netcdf_file
+.. automodule:: dabu.schema_org_data
 .. automodule:: dabu.scripts
 
 copyright + license
 ===================
 Author: Daniel Mohr
 
-Date: 2021-02-15 (last change).
+Date: 2021-03-04 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 

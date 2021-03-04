@@ -83,7 +83,7 @@ class TestWithPytest(Command):
                     nthreads = int(os.cpu_count() - os.getloadavg()[0])
                     # since we have only a few tests, limit overhead:
                     nthreads = min(4, nthreads)
-                    nthreads = max(1, nthreads) # at least one thread
+                    nthreads = max(1, nthreads)  # at least one thread
                 else:
                     nthreads = max(1, int(0.5 * os.cpu_count()))
                 pyargs += ['-n %i' % nthreads]
@@ -289,10 +289,13 @@ setup(
         'dabu.check_nasa_ames_format',
         'dabu.check_netcdf_file',
         'dabu.analyse_file_format',
+        'dabu.schema_org_data',
         'dabu.scripts',
-        'dabu.scripts.pydabu'],
+        'dabu.scripts.pydabu',
+        'dabu.scripts.json_schema_from_schema_org'],
     scripts=[
-        'src/scripts/pydabu.py'],
+        'src/scripts/pydabu.py',
+        'src/scripts/json_schema_from_schema_org.py'],
     package_data={'dabu': ['schemas/analyse_data_structure_output.schema',
                            'schemas/dabu.schema',
                            'schemas/dabu_requires.schema']},

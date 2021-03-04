@@ -42,7 +42,7 @@ command line script: :program:`pydabu.py`
 These commands are explained in more detail in the following (help output):
 
 .. argparse::
-   :module: dabu.scripts.pydabu_main
+   :module: dabu.scripts.pydabu.pydabu_main
    :func: my_argument_parser
    :prog: pydabu.py
 
