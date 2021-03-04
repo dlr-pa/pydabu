@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-02-19
+:Version: 2021-03-04
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -69,7 +69,7 @@ unittests
 
 You can run a few unittests::
 
-  env python3 setup.py run_unittests --src local
+  env python3 setup.py run_unittest --src local
 
 But the scripts are not tested before installing.
 After installation you can run unittests on the scripts as well
@@ -204,7 +204,7 @@ unittests (after installation)
 
 Now you can run all available unittests (including scripts)::
 
-  env python3 setup.py run_unittests
+  env python3 setup.py run_unittest
 
 .. _after you install.pytest:
 
