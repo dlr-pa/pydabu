@@ -94,7 +94,7 @@ def module(suite):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-04
+    :Date: 2021-03-05
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     add tests for the module
@@ -104,6 +104,9 @@ def module(suite):
     suite.addTest(loader.loadTestsFromTestCase(test_module_import))
     # dabu.schemas
     suite.addTest(loader.loadTestsFromName('pydabu_unittests.package_data'))
+    # dabu.scripts.pydabu.check_arg_file_not_exisits.py
+    suite.addTest(loader.loadTestsFromName(
+        'pydabu_unittests.dabu_scripts_pydabu_check_arg_file_not_exists'))
 
 
 def scripts(suite):
@@ -116,7 +119,7 @@ def scripts(suite):
     add tests for the scripts
     """
     print('add tests for the scripts')
-    loader = unittest.defaultTestLoader
+    loader=unittest.defaultTestLoader
     suite.addTest(loader.loadTestsFromTestCase(test_scripts_executable))
     # pydabu.py
     suite.addTest(loader.loadTestsFromName('pydabu_unittests.script_pydabu'))

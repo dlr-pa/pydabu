@@ -105,6 +105,9 @@ class TestWithPytest(Command):
             pyargs += ['--verbose']
         pyargs += ['pydabu_unittests/main.py']
         pyargs += ['pydabu_unittests/package_data.py']
+        pyargs += [
+            'pydabu_unittests/dabu_scripts_pydabu_check_arg_file_not_exists.py'
+        ]
         if self.src == 'installed':
             pyargs += ['pydabu_unittests/script_pydabu.py']
             pyargs += ['pydabu_unittests/script_json_schema_from_schema_org.py']
@@ -168,13 +171,15 @@ class TestWithUnittest(Command):
         import pydabu_unittests
         pydabu_unittests.module(suite)
         setup_self = self
+
         class test_required_module_import(unittest.TestCase):
             def test_required_module_import(self):
                 import importlib
                 for module in setup_self.distribution.metadata.get_requires():
                     importlib.import_module(module)
         loader = unittest.defaultTestLoader
-        suite.addTest(loader.loadTestsFromTestCase(test_required_module_import))
+        suite.addTest(loader.loadTestsFromTestCase(
+            test_required_module_import))
         if self.src == 'installed':
             pydabu_unittests.scripts(suite)
         unittest.TextTestRunner(verbosity=2).run(suite)

@@ -113,3 +113,22 @@ class mixin_create_data_bubble():
                             ("hash",
                              "CZgzkcNy77d2n4W6vqbdRYFKp2rskJ3LCdRlVxiy3rmVt7w+YOmSDH0jxC6xp1AWs+HUCMbGqt6Z+dAN1dUpaA==")]:
                         self.assertEqual(data["checksum"][k], v)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            for fn in ['a.na', '.checksum.sha256', 'LICENSE.txt', 'README.md',
+                       'test.nc']:
+                shutil.copyfile(os.path.join(self.test_dir_path[4], fn),
+                                os.path.join(tmpdir, fn))
+            os.mkdir(os.path.join(tmpdir, '.git'))
+            cp = subprocess.run(
+                ['pydabu.py create_data_bubble -directory . ' +
+                 '-checksum_from_file .checksum.sha256'],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
+                check=True)
+            for fn in ['.dabu.schema', '.dabu.json']:
+                self.assertTrue(os.path.isfile(os.path.join(tmpdir, fn)))
+            with open(os.path.join(tmpdir, '.dabu.json')) as fd:
+                instance = json.load(fd)
+            with open(os.path.join(tmpdir, '.dabu.schema')) as fd:
+                schema = json.load(fd)
+            jsonschema.validate(instance, schema)

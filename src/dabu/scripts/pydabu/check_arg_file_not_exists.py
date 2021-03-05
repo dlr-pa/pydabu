@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-08 (last change).
+:Date: 2021-03-05 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -9,7 +9,7 @@ import argparse
 import os.path
 
 
-def check_arg_file_not_exisits(data):
+def check_arg_file_not_exists(data):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de

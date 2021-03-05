@@ -1,14 +1,14 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-17 (last change).
+:Date: 2021-03-05 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import argparse
 import os.path
 
-from .check_arg_file_not_exisits import check_arg_file_not_exisits
+from .check_arg_file_not_exists import check_arg_file_not_exists
 from .check_arg_file import check_arg_file
 from .run_analyse_data_structure import run_analyse_data_structure
 from .run_check_file_format import run_check_file_format
@@ -36,7 +36,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-17 (last change).
+    :Date: 2021-03-05 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -50,7 +50,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-02-17\n"
+    epilog += "Date: 2021-03-05\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -237,7 +237,7 @@ def my_argument_parser():
     parser_create_data_bubble.add_argument(
         '-dabu_instance_file',
         nargs=1,
-        type=check_arg_file_not_exisits,
+        type=check_arg_file_not_exists,
         required=False,
         default=['.dabu.json'],   # this is not checked
         dest='dabu_instance_file',
@@ -248,7 +248,7 @@ def my_argument_parser():
     parser_create_data_bubble.add_argument(
         '-dabu_schema_file',
         nargs=1,
-        type=check_arg_file_not_exisits,
+        type=check_arg_file_not_exists,
         required=False,
         default=['.dabu.schema'],  # this is not checked
         dest='dabu_schema_file',
