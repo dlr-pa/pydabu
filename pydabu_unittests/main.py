@@ -104,7 +104,7 @@ def module(suite):
     suite.addTest(loader.loadTestsFromTestCase(test_module_import))
     # dabu.schemas
     suite.addTest(loader.loadTestsFromName('pydabu_unittests.package_data'))
-    # dabu.scripts.pydabu.check_arg_file_not_exisits.py
+    # dabu.scripts.pydabu.check_arg_file_not_exists.py
     suite.addTest(loader.loadTestsFromName(
         'pydabu_unittests.dabu_scripts_pydabu_check_arg_file_not_exists'))
 
