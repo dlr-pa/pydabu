@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-04
+:Date: 2021-03-05
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -243,6 +243,7 @@ class CheckModulesModulefinder(Command):
 # necessary modules
 required_modules = ['argparse',
                     'base64',
+                    'datetime',
                     'distutils',
                     'hashlib',
                     'json',
@@ -263,12 +264,28 @@ required_modules = ['argparse',
                     'xdist']
 # optional modules
 required_modules += ['cfchecker.cfchecks', 'netCDF4']
+# optional modules to return version from module read from package metadata
+required_modules += ['pkg_resources']
+# optional modules for python3 setup.py check_modules
+required_modules += ['importlib']
+# optional modules for python3 setup.py check_modules_modulefinder
+required_modules += ['modulefinder']
+# optional modules for json_schema_from_schema_org.py
+required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
 # modules to build doc
 required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
+# modules to run tests with unittest
+required_modules += ['unittest']
+# modules to run tests with pytest
+required_modules += ['pytest']
+# optional modules to run tests with pytest in parallel
+required_modules += ['xdist']
+# optional modules to run tests with pytest and create coverage report
+required_modules += ['pytest_cov']
 
 setup(
     name='pydabu',
-    version='2021-03-04',
+    version='2021-03-05',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
