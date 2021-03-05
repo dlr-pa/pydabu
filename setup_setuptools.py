@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-17
+:Date: 2021-03-05
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -139,6 +139,7 @@ class CheckModulesModulefinder(Command):
 # necessary modules
 required_modules = ['argparse',
                     'base64',
+                    'datetime',
                     'distutils',
                     'hashlib',
                     'json',
@@ -152,32 +153,59 @@ required_modules = ['argparse',
                     'sys',
                     'tempfile',
                     'time',
-                    'unittest',
                     'warnings']
 install_requires = ['argparse>=1.1',
-                    'base64',
-                    'distutils',
-                    'hashlib',
-                    'json',
+                    # 'base64', # not available by pypi.org
+                    'datetime',
+                    # 'distutils', # not available by pypi.org
+                    # 'hashlib', # version from pypi.org does not work
+                    # 'json', # not available by pypi.org
                     'jsonschema',
-                    'logging',
-                    'os',
-                    'pkgutil',
-                    're',
-                    'subprocess',
-                    'sys',
-                    'tempfile',
-                    'time',
-                    'unittest']
+                    # 'logging', # version from pypi.org does not work
+                    # 'os', # not available by pypi.org
+                    # 'pkgutil', # not available by pypi.org
+                    # 're', # not available by pypi.org
+                    # 'subprocess', # version from pypi.org does not work
+                    # 'sys', # version from pypi.org does not work
+                    # 'tempfile', # version from pypi.org does not work
+                    # 'time', # not available by pypi.org
+                    ]
 # optional modules
 required_modules += ['cfchecker.cfchecks', 'netCDF4']
 install_requires += ['cfchecker', 'netCDF4']
+# optional modules to return version from module read from package metadata
+required_modules += ['pkg_resources']
+install_requires += ['pkg_resources']
+# optional modules for python3 setup.py check_modules
+required_modules += ['importlib']
+#install_requires += ['importlib'] # version from pypi.org does not work
+# optional modules for python3 setup.py check_modules_modulefinder
+required_modules += ['modulefinder']
+# install_requires += ['modulefinder'] # version from pypi.org does not work
+# optional modules for json_schema_from_schema_org.py
+required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
+# not available by pypi.org: bz2, gzip, lzma
+# version from pypi.org does not work: ssl, urllib
 # modules to build doc
 required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
+# not available by pypi.org: sphinxarg
+install_requires += ['sphinx', 'recommonmark']
+# modules to run tests with unittest
+required_modules += ['unittest']
+# install_requires += ['unittest'] # not available by pypi.org
+# modules to run tests with pytest
+required_modules += ['pytest']
+install_requires += ['pytest']
+# optional modules to run tests with pytest in parallel
+required_modules += ['xdist']
+# install_requires += ['xdist'] # not available by pypi.org
+# optional modules to run tests with pytest and create coverage report
+required_modules += ['pytest_cov']
+install_requires += ['pytest_cov']
 
 setup(
     name='pydabu',
-    version='2021-02-17',
+    version='2021-03-05',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
