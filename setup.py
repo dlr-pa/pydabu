@@ -252,16 +252,12 @@ required_modules = ['argparse',
                     'os',
                     'os.path',
                     'pkgutil',
-                    'pytest',
-                    'pytest_cov',
                     're',
                     'subprocess',
                     'sys',
                     'tempfile',
                     'time',
-                    'unittest',
-                    'warnings',
-                    'xdist']
+                    'warnings']
 # optional modules
 required_modules += ['cfchecker.cfchecks', 'netCDF4']
 # optional modules to return version from module read from package metadata
