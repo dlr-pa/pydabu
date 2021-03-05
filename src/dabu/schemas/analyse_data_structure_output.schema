@@ -27,13 +27,19 @@
             "oneOf": [
                 {
                     "type": "string",
-                    "pattern": "^repository|checksums$"
+                    "enum": [
+                        "repository",
+                        "checksums"
+                    ]
                 },
                 {
                     "type": "array",
                     "items": {
                         "type": "string",
-                        "pattern": "^repository|checksums$"
+                        "enum": [
+                            "repository",
+                            "checksums"
+                        ]
                     }
                 }
             ]
