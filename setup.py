@@ -117,7 +117,7 @@ class TestWithUnittest(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-04
+    :Date: 2021-03-05
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with unittest
@@ -150,7 +150,7 @@ class TestWithUnittest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-04
+        :Date: 2021-03-05
         """
         import sys
         import os.path
@@ -167,6 +167,14 @@ class TestWithUnittest(Command):
         suite = unittest.TestSuite()
         import pydabu_unittests
         pydabu_unittests.module(suite)
+        setup_self = self
+        class test_required_module_import(unittest.TestCase):
+            def test_required_module_import(self):
+                import importlib
+                for module in setup_self.distribution.metadata.get_requires():
+                    importlib.import_module(module)
+        loader = unittest.defaultTestLoader
+        suite.addTest(loader.loadTestsFromTestCase(test_required_module_import))
         if self.src == 'installed':
             pydabu_unittests.scripts(suite)
         unittest.TextTestRunner(verbosity=2).run(suite)
@@ -271,7 +279,7 @@ required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
 # modules to build doc
 required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 # modules to run tests with unittest
-required_modules += ['unittest']
+required_modules += ['unittest', 'shutil']
 # modules to run tests with pytest
 required_modules += ['pytest']
 # optional modules to run tests with pytest in parallel
