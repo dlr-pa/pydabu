@@ -65,20 +65,21 @@ class mixin_basic_sub_commands():
 class mixin_data_bubble():
     """
     :Author: Daniel Mohr
-    :Date: 2021-02-19
+    :Date: 2021-03-05
     """
 
     def test_data_bubble(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-17
+        :Date: 2021-03-05
 
         This test checks the available test data.
         """
         for test_dir_path in self.test_dir_path[0:4]:
             self.assertTrue(os.path.isdir(test_dir_path))
-            self.assertTrue(
-                os.path.isfile(os.path.join(test_dir_path, 'README.md')))
+            for fn in ['LICENSE.txt', 'README.md']:
+                self.assertTrue(
+                    os.path.isfile(os.path.join(test_dir_path, fn)))
 
 
 class scripty_pydabu(
