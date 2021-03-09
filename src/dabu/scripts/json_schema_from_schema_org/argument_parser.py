@@ -1,12 +1,15 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-04 (last change).
+:Date: 2021-03-09 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import argparse
+import os
 import os.path
+import pwd
+import sys
 import tempfile
 
 
@@ -14,11 +17,11 @@ def argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-04 (last change).
+    :Date: 2021-03-09 (last change).
     """
     epilog = ""
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-03-04\n"
+    epilog += "Date: 2021-03-09\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     description = 'json_schema_from_schema_org.py is a script ' \
@@ -41,11 +44,9 @@ def argument_parser():
         default=[4],
         dest='indent',
         help='In the output the elements will be indented ' +
-        'by this number of spaces.',
+        'by this number of spaces. default: 4',
         metavar='i')
-    cachefilename = os.path.join(
-        tempfile.gettempdir(),
-        'json_schema_from_schema_org_schemaorg-current-https.jsonld.lzma')
+    cachefilename = 'schemaorg-current-https.jsonld.bz2'
     parser.add_argument(
         '-cachefilename',
         nargs=1,
@@ -56,7 +57,23 @@ def argument_parser():
         help='We need data from schema.org. '
         'If you set cachefilename to an empty string, nothing is cached. '
         'If the file ends with common extension for compression, '
-        'this comperession is used (e. g.: .gz, .lzma, .xz, .bz2).'
+        'this comperession is used (e. g.: .gz, .lzma, .xz, .bz2). '
+        'The file is created in the cachefilepath (see this option). '
         'default: "%s"' % cachefilename,
         metavar='f')
+    cachefilepath = os.path.join(
+        tempfile.gettempdir(),
+        'json_schema_from_schema_org_' + pwd.getpwuid(os.getuid()).pw_name)
+    parser.add_argument(
+        '-cachefilepath',
+        nargs=1,
+        type=str,
+        required=False,
+        default=[cachefilepath],
+        dest='cachefilepath',
+        help='This path is used for the cachefilename. '
+        'If necessary, this directory will be created '
+        '(not the directory tree!). '
+        'default: "%s"' % cachefilepath,
+        metavar='p')
     return parser

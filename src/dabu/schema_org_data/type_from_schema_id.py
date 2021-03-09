@@ -5,6 +5,8 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import json
+
 
 def type_from_schema_id(data, newdata, i, draft='draft-04'):
     """
@@ -64,6 +66,7 @@ def type_from_schema_id(data, newdata, i, draft='draft-04'):
     elif word in skip:
         pass
     else:
+        itext = json.dumps(i, indent=4)
         raise NotImplementedError(
-            f'do not understand "@id" in:\n\n{data}\n\n{i}')
+            f'do not understand "@id" = {data} in:\n\n{itext}')
     return None

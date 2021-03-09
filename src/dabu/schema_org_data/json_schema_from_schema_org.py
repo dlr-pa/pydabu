@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-04 (last change).
+:Date: 2021-03-09 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -27,7 +27,7 @@ def combine_properties(properties, subclass):
 def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-04
+    :Date: 2021-03-09
 
     This function generates a json schema from https://schema.org , which
     desribes the vocabulary.
@@ -70,9 +70,10 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
         "All necessary words should be defined."
     final_new_schema["definitions"] = dict()
     new_schema = final_new_schema["definitions"]
+    found_words = []
     while len(missing_words) > 0:
         item = missing_words.pop(0)
-        sys.stderr.write(f'extracting: {item}\n')
+        sys.stderr.write(f'searching: {item}\n')
         #item = "schema:" + item
         new_schema[item] = dict()
         new_schema[item]["type"] = "object"
@@ -82,6 +83,8 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
         new_missing_words = []
         for i in schemaorg_data['@graph']:
             if ("@id" in i) and (i["@id"] == "schema:" + item):
+                sys.stderr.write(f'extracting: {item}\n')
+                found_words.append(item)
                 if ("@type" in i) and (i["@type"] == "rdfs:Class"):
                     new_missing_words = schema_org_rdfs_class(
                         item, new_schema, schemaorg_data['@graph'])
@@ -109,4 +112,9 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
                 if ((t not in missing_words) and
                         (t not in new_schema)):
                     missing_words.append(t)
+    if len(found_words) == 0:
+        sys.stderr.write('nothing found\n')
+        final_new_schema = dict()
+        # print(found_words)
+    sys.stderr.write('\n')
     return final_new_schema
