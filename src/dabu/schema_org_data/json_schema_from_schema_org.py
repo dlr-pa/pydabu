@@ -46,11 +46,11 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
     """
     # https://www.jsonschemavalidator.net/
     # https://json-ld.org/playground/
-    missing_words = []
+    missing_words = set()
     for word in vocabulary:
         # if not word.startswith('schema:'):
         #    word = 'schema:' + word
-        missing_words.append(word)
+        missing_words.add(word)
     final_new_schema = dict()
     schema_declaration = {
         'draft-04': "http://json-schema.org/draft-04/schema#",
@@ -72,7 +72,7 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
     new_schema = final_new_schema["definitions"]
     found_words = []
     while len(missing_words) > 0:
-        item = missing_words.pop(0)
+        item = missing_words.pop()
         sys.stderr.write(f'searching: {item}\n')
         #item = "schema:" + item
         new_schema[item] = dict()
@@ -86,6 +86,11 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
                 sys.stderr.write(f'extracting: {item}\n')
                 found_words.append(item)
                 if ("@type" in i) and (i["@type"] == "rdfs:Class"):
+                    if (("rdfs:comment" in i) and
+                            isinstance(i["rdfs:comment"], str)):
+                        new_schema[item]["description"] = i["rdfs:comment"]
+                    else:
+                        raise NotImplementedError()
                     new_missing_words = schema_org_rdfs_class(
                         item, new_schema, schemaorg_data['@graph'])
                     if (("rdfs:subClassOf" in i) and
@@ -109,11 +114,24 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
                         f'Your word "{item}" is a property.')
                 else:
                     raise NotImplementedError(json.dumps(i))
-        if len(new_missing_words) > 0:
-            for t in new_missing_words:
-                if ((t not in missing_words) and
-                        (t not in new_schema)):
-                    missing_words.append(t)
+        if item in found_words:
+            if len(new_missing_words) > 0:
+                for t in new_missing_words:
+                    if t not in new_schema:
+                        missing_words.add(t)
+        else:
+            del new_schema[item]
+            index = \
+                final_new_schema["properties"]["@context"]["required"].index(
+                    item)
+            del final_new_schema["properties"]["@context"]["required"][index]
+            del final_new_schema["properties"]["@context"]["properties"][item]
+            del vocabulary[vocabulary.index(item)]
+            final_new_schema["description"] = \
+              "The vocabulary %s " % ', '.join(vocabulary) + \
+              "from schema.org is defined as a json schema. " \
+              "It should be a valid json-ld file. " \
+              "All necessary words should be defined."
     if len(found_words) == 0:
         sys.stderr.write('nothing found\n')
         final_new_schema = dict()
