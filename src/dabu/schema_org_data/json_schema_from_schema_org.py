@@ -102,9 +102,11 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
                                 'type of "rdfs:subClassOf" not str')
                     break
                 elif ("@type" in i) and ("schema:DataType" in i["@type"]):
-                    raise NotImplementedError('Your word is a data type.')
+                    raise NotImplementedError(
+                        f'Your word "{item}" is a data type.')
                 elif ("@type" in i) and ("rdf:Property" in i["@type"]):
-                    raise NotImplementedError('Your word is a property.')
+                    raise NotImplementedError(
+                        f'Your word "{item}" is a property.')
                 else:
                     raise NotImplementedError(json.dumps(i))
         if len(new_missing_words) > 0:
