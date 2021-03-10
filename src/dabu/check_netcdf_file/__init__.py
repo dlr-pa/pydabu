@@ -1,6 +1,6 @@
 """
 :mod:`dabu.check_netcdf_file`
-==================================
+=============================
 .. moduleauthor:: Daniel Mohr
 .. contents::
 
@@ -13,7 +13,7 @@ copyright + license
 ===================
 Author: Daniel Mohr
 
-Date: 2021-01-29 (last change).
+Date: 2021-03-10 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
