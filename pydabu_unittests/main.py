@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-04
+:Date: 2021-03-10
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 aggregation of tests
@@ -94,7 +94,7 @@ def module(suite):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-05
+    :Date: 2021-03-10
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     add tests for the module
@@ -107,6 +107,9 @@ def module(suite):
     # dabu.scripts.pydabu.check_arg_file_not_exists.py
     suite.addTest(loader.loadTestsFromName(
         'pydabu_unittests.dabu_scripts_pydabu_check_arg_file_not_exists'))
+    # dabu.compare_json_schemas
+    suite.addTest(
+        loader.loadTestsFromName('pydabu_unittests.compare_json_schemas'))
 
 
 def scripts(suite):

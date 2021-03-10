@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-09
+:Date: 2021-03-10
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -108,6 +108,7 @@ class TestWithPytest(Command):
         pyargs += [
             'pydabu_unittests/dabu_scripts_pydabu_check_arg_file_not_exists.py'
         ]
+        pyargs += ['pydabu_unittests/compare_json_schemas.py']
         if self.src == 'installed':
             pyargs += ['pydabu_unittests/script_pydabu.py']
             pyargs += ['pydabu_unittests/script_json_schema_from_schema_org.py']
@@ -295,7 +296,7 @@ required_modules += ['pytest_cov']
 
 setup(
     name='pydabu',
-    version='2021-03-09',
+    version='2021-03-10',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
@@ -316,6 +317,7 @@ setup(
         'dabu.analyse_data_structure',
         'dabu.check_nasa_ames_format',
         'dabu.check_netcdf_file',
+        'dabu.compare_json_schemas',
         'dabu.analyse_file_format',
         'dabu.schema_org_data',
         'dabu.scripts',

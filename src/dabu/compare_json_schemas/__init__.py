@@ -1,20 +1,13 @@
-"""pydabu -- python data bubble
-
+"""
+:mod:`dabu.compare_json_schemas`
+================================
+.. moduleauthor:: Daniel Mohr
 .. contents::
 
-description
-===========
-This is the description for the module dabu belonging to the project pydabu.
-
-submodules
-==========
-.. automodule:: dabu.analyse_data_structure
-.. automodule:: dabu.analyse_file_format
-.. automodule:: dabu.check_nasa_ames_format
-.. automodule:: dabu.check_netcdf_file
-.. automodule:: dabu.compare_json_schemas
-.. automodule:: dabu.schema_org_data
-.. automodule:: dabu.scripts
+functions
+---------
+.. currentmodule:: dabu.compare_json_schemas
+.. autofunction:: compare_json_schemas
 
 copyright + license
 ===================
@@ -40,9 +33,5 @@ Copyright (C) 2021 Daniel Mohr
  http://www.gnu.org/licenses/
 """
 
-try:
-    # try to get version from package metadata
-    import pkg_resources
-    __version__ = pkg_resources.require('pydabu')[0].version
-except:
-    pass
+from .compare_json_schemas import compare_json_schemas_one_way
+from .compare_json_schemas import compare_json_schemas
