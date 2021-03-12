@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-04 (last change).
+:Date: 2021-03-12 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -13,7 +13,7 @@ from .type_from_schema_id import type_from_schema_id
 def schema_org_rdfs_class(item, new_schema, data):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-04
+    :Date: 2021-03-12
     """
     missing_types = []
     subclasses = []
@@ -29,17 +29,15 @@ def schema_org_rdfs_class(item, new_schema, data):
                     missing_type = type_from_schema_id(
                         i["schema:rangeIncludes"]["@id"],
                         new_schema[item]["properties"][prop_name],
-                        i)
+                        i, data)
                 elif isinstance(i["schema:rangeIncludes"], list):
                     new_schema[item]["properties"][prop_name]["oneOf"] = \
                         list()
+                    r = new_schema[item]["properties"][prop_name]["oneOf"]
                     for element in i["schema:rangeIncludes"]:
-                        new_schema[item]["properties"][prop_name]["oneOf"].append(
-                            dict())
+                        r.append(dict())
                         missing_type = type_from_schema_id(
-                            element["@id"],
-                            new_schema[item]["properties"][prop_name]["oneOf"][-1],
-                            i)
+                            element["@id"], r[-1], i, data)
                 else:
                     raise NotImplementedError(
                         f'do not understand "schema:rangeIncludes" in:\n{i}')

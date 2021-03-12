@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-10
+:Date: 2021-03-12
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script json_schema_from_schema_org.py
@@ -25,7 +25,7 @@ import unittest
 class scripty_json_schema_from_schema_org(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-10
+    :Date: 2021-03-12
     """
 
     def test_dummy_1(self):
@@ -71,7 +71,7 @@ class scripty_json_schema_from_schema_org(unittest.TestCase):
     def test_person_1(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-03-04
+        :Date: 2021-03-12
 
         This test calls json_schema_from_schema_org.py Person
         """
@@ -89,7 +89,9 @@ class scripty_json_schema_from_schema_org(unittest.TestCase):
             instance["@context"][key] = "https://schema.org/" + key
         with self.assertRaises(jsonschema.exceptions.ValidationError):
             jsonschema.validate(instance, schema)
-        for key in ["ImageObject", "MediaObject", "CreativeWork", "Comment"]:
+        for key in ["ImageObject", "MediaObject", "CreativeWork", "Comment",
+                    "Organization", "Distance", "Quantity", "DefinedTerm",
+                    "Intangible"]:
             instance["@context"][key] = "https://schema.org/" + key
         jsonschema.validate(instance, schema)
 
@@ -116,6 +118,26 @@ class scripty_json_schema_from_schema_org(unittest.TestCase):
         # This should be fine in most cases. But not in all cases!
         dabu.compare_json_schemas.compare_json_schemas(
             schema1, schema2, self.assertEqual)
+
+    def test_raise_notimplementederror(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-03-12
+
+        This test calls: json_schema_from_schema_org.py GenderType
+
+        At the moment this raises NotImplementedError.
+        This test should not test that GenderType is not available,
+        instead it should test the code used to raise.
+        """
+        import subprocess
+        import dabu.compare_json_schemas
+        cp = subprocess.run(
+            ["json_schema_from_schema_org.py GenderType"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            shell=True, timeout=3, check=False)
+        with self.assertRaises(subprocess.CalledProcessError):
+            cp.check_returncode()
 
 
 if __name__ == '__main__':

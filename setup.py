@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-10
+:Date: 2021-03-12
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -296,7 +296,7 @@ required_modules += ['pytest_cov']
 
 setup(
     name='pydabu',
-    version='2021-03-10',
+    version='2021-03-12',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
