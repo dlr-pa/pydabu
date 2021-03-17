@@ -10,7 +10,7 @@ import sys
 
 from .add_context import add_context
 from .schema_org_rdfs_class import schema_org_rdfs_class
-
+from .json_schema_from_schema_org2 import json_schema_from_schema_org2 as json_schema_from_schema_org
 
 def combine_properties(properties, subclass):
     """
@@ -24,7 +24,7 @@ def combine_properties(properties, subclass):
          "#/definitions/" + subclass}]
 
 
-def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
+def json_schema_from_schema_org_old(schemaorg_data, vocabulary, draft='draft-04'):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-09
