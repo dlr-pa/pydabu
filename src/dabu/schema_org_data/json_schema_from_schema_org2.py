@@ -10,6 +10,58 @@ import sys
 
 from dabu.compare_json_schemas import compare_json_schemas_one_way
 
+
+def _Includes_dict(object, content):
+    """
+    :Author: Daniel Mohr
+    :Date: 2021-02-26
+    """
+    if ("@id" in object) and (object["@id"] == content):
+        return True
+    else:
+        return False
+
+
+def _Includes_list(object, content):
+    """
+    :Author: Daniel Mohr
+    :Date: 2021-02-26
+    """
+    ret = False
+    for element in object:
+        ret = _Includes_dict(element, content)
+        if ret:
+            break
+    return ret
+
+
+def _Includes(object, content):
+    """
+    :Author: Daniel Mohr
+    :Date: 2021-02-26
+    """
+    if isinstance(object, dict):
+        return _Includes_dict(object, content)
+    elif isinstance(object, list):
+        return _Includes_list(object, content)
+    else:
+        return False
+
+
+def ispending(object):
+    """
+    :Author: Daniel Mohr
+    :Date: 2021-03-09
+
+    We ignore work-in-progress terms marked as pending:
+    https://schema.org/docs/howwework.html#pending
+    """
+    if "schema:isPartOf" in object:
+        return _Includes(object["schema:isPartOf"],
+                         "https://pending.schema.org")
+    return False
+
+
 def set_property(schema, key, value):
     """
     :Author: Daniel Mohr
@@ -89,6 +141,7 @@ def create_context_schema(word):
                                     "enum": ["https://schema.org/" + word]}}
     return context
 
+
 def _are_types_equal(type1, type2):
     """
     :Author: Daniel Mohr
@@ -100,6 +153,8 @@ def _are_types_equal(type1, type2):
     except AssertionError:
         iseq = False
     return iseq
+
+
 def create_properties_schema2json(
         properties, schema2json, prop_name, word, item_type):
     """
@@ -115,25 +170,22 @@ def create_properties_schema2json(
         if isinstance(properties[prop_name], dict):
             if not "oneOf" in properties[prop_name]:
                 if (("@id" in properties[prop_name]) and
-                    (properties[prop_name]["@id"] == value)):
+                        (properties[prop_name]["@id"] == value)):
                     return
                 properties[prop_name] = {"oneOf": [properties[prop_name]]}
                 properties[prop_name]["oneOf"].append(dict())
                 store_prop = properties[prop_name]["oneOf"][-1]
-            else: # properties[prop_name]["oneOf"] is list
+            else:  # properties[prop_name]["oneOf"] is list
                 def_store_prop = False
                 for item in properties[prop_name]["oneOf"]:
                     if (("@id" in item) and (item["@id"] == value)):
-                        print('xyz', '\n ', item["type"], '\n ', item, '\n ', schema2json[item_type])
                         # _get_property identifier
                         iseq = False
                         if not "oneOf" in item["type"]:
                             iseq = _are_types_equal(schema2json[item_type],
                                                     item["type"])
                         else:
-                            print('type(item["type"]["oneOf"])', type(item["type"]["oneOf"]))
                             for litem in item["type"]["oneOf"]:
-                                print('litem', litem)
                                 iseq = _are_types_equal(schema2json[item_type],
                                                         litem["type"])
                         if iseq:
@@ -154,9 +206,11 @@ def create_properties_schema2json(
     #item_type = data["schema:rangeIncludes"]["@id"].split('schema:')[1]
     if isinstance(schema2json[item_type], str):
         store_prop["type"] = schema2json[item_type]
-    else: # dict
+    else:  # dict
         for key in schema2json[item_type]:
             store_prop[key] = schema2json[item_type][key]
+
+
 def create_properties_handle(
         properties, prop_name, missing_words, word, item_type_ref):
     """
@@ -171,13 +225,13 @@ def create_properties_handle(
         if isinstance(properties[prop_name], dict):
             if not "oneOf" in properties[prop_name]:
                 if (("$ref" in properties[prop_name]) and
-                    (properties[prop_name]["$ref"] == value)):
+                        (properties[prop_name]["$ref"] == value)):
                     return
                 properties[prop_name] = {"oneOf": [properties[prop_name]]}
-            else: # properties[prop_name]["oneOf"] is list
+            else:  # properties[prop_name]["oneOf"] is list
                 for item in properties[prop_name]["oneOf"]:
                     if (("$ref" in item) and
-                        (item["$ref"] == value)):
+                            (item["$ref"] == value)):
                         return
             properties[prop_name]["oneOf"].append(dict())
             store_prop = properties[prop_name]["oneOf"][-1]
@@ -185,6 +239,8 @@ def create_properties_handle(
             raise NotImplementedError(json.dumps(data, indent=2))
     store_prop["$ref"] = value
     missing_words.append(item_type_ref)
+
+
 def _rangeincludes_list(data, schema2json, handle):
     """
     :Author: Daniel Mohr
@@ -201,6 +257,8 @@ def _rangeincludes_list(data, schema2json, handle):
             if ((item_type in schema2json) or (item_type in handle)):
                 accept_list.append(item_type)
     return accept_list
+
+
 def _get_property(item, data, schema2json, properties, prop_name,
                   missing_words):
     """
@@ -221,9 +279,7 @@ def _get_property(item, data, schema2json, properties, prop_name,
               "PriceSpecification", "OwnershipInfo", "Product", "Event",
               "Demand", "QuantitativeValue", "PropertyValue"]
     word = data["@id"].split('schema:')[1]
-    print('_get_property', word, '\n')
     if word in schema2json:
-        print('word in schema2json', '\n')
         create_properties_schema2json(
             properties, schema2json, prop_name, word, word)
     elif (("schema:rangeIncludes" in data) and
@@ -231,54 +287,42 @@ def _get_property(item, data, schema2json, properties, prop_name,
           (data["schema:rangeIncludes"]["@id"].split('schema:')[1] in
            schema2json)):
         # faxNumber
-        print('item["schema:rangeIncludes"]["@id"].split("schema:")[1] in schema2json', '\n')
         create_properties_schema2json(
             properties, schema2json, word, prop_name,
             data["schema:rangeIncludes"]["@id"].split('schema:')[1])
     elif item["@id"].split('schema:')[1] in handle:
-        print('item["@id"].split("schema:")[1] in handle', item["@id"].split('schema:')[1], '\n')
-        print('item', item, 'word', word)
-        print('data', data, '\n')
         create_properties_handle(
             properties, prop_name, missing_words, word,  item["@id"].split('schema:')[1])
     elif (("schema:rangeIncludes" in data) and
           ("@id" in data["schema:rangeIncludes"]) and
           (data["schema:rangeIncludes"]["@id"].split('schema:')[1] in
            handle)):
-        print('data["schema:rangeIncludes"]["@id"].split("schema:")[1] in handle', '\n')
         # follows
         create_properties_handle(
             properties, prop_name, missing_words, word,
             data["schema:rangeIncludes"]["@id"].split('schema:')[1])
     else:
         accept_list = _rangeincludes_list(data, schema2json, handle)
-        print('accept_list', accept_list, type(accept_list), '\n')
         if accept_list is not None:
             if len(accept_list) > 1:
-                print('accept_list', '\n')
                 for item_type in accept_list:
                     if item_type in schema2json:
-                        print('item_type in schema2json', item_type, '\n')
                         create_properties_schema2json(
                             properties, schema2json, word, prop_name, item_type)
                     elif item_type in handle:
-                        print('item_type in handle', '\n')
                         create_properties_handle(
                             properties, prop_name, missing_words,
                             word, item_type)
             elif len(accept_list) == 1:
-                print('accept_list item', '\n')
                 item_type = accept_list[0]
                 if item_type in schema2json:
-                    print('accept_list item item_type in schema2json', '\n')
                     create_properties_schema2json(
                         properties, schema2json, word, prop_name, item_type)
                 elif item_type in handle:
-                    print('accept_list item item_type in handle', '\n')
                     create_properties_handle(
                         properties, prop_name, missing_words, word, item_type)
         else:
-            pass # not implemented now
+            pass  # not implemented now
 
 
 def get_property(schemaorg_data, properties, prop_name, missing_words,
@@ -333,16 +377,13 @@ def get_property(schemaorg_data, properties, prop_name, missing_words,
                       {"type": "string", "format": "iri"},
                       {"type": "string", "format": "iri-reference"}]}
     data = get_graph_item(schemaorg_data, prop_name)
-    print('data', data, '\n')
     if ("@type" in data) and (data["@type"] == "rdfs:Class"):
-        print('data["@type"] == "rdfs:Class"')
         new_missing_word = data["@id"].split('schema:')[1]
         properties[prop_name] = dict()
         properties[prop_name]["$ref"] = "#/definitions/" + new_missing_word
         missing_words.append(new_missing_word)
         return None
     elif ("@type" in data) and (data["@type"] == "rdf:Property"):
-        print('data["@type"] == "rdf:Property"', '\n')
         if "schema:rangeIncludes" in data:
             if isinstance(data["schema:rangeIncludes"], dict):
                 if not "@id" in data["schema:rangeIncludes"]:
@@ -357,7 +398,6 @@ def get_property(schemaorg_data, properties, prop_name, missing_words,
                         missing_words)
             else:
                 raise NotImplementedError(json.dumps(data, indent=2))
-            print('properties', properties, '\n')
         else:
             raise NotImplementedError(json.dumps(data, indent=2))
     elif "@type":
@@ -402,7 +442,7 @@ def add_properties_to_object(schemaorg_data, word, properties, missing_words):
     },
     """
     for item in schemaorg_data['@graph']:
-        if ("schema:domainIncludes" in item):
+        if (("schema:domainIncludes" in item) and (not ispending(item))):
             if isinstance(item["schema:domainIncludes"], dict):
                 add_property_to_object(
                     schemaorg_data, item, item["schema:domainIncludes"],
@@ -548,7 +588,7 @@ def json_schema_from_schema_org2(schemaorg_data, vocabulary, draft='draft-04'):
                     if t not in schema["definitions"]:
                         missing_words.add(t)
         sys.stderr.write(f'finished: {word}\n')
-        #return schema  # workaround for debugging
+        # return schema  # workaround for debugging
     if update_description:
         set_property(schema,
                      "description",
