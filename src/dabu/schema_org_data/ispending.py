@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-09 (last change).
+:Date: 2021-03-19 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -55,14 +55,3 @@ def ispending(object):
         return _Includes(object["schema:isPartOf"],
                          "https://pending.schema.org")
     return False
-
-
-def domainIncludes(object, content):
-    """
-    :Author: Daniel Mohr
-    :Date: 2021-03-09
-    """
-    if ("schema:domainIncludes" in object) and (not ispending(object)):
-        return _Includes(object["schema:domainIncludes"], content)
-    else:
-        return False
