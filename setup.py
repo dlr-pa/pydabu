@@ -55,7 +55,7 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-18
+        :Date: 2021-03-19
         """
         import sys
         import os.path
@@ -109,6 +109,7 @@ class TestWithPytest(Command):
             'pydabu_unittests/dabu_scripts_pydabu_check_arg_file_not_exists.py'
         ]
         pyargs += ['pydabu_unittests/compare_json_schemas.py']
+        pyargs += ['pydabu_unittests/schema_org_data.py']
         if self.src == 'installed':
             pyargs += ['pydabu_unittests/script_pydabu.py']
             pyargs += ['pydabu_unittests/script_json_schema_from_schema_org.py']

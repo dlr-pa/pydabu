@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-10
+:Date: 2021-03-19
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 aggregation of tests
@@ -94,7 +94,7 @@ def module(suite):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-10
+    :Date: 2021-03-19
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     add tests for the module
@@ -110,6 +110,10 @@ def module(suite):
     # dabu.compare_json_schemas
     suite.addTest(
         loader.loadTestsFromName('pydabu_unittests.compare_json_schemas'))
+    # dabut.schema_org_data
+    suite.addTest(
+        loader.loadTestsFromName('pydabu_unittests.schema_org_data'))
+
 
 
 def scripts(suite):
