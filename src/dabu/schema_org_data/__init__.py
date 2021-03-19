@@ -14,7 +14,7 @@ copyright + license
 ===================
 Author: Daniel Mohr
 
-Date: 2021-03-04 (last change).
+Date: 2021-03-19 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
@@ -36,3 +36,4 @@ Copyright (C) 2021 Daniel Mohr
 
 from .json_schema_from_schema_org import json_schema_from_schema_org
 from .get_schema_org_data import get_schema_org_data
+from .add_property import combine

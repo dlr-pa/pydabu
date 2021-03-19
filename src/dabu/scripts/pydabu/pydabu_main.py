@@ -1,12 +1,14 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-05 (last change).
+:Date: 2021-03-19 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import argparse
+import pwd
 import os.path
+import tempfile
 
 from .check_arg_file_not_exists import check_arg_file_not_exists
 from .check_arg_file import check_arg_file
@@ -18,6 +20,7 @@ from .run_common_json_format import run_common_json_format
 from .run_create_data_bubble import run_create_data_bubble
 from .run_check_data_bubble import run_check_data_bubble
 from .run_listschemas import run_listschemas
+from .run_data_bubble2jsonld import run_data_bubble2jsonld
 
 
 def check_arg_directory(data):
@@ -36,7 +39,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-05 (last change).
+    :Date: 2021-03-19 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -50,7 +53,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-03-05\n"
+    epilog += "Date: 2021-03-19\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -129,6 +132,27 @@ def my_argument_parser():
         required=False,
         dest='checksum_from_file',
         help='Try to get checksums from the given file.',
+        metavar='f')
+    common_parser6 = argparse.ArgumentParser(add_help=False)
+    common_parser6.add_argument(
+        '-dabu_instance_file',
+        nargs=1,
+        type=check_arg_file,
+        required=False,
+        default=['.dabu.json'],   # this is not checked
+        dest='dabu_instance_file',
+        help='Gives the name of the file describing the content ' +
+        'of a data bubble. The name is relative to the given directory.',
+        metavar='f')
+    common_parser6.add_argument(
+        '-dabu_schema_file',
+        nargs=1,
+        type=check_arg_file,
+        required=False,
+        default=['.dabu.schema'],  # this is not checked
+        dest='dabu_schema_file',
+        help='Gives the name of the file describing the necessary content ' +
+        'of a data bubble. The name is relative to the given directory.',
         metavar='f')
     # subparsers
     subparsers = parser.add_subparsers(
@@ -242,8 +266,8 @@ def my_argument_parser():
         default=['.dabu.json'],   # this is not checked
         dest='dabu_instance_file',
         help='Gives the name of the file describing the content ' +
-        'of a data bubble. If this file already exists an erroris raised. ' +
-        ' The name is relative to the given directory.',
+        'of a data bubble. If this file already exists an error is raised. ' +
+        'The name is relative to the given directory.',
         metavar='f')
     parser_create_data_bubble.add_argument(
         '-dabu_schema_file',
@@ -253,8 +277,8 @@ def my_argument_parser():
         default=['.dabu.schema'],  # this is not checked
         dest='dabu_schema_file',
         help='Gives the name of the file describing the necessary content ' +
-        'of a data bubble. If this file already exists an erroris raised. ' +
-        ' The name is relative to the given directory.',
+        'of a data bubble. If this file already exists an error is raised. ' +
+        'The name is relative to the given directory.',
         metavar='f')
     # subparser check_data_bubble
     description = 'This command checks a data bubble in the given directory. '
@@ -272,28 +296,8 @@ def my_argument_parser():
         help='For more help: pydabu.py check_data_bubble -h',
         description=description,
         epilog=epilog,
-        parents=[common_parser2_required])
+        parents=[common_parser2_required, common_parser6])
     parser_check_data_bubble.set_defaults(func=run_check_data_bubble)
-    parser_check_data_bubble.add_argument(
-        '-dabu_instance_file',
-        nargs=1,
-        type=check_arg_file,
-        required=False,
-        default=['.dabu.json'],   # this is not checked
-        dest='dabu_instance_file',
-        help='Gives the name of the file describing the content ' +
-        'of a data bubble. The name is relative to the given directory.',
-        metavar='f')
-    parser_check_data_bubble.add_argument(
-        '-dabu_schema_file',
-        nargs=1,
-        type=check_arg_file,
-        required=False,
-        default=['.dabu.schema'],  # this is not checked
-        dest='dabu_schema_file',
-        help='Gives the name of the file describing the necessary content ' +
-        'of a data bubble. The name is relative to the given directory.',
-        metavar='f')
     # subparser listschemas
     description = 'This command lists the provided and used json schemas.'
     epilog = 'Examples:\n\n'
@@ -320,6 +324,106 @@ def my_argument_parser():
         'json leads to a json output. ' +
         'default: simple',
         metavar='f')
+    # subparser data_bubble2jsonld
+    description = 'This command reads the data bubble '
+    description += '(.dabu.json and .dabu.schema) and creates a '
+    description += 'json-ld data bubble '
+    description += '(.dabu.json-ld and .dabu.json-ld.schema). '
+    description += 'If you are fine with these new files, you should delete '
+    description += 'the old ones by youself.'
+    epilog = 'Example:\n\n'
+    epilog += '  pydabu.py data_bubble2jsonld -dir .\n\n'
+    epilog += 'Example to check the result:\n\n'
+    epilog += '  pydabu.py check_data_bubble -dir . '
+    epilog += '-dabu_instance_file .dabu.json-ld '
+    epilog += '-dabu_schema_file .dabu.json-ld.schema\n\n'
+    parser_data_bubble2jsonld = subparsers.add_parser(
+        'data_bubble2jsonld',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        help='For more help: pydabu.py data_bubble2jsonld -h',
+        description=description,
+        epilog=epilog,
+        parents=[common_parser2_required, common_parser4, common_parser6])
+    parser_data_bubble2jsonld.set_defaults(func=run_data_bubble2jsonld)
+    parser_data_bubble2jsonld.add_argument(
+        '-dabu_jsonld_instance_file',
+        nargs=1,
+        type=check_arg_file_not_exists,
+        required=False,
+        default=['.dabu.json-ld'],   # this is not checked
+        dest='dabu_jsonld_instance_file',
+        help='Gives the name of the file describing the content ' +
+        'of a data bubble as jsonld. ' +
+        'If this file already exists an error is raised. ' +
+        'The name is relative to the given directory. ' +
+        'default: .dabu.json-ld',
+        metavar='f')
+    parser_data_bubble2jsonld.add_argument(
+        '-dabu_jsonld_schema_file',
+        nargs=1,
+        type=check_arg_file_not_exists,
+        required=False,
+        default=['.dabu.json-ld.schema'],  # this is not checked
+        dest='dabu_jsonld_schema_file',
+        help='Gives the name of the file describing the necessary content ' +
+        'of a data bubble with json-ld. ' +
+        'If this file already exists an error is raised. ' +
+        'The name is relative to the given directory. ' +
+        'default: .dabu.json-ld.schema',
+        metavar='f')
+    parser_data_bubble2jsonld.add_argument(
+        '-vocabulary',
+        nargs=1,
+        type=str,
+        choices=['schema.org'],
+        required=False,
+        default=['schema.org'],
+        dest='vocabulary',
+        help='Sets the vocabulary to use. ' +
+        'At the moment only schema.org is implemented. ' +
+        'default: schema.org',
+        metavar='v')
+    cachefilename = 'schemaorg-current-https.jsonld.bz2'
+    parser_data_bubble2jsonld.add_argument(
+        '-cachefilename',
+        nargs=1,
+        type=str,
+        required=False,
+        default=[cachefilename],
+        dest='cachefilename',
+        help='We need data from schema.org. '
+        'If you set cachefilename to an empty string, nothing is cached. '
+        'If the file ends with common extension for compression, '
+        'this comperession is used (e. g.: .gz, .lzma, .xz, .bz2). '
+        'The file is created in the cachefilepath (see this option). '
+        'default: "%s"' % cachefilename,
+        metavar='f')
+    cachefilepath = os.path.join(
+        tempfile.gettempdir(),
+        'json_schema_from_schema_org_' + pwd.getpwuid(os.getuid()).pw_name)
+    parser_data_bubble2jsonld.add_argument(
+        '-cachefilepath',
+        nargs=1,
+        type=str,
+        required=False,
+        default=[cachefilepath],
+        dest='cachefilepath',
+        help='This path is used for the cachefilename. '
+        'If necessary, this directory will be created '
+        '(not the directory tree!). '
+        'default: "%s"' % cachefilepath,
+        metavar='p')
+    parser_data_bubble2jsonld.add_argument(
+        '-author',
+        nargs=1,
+        type=str,
+        required=False,
+        dest='author',
+        help='Sets the author of the data bubble. ' +
+        'If not given, it is not added to the dabu_jsonld_instance_file. ' +
+        'Anyway the dabu_jsonld_schema_file will require it. ' +
+        'You can just give a string or any json object.',
+        metavar='p')
     return parser
 
 
