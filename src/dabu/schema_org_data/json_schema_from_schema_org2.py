@@ -1,14 +1,14 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-18 (last change).
+:Date: 2021-03-19 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import json
 import sys
 
-from dabu.compare_json_schemas import compare_json_schemas_one_way
+from dabu.compare_json_schemas import compare_json_schemas
 
 
 def _Includes_dict(object, content):
@@ -145,11 +145,11 @@ def create_context_schema(word):
 def _are_types_equal(type1, type2):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-18
+    :Date: 2021-03-19
     """
     iseq = True
     try:
-        compare_json_schemas_one_way(type1, type2)
+        compare_json_schemas(type1, type2)
     except AssertionError:
         iseq = False
     return iseq
@@ -159,10 +159,9 @@ def create_properties_schema2json(
         properties, schema2json, prop_name, word, item_type):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-18
+    :Date: 2021-03-19
     """
     value = "https://schema.org/" + word
-    store_id = True
     if prop_name not in properties:
         properties[prop_name] = dict()
         store_prop = properties[prop_name]
@@ -176,34 +175,21 @@ def create_properties_schema2json(
                 properties[prop_name]["oneOf"].append(dict())
                 store_prop = properties[prop_name]["oneOf"][-1]
             else:  # properties[prop_name]["oneOf"] is list
-                def_store_prop = False
+                newtype = dict()
+                newtype["@id"] = value
+                if isinstance(schema2json[item_type], str):
+                    newtype["type"] = schema2json[item_type]
+                else:  # dict
+                    for key in schema2json[item_type]:
+                        newtype[key] = schema2json[item_type][key]
                 for item in properties[prop_name]["oneOf"]:
-                    if (("@id" in item) and (item["@id"] == value)):
-                        # _get_property identifier
-                        iseq = False
-                        if not "oneOf" in item["type"]:
-                            iseq = _are_types_equal(schema2json[item_type],
-                                                    item["type"])
-                        else:
-                            for litem in item["type"]["oneOf"]:
-                                iseq = _are_types_equal(schema2json[item_type],
-                                                        litem["type"])
-                        if iseq:
-                            return
-                        if not "oneOf" in item["type"]:
-                            item["type"] = {"oneOf": [{"type": item["type"]}]}
-                        item["type"]["oneOf"].append(dict())
-                        store_prop = item["type"]["oneOf"][-1]
-                        def_store_prop = True
-                        store_id = False
-                        break
-                if not def_store_prop:
-                    return
+                    if _are_types_equal(newtype, item):
+                        return
+                properties[prop_name]["oneOf"].append(dict())
+                store_prop = properties[prop_name]["oneOf"][-1]
         else:
             raise NotImplementedError(json.dumps(data, indent=2))
-    if store_id:
-        store_prop["@id"] = value
-    #item_type = data["schema:rangeIncludes"]["@id"].split('schema:')[1]
+    store_prop["@id"] = value
     if isinstance(schema2json[item_type], str):
         store_prop["type"] = schema2json[item_type]
     else:  # dict
