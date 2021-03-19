@@ -37,7 +37,12 @@ command line script: :program:`pydabu.py`
 
 .. option:: listschemas
 
-   Specify the revision to work upon.
+   This command lists the provided and used json schemas.
+
+.. option:: data_bubble2jsonld
+
+   This command reads the data bubble (.dabu.json and .dabu.schema) and
+   creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).
 
 These commands are explained in more detail in the following (help output):
 
