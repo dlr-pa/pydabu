@@ -6,7 +6,7 @@
 
 tests the script: pydabu.py
 
-Or you can run only one test, e. g.::
+Or you can run only one test from this file, e. g.::
 
   pytest-3 -k test_basic_sub_commands script_pydabu.py
 """

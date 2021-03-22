@@ -29,6 +29,7 @@ from .mixin_create_data_bubble import mixin_create_data_bubble
 from .mixin_check_data_bubble import mixin_check_data_bubble
 from .mixin_listschemas import mixin_listschemas
 from .mixin_basic_sub_commands import mixin_basic_sub_commands
+from .mixin_data_bubble2jsonld import mixin_data_bubble2jsonld
 
 
 class mixin_data_bubble():
@@ -57,7 +58,8 @@ class scripty_pydabu(
         mixin_analyse_data_structure, mixin_check_netcdf_file,
         mixin_check_nasa_ames_format, mixin_check_file_format,
         mixin_common_json_format, mixin_create_data_bubble,
-        mixin_check_data_bubble, mixin_listschemas):
+        mixin_check_data_bubble, mixin_listschemas,
+        mixin_data_bubble2jsonld):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-05
