@@ -1,18 +1,18 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-05
+:Date: 2021-03-22
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the package data of the module dabu
 
-You can run this file directly:
+You can run this file directly::
 
-pytest-3 script_pydabu.py
+  pytest-3 script_pydabu.py
 
-Or you can run only one test, e. g.:
+Or you can run only one test, e. g.::
 
-pytest-3 -k test_create_data_bubble_00 script_pydabu.py
+  pytest-3 -k test_create_data_bubble_00 script_pydabu.py
 """
 
 import os.path
@@ -28,38 +28,7 @@ from .mixin_common_json_format import mixin_common_json_format
 from .mixin_create_data_bubble import mixin_create_data_bubble
 from .mixin_check_data_bubble import mixin_check_data_bubble
 from .mixin_listschemas import mixin_listschemas
-
-
-class mixin_basic_sub_commands():
-    """
-    :Author: Daniel Mohr
-    :Date: 2021-02-19
-    """
-
-    def test_basic_sub_commands(self):
-        """
-        :Author: Daniel Mohr
-        :Date: 2021-02-19
-
-        This test checks for the available sub-commands of pydabu.py
-        """
-        # check basic sub-commands
-        for cmd in ['analyse_data_structure', 'check_file_format',
-                    'listschemas']:
-            cp = subprocess.run(
-                ['pydabu.py ' + cmd],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                shell=True, timeout=self.subprocess_timeout, check=True)
-        for cmd in ['check_nasa_ames_format', 'check_netcdf_file',
-                    'common_json_format', 'create_data_bubble',
-                    'check_data_bubble']:
-            cp = subprocess.run(
-                ['pydabu.py ' + cmd],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                shell=True, timeout=self.subprocess_timeout, check=False)
-            with self.assertRaises(subprocess.CalledProcessError):
-                # parameter is necessary
-                cp.check_returncode()
+from .mixin_basic_sub_commands import mixin_basic_sub_commands
 
 
 class mixin_data_bubble():
