@@ -17,11 +17,14 @@ env python3 schema_org_data.py schema_org_data.test_add_property
 """
 
 import unittest
+
+
 class schema_org_data_add_property(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-19
     """
+
     def test_add_property(self):
         """
         :Author: Daniel Mohr
@@ -65,6 +68,7 @@ class schema_org_data_add_property(unittest.TestCase):
         add_property(a, "baz", ['bar', 'foo'])
         b["baz"] = ["baz", "bar", 'foo']
         dabu.compare_json_schemas.compare_json_schemas(a, b)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
