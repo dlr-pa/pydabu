@@ -88,7 +88,6 @@ class mixin_check_data_bubble():
                 shell=True, cwd=tmpdir,
                 timeout=self.subprocess_timeout, check=True)
 
-
     def test_create_check_data_bubble(self):
         """
         :Author: Daniel Mohr

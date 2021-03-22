@@ -33,7 +33,8 @@ class compare_json_schemas(unittest.TestCase):
         import dabu.compare_json_schemas
         dabu.compare_json_schemas.compare_json_schemas(1, 1)
         with self.assertRaises(AssertionError):
-            dabu.compare_json_schemas.compare_json_schemas({0: 1}, {0: 1, 2: 3})
+            dabu.compare_json_schemas.compare_json_schemas(
+                {0: 1}, {0: 1, 2: 3})
 
     def test_dict_compare(self):
         """
@@ -80,7 +81,7 @@ class compare_json_schemas(unittest.TestCase):
                 a, b, comparefct=self.assertEqual)
         e1 = {'b': [1, 2, {'f': 5}, [6, 7]], 'a': [{'d': 2, 'c': 1}, [3, 4]]}
         e2 = {'a': [[4, 3], {'c': 1, 'd': 2}], 'b': [2, 1, [6, 7], {'f': 5}]}
-        a = {'e': e1,'b': [1, 2, e2], 'a': [{'d': 2, 'c': 1}, [3, 4]]}
+        a = {'e': e1, 'b': [1, 2, e2], 'a': [{'d': 2, 'c': 1}, [3, 4]]}
         b = {'a': [[4, 3], {'c': 1, 'd': 2}], 'b': [2, e1, 1], 'e': e2}
         dabu.compare_json_schemas.compare_json_schemas(
             a, b, comparefct=self.assertEqual)

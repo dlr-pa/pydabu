@@ -115,7 +115,6 @@ def module(suite):
         loader.loadTestsFromName('pydabu_unittests.schema_org_data'))
 
 
-
 def scripts(suite):
     """
     :Author: Daniel Mohr
@@ -126,7 +125,7 @@ def scripts(suite):
     add tests for the scripts
     """
     print('add tests for the scripts')
-    loader=unittest.defaultTestLoader
+    loader = unittest.defaultTestLoader
     suite.addTest(loader.loadTestsFromTestCase(test_scripts_executable))
     # pydabu.py
     suite.addTest(loader.loadTestsFromName('pydabu_unittests.script_pydabu'))
