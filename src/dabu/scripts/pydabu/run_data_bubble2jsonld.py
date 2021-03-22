@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-19 (last change).
+:Date: 2021-03-22 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -20,7 +20,7 @@ def run_data_bubble2jsonld(args):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-19 (last change).
+    :Date: 2021-03-22 (last change).
 
     :param args: namespace return from ArgumentParser.parse_args
     """
@@ -59,7 +59,12 @@ def run_data_bubble2jsonld(args):
         for key in schema["properties"]["@context"]["required"]:
             instance["@context"][key] = prop[key]["enum"][0]
         if args.author is not None:
-            instance["author"] = args.author[0]
+            try:
+                author = json.loads(args.author[0])
+            except json.JSONDecodeError:
+                author = {"@id": "http://schema.org/author",
+                          "name": args.author[0]}
+            instance["author"] = author
         if isinstance(schema["$schema"], list):
             index = len(schema["$schema"]) - 1
             while 0 < index:

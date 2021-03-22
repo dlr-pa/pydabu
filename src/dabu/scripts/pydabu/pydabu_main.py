@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-19 (last change).
+:Date: 2021-03-22 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -39,7 +39,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-19 (last change).
+    :Date: 2021-03-22 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -53,7 +53,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-03-19\n"
+    epilog += "Date: 2021-03-22\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -331,8 +331,11 @@ def my_argument_parser():
     description += '(.dabu.json-ld and .dabu.json-ld.schema). '
     description += 'If you are fine with these new files, you should delete '
     description += 'the old ones by youself.'
-    epilog = 'Example:\n\n'
+    epilog = 'Examples:\n\n'
     epilog += '  pydabu.py data_bubble2jsonld -dir .\n\n'
+    epilog += '  pydabu.py data_bubble2jsonld -dir . -author "Daniel Mohr"\n\n'
+    epilog += '  pydabu.py data_bubble2jsonld -dir . -author \'{"@id": "http://schema.org/author", "name": "Daniel Mohr", "identifier": {"propertyID": "https://orcid.org/", "name": "ORCID", "value": "0000-0002-9382-6586", "url": "https://orcid.org/0000-0002-9382-6586"}}\'\n\n'
+    epilog += '  pydabu.py data_bubble2jsonld -dir . -author \'[{"@id": "http://schema.org/author", "name": "er"}, {"@id": "http://schema.org/author", "name": "sie"}, {"@id": "http://schema.org/author", "name": "es"}]\'\n\n'
     epilog += 'Example to check the result:\n\n'
     epilog += '  pydabu.py check_data_bubble -dir . '
     epilog += '-dabu_instance_file .dabu.json-ld '
