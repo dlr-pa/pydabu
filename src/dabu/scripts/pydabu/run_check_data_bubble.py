@@ -17,10 +17,11 @@ def run_check_data_bubble(args):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-15 (last change).
+    :Date: 2021-03-23 (last change).
 
     :param args: namespace return from ArgumentParser.parse_args
     """
+    ret = True
     for path in args.directory:  # for every given directory
         check_arg_file(os.path.join(path, args.dabu_instance_file[0]))
         check_arg_file(os.path.join(path, args.dabu_schema_file[0]))
@@ -62,5 +63,8 @@ def run_check_data_bubble(args):
                         err.message,
                         filenameoutput,
                         ' -> '.join(map(str, err.path))))
+                ret = False
             else:
                 print(err.message)
+                ret = False
+    return ret

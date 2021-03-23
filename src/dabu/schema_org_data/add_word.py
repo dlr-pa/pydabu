@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-19 (last change).
+:Date: 2021-03-23 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -27,7 +27,7 @@ def create_context_schema(word):
 def add_word(schemaorg_data, word, draft='draft-04'):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-16
+    :Date: 2021-03-23
 
     This function generates a json schema from https://schema.org , which
     desribes the given word.
@@ -58,10 +58,11 @@ def add_word(schemaorg_data, word, draft='draft-04'):
         schema["definitions"][word]["type"] = "object"
         if "rdfs:comment" in data:
             schema["definitions"][word]["description"] = data["rdfs:comment"]
-        schema["definitions"][word]["required"] = ["@context"]
+        #schema["definitions"][word]["required"] = ["@context"]
+        schema["definitions"][word]["required"] = []
         schema["definitions"][word]["properties"] = dict()
         properties = schema["definitions"][word]["properties"]
-        properties["@context"] = create_context_schema(word)
+        #properties["@context"] = create_context_schema(word)
         if "rdfs:subClassOf" in data:
             subClassOf = []
             if isinstance(data["rdfs:subClassOf"], dict):
@@ -92,4 +93,6 @@ def add_word(schemaorg_data, word, draft='draft-04'):
         schema["required"] = ["@context"]
         schema["properties"] = dict()
         schema["properties"]["@context"] = create_context_schema(word)
+        if len(schema["definitions"][word]["required"]) == 0:
+            del schema["definitions"][word]["required"]
     return missing_words, schema
