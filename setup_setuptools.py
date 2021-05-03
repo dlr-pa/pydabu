@@ -148,6 +148,7 @@ required_modules = ['argparse',
                     'os',
                     'os.path',
                     'pkgutil',
+                    'pwd',
                     're',
                     'subprocess',
                     'sys',
@@ -178,7 +179,7 @@ required_modules += ['pkg_resources']
 install_requires += ['pkg_resources']
 # optional modules for python3 setup.py check_modules
 required_modules += ['importlib']
-#install_requires += ['importlib'] # version from pypi.org does not work
+# install_requires += ['importlib'] # version from pypi.org does not work
 # optional modules for python3 setup.py check_modules_modulefinder
 required_modules += ['modulefinder']
 # install_requires += ['modulefinder'] # version from pypi.org does not work
@@ -191,7 +192,7 @@ required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 # not available by pypi.org: sphinxarg
 install_requires += ['sphinx', 'recommonmark']
 # modules to run tests with unittest
-required_modules += ['unittest']
+required_modules += ['unittest', 'shutil']
 # install_requires += ['unittest'] # not available by pypi.org
 # modules to run tests with pytest
 required_modules += ['pytest']
