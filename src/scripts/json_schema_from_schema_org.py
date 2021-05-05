@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Author: Daniel Mohr.
 Date: 2021-03-04 (last change).
