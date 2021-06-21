@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-05-03
+:Date: 2021-06-21
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -55,7 +55,7 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-03-19
+        :Date: 2021-06-21
         """
         import sys
         import os.path
@@ -115,7 +115,7 @@ class TestWithPytest(Command):
             pyargs += ['pydabu_unittests/script_json_schema_from_schema_org.py']
         pyplugins = []
         print('call: pytest', ' '.join(pyargs))
-        pytest.main(pyargs, pyplugins)
+        sys.exit(pytest.main(pyargs, pyplugins))
 
 
 class TestWithUnittest(Command):
@@ -155,7 +155,7 @@ class TestWithUnittest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-03-05
+        :Date: 2021-06-21
         """
         import sys
         import os.path
@@ -184,7 +184,18 @@ class TestWithUnittest(Command):
             test_required_module_import))
         if self.src == 'installed':
             pydabu_unittests.scripts(suite)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        if unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful():
+            sys.exit(0)
+        else:
+            sys.exit(1)
+        a = unittest.TextTestRunner(verbosity=2).run(suite)
+        print('\n########\n')
+        print(type(a))
+        print(a)
+        if a.wasSuccessful():
+            sys.exit(0)
+        else:
+            sys.exit(1)
 
 
 class CheckModules(Command):
@@ -297,7 +308,7 @@ required_modules += ['pytest_cov']
 
 setup(
     name='pydabu',
-    version='2021-05-03',
+    version='2021-06-21',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
