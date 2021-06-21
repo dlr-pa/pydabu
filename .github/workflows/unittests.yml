@@ -1,0 +1,36 @@
+# https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+
+# todo:
+# https://docs.github.com/en/actions/guides/building-and-testing-python
+# https://docs.github.com/en/actions/guides/caching-dependencies-to-speed-up-workflows
+
+name: unittests
+
+on:
+  push:
+#    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
+
+jobs:
+  build:
+
+#    runs-on: ubuntu-latest
+#    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: install dependencies (ubuntu packages)
+      run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 python3-sphinx python3-sphinx-argparse python3-recommonmark python3-pytest python3-pytest-cov python3-pytest-xdist libudunits2-0
+    - name: install dependencies (cfchecker via pip)
+      run: pip3 install cfchecker
+    - name: install dependencies (sphinx-jsonschema via pip)
+      run: pip3 install sphinx-jsonschema
+    - name: install pydabu
+      run: pip3 install .
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
