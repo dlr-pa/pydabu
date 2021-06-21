@@ -9,9 +9,9 @@ name: unittests
 
 on:
   push:
-#    branches: [ main ]
-#  pull_request:
-#    branches: [ main ]
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
