@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-06-21
+:Date: 2021-06-23
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -14,7 +14,7 @@ class TestWithPytest(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-19
+    :Date: 2021-06-23
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with pytest
@@ -55,7 +55,7 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-06-21
+        :Date: 2021-06-23
         """
         import sys
         import os.path
@@ -83,9 +83,9 @@ class TestWithPytest(Command):
                     nthreads = int(os.cpu_count() - os.getloadavg()[0])
                     # since we have only a few tests, limit overhead:
                     nthreads = min(4, nthreads)
-                    nthreads = max(1, nthreads)  # at least one thread
+                    nthreads = max(2, nthreads)  # at least two threads
                 else:
-                    nthreads = max(1, int(0.5 * os.cpu_count()))
+                    nthreads = max(2, int(0.5 * os.cpu_count()))
                 pyargs += ['-n %i' % nthreads]
             except:
                 pass
@@ -308,7 +308,7 @@ required_modules += ['pytest_cov']
 
 setup(
     name='pydabu',
-    version='2021-06-21',
+    version='2021-06-23',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,
