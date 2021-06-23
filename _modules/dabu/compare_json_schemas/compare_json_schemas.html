@@ -1,0 +1,244 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dabu.compare_json_schemas.compare_json_schemas &#8212; pydabu 2021-03-05 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2021-03-05',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within pydabu 2021-03-05 documentation"
+          href="../../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dabu.compare_json_schemas.compare_json_schemas</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:Author: Daniel Mohr</span>
+<span class="sd">:Email: daniel.mohr@dlr.de</span>
+<span class="sd">:Date: 2021-03-10</span>
+<span class="sd">:License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">dict_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-09</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">dict_equal</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">])):</span>
+                <span class="k">if</span> <span class="n">any_element_equal_list</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">key</span><span class="p">]):</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="n">b</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">equal_list_as_set</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-10</span>
+
+<span class="sd">    return True if for every element in a if it is also available in b</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="c1"># is any element in b equal to i?</span>
+        <span class="k">if</span> <span class="n">any_element_equal_list</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">any_element_equal_list</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-10</span>
+
+<span class="sd">    checks if any element of l is in e</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dict_equal</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">equal_list_as_set</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">e</span> <span class="o">==</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">compare_list_as_set</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">comparefct</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-10</span>
+
+<span class="sd">    checks for every element in a if it is also available in b</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">comparefct</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+    <span class="n">comparefct</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+        <span class="c1"># is any element in b equal to i?</span>
+        <span class="k">if</span> <span class="n">any_element_equal_list</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">comparefct</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">compare_dict</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">comparefct</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-09</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">comparefct</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">set</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">compare_dict</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">comparefct</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">compare_list_as_set</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">comparefct</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">comparefct</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">assertEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">compare_json_schemas_one_way</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">comparefct</span><span class="o">=</span><span class="n">assertEqual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-09</span>
+
+<span class="sd">    This function compares the json schemas a with b and checks if a</span>
+<span class="sd">    is in b.</span>
+
+<span class="sd">    :param a: json schema to compare</span>
+<span class="sd">    :param b: json schema to compare</span>
+<span class="sd">    :param comparefct: compare function to use; </span>
+<span class="sd">                       e. g. self.assertEqual in unittests</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">compare_dict</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">comparefct</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">compare_list_as_set</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">comparefct</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">comparefct</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<div class="viewcode-block" id="compare_json_schemas"><a class="viewcode-back" href="../../../module_dabu.html#dabu.compare_json_schemas.compare_json_schemas">[docs]</a><span class="k">def</span> <span class="nf">compare_json_schemas</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">comparefct</span><span class="o">=</span><span class="n">assertEqual</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-10</span>
+
+<span class="sd">    This function compares the two json schemas a and b.</span>
+
+<span class="sd">    :param a: json schema to compare</span>
+<span class="sd">    :param b: json schema to compare</span>
+<span class="sd">    :param comparefct: compare function to use; </span>
+<span class="sd">                       e. g. self.assertEqual in unittests</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">compare_json_schemas_one_way</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">comparefct</span><span class="o">=</span><span class="n">comparefct</span><span class="p">)</span>
+    <span class="n">compare_json_schemas_one_way</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">comparefct</span><span class="o">=</span><span class="n">comparefct</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Welcome to pydabu’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">README: pydabu – Python Data Bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INSTALL.html">INSTALL: pydabu – Python data bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../walkthrough.html">walk-through pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../script_pydabu.html">command line script: <strong class="program">pydabu.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../schemas.html">Provided and used json schemas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_dabu.html">python module: <code class="docutils literal"><span class="pre">dabu</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_coverage_report/index.html">test coverage report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license_link.html">LICENSE: pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gpl.html">GPL</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Daniel Mohr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

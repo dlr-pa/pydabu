@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dabu.schema_org_data.get_schema_org_data &#8212; pydabu 2021-03-05 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2021-03-05',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within pydabu 2021-03-05 documentation"
+          href="../../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dabu.schema_org_data.get_schema_org_data</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:Author: Daniel Mohr</span>
+<span class="sd">:Email: daniel.mohr@dlr.de</span>
+<span class="sd">:Date: 2021-03-09 (last change).</span>
+<span class="sd">:License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">lzma</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">ssl</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+
+
+<span class="k">def</span> <span class="nf">lzma_open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">lzma</span><span class="o">.</span><span class="n">FORMAT_ALONE</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-09</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">lzma</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_schema_org_data"><a class="viewcode-back" href="../../../module_dabu.html#dabu.schema_org_data.get_schema_org_data">[docs]</a><span class="k">def</span> <span class="nf">get_schema_org_data</span><span class="p">(</span><span class="n">cachefilepath</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">cachefilename</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Date: 2021-03-09</span>
+
+<span class="sd">    This function returns the data from</span>
+<span class="sd">    https://schema.org/version/latest/schemaorg-current-https.jsonld</span>
+<span class="sd">    as a json-ld structure (parsed by the python module json).</span>
+
+<span class="sd">    :param cachefilepath: This path is used as the path for the cachefilename.</span>
+<span class="sd">    :param cachefilename: If not set to an empty string, the data is read</span>
+<span class="sd">                          from this file. If this file does not exists,</span>
+<span class="sd">                          the data is loadd from the website and stored</span>
+<span class="sd">                          in this file.</span>
+
+<span class="sd">    :return: json-ld structure (parsed by the python module json) as </span>
+<span class="sd">             dicts and lists</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">schema_org_data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">opencmds</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="nb">open</span><span class="p">,</span>
+                <span class="s1">&#39;.jsonld&#39;</span><span class="p">:</span> <span class="nb">open</span><span class="p">,</span>
+                <span class="s1">&#39;.gz&#39;</span><span class="p">:</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">,</span>
+                <span class="s1">&#39;.lzma&#39;</span><span class="p">:</span> <span class="n">lzma_open</span><span class="p">,</span>
+                <span class="s1">&#39;.xz&#39;</span><span class="p">:</span> <span class="n">lzma</span><span class="o">.</span><span class="n">open</span><span class="p">,</span>
+                <span class="s1">&#39;.bz2&#39;</span><span class="p">:</span> <span class="n">bz2</span><span class="o">.</span><span class="n">open</span><span class="p">}</span>
+    <span class="n">cachefilenamepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cachefilepath</span><span class="p">,</span> <span class="n">cachefilename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cachefilename</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">cachefilenamepath</span><span class="p">)</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">opencmds</span><span class="p">:</span>
+            <span class="n">open_cmd</span> <span class="o">=</span> <span class="n">opencmds</span><span class="p">[</span><span class="n">ext</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">open_cmd</span> <span class="o">=</span> <span class="n">opencmds</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cachefilename</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">cachefilenamepath</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">open_cmd</span><span class="p">(</span><span class="n">cachefilenamepath</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+            <span class="n">schema_org_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://schema.org/version/latest/schemaorg-current-https.jsonld&#39;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+            <span class="n">schema_org_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">schema_org_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cachefilename</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cachefilepath</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">cachefilepath</span><span class="p">)):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">cachefilepath</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">open_cmd</span><span class="p">(</span><span class="n">cachefilenamepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+                <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">schema_org_data</span><span class="p">,)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">schema_org_data</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Welcome to pydabu’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">README: pydabu – Python Data Bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INSTALL.html">INSTALL: pydabu – Python data bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../walkthrough.html">walk-through pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../script_pydabu.html">command line script: <strong class="program">pydabu.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../schemas.html">Provided and used json schemas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_dabu.html">python module: <code class="docutils literal"><span class="pre">dabu</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_coverage_report/index.html">test coverage report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license_link.html">LICENSE: pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gpl.html">GPL</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Daniel Mohr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

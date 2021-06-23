@@ -1,0 +1,177 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dabu.analyse_file_format.analyse_file_format_dict &#8212; pydabu 2021-03-05 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2021-03-05',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within pydabu 2021-03-05 documentation"
+          href="../../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dabu.analyse_file_format.analyse_file_format_dict</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:Author: Daniel Mohr</span>
+<span class="sd">:Email: daniel.mohr@dlr.de</span>
+<span class="sd">:Date: 2021-02-19 (last change).</span>
+<span class="sd">:License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">.analyse_file_format</span> <span class="k">import</span> <span class="n">analyse_file_format</span>
+<span class="kn">from</span> <span class="nn">.extract_hash_from_checksum_file</span> <span class="k">import</span> <span class="n">extract_hash_from_checksum_file</span>
+<span class="kn">from</span> <span class="nn">.create_checksum</span> <span class="k">import</span> <span class="n">create_checksum</span>
+<span class="kn">from</span> <span class="nn">dabu.check_netcdf_file</span> <span class="k">import</span> <span class="n">check_netcdf_file</span>
+<span class="kn">from</span> <span class="nn">dabu.check_nasa_ames_format</span> <span class="k">import</span> <span class="n">check_nasa_ames_format</span>
+
+
+<div class="viewcode-block" id="analyse_file_format_dict"><a class="viewcode-back" href="../../../module_dabu.html#dabu.analyse_file_format.analyse_file_format_dict">[docs]</a><span class="k">def</span> <span class="nf">analyse_file_format_dict</span><span class="p">(</span>
+        <span class="n">result</span><span class="p">,</span> <span class="n">output_format</span><span class="p">,</span> <span class="n">store_checksums</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">checksum_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Email: daniel.mohr@dlr.de</span>
+<span class="sd">    :Date: 2021-02-17 (last change).</span>
+
+<span class="sd">    Analyse the file format of the files stored in result.</span>
+
+<span class="sd">    :param result: a dict; only the key &#39;data&#39; will be adapted</span>
+<span class="sd">    :param output_format: describes the output format in a list</span>
+<span class="sd">    :param store_checksums: if True find/calculate checksums for each file</span>
+<span class="sd">    :param checksum_file: the file to import the checksums from</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;data&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span>  <span class="c1"># nothing to do, no data files available</span>
+    <span class="k">if</span> <span class="n">checksum_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">hash_from_checksum_file</span> <span class="o">=</span> <span class="n">extract_hash_from_checksum_file</span><span class="p">(</span>
+            <span class="n">checksum_file</span><span class="p">)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">file_extension</span> <span class="o">=</span> <span class="n">analyse_file_format</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">resitem</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">f</span><span class="p">,</span> <span class="s1">&#39;file_extension&#39;</span><span class="p">:</span> <span class="n">file_extension</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">store_checksums</span><span class="p">:</span>
+            <span class="n">checksum</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">checksum_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">hash_info</span> <span class="o">=</span> <span class="n">hash_from_checksum_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;base64&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">hash_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">checksum</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;hash&#39;</span><span class="p">:</span> <span class="n">hash_info</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="n">hash_info</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="n">hash_info</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]}</span>
+            <span class="k">if</span> <span class="n">checksum</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">hash_byte_array</span> <span class="o">=</span> <span class="n">create_checksum</span><span class="p">(</span><span class="n">f</span><span class="p">,</span>
+                                                  <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;sha512&#39;</span><span class="p">,</span>
+                                                  <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;base64&#39;</span><span class="p">)</span>
+                <span class="n">checksum</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;hash&#39;</span><span class="p">:</span> <span class="n">hash_byte_array</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+                            <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="s1">&#39;sha512&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;base64&#39;</span><span class="p">}</span>
+            <span class="k">if</span> <span class="n">checksum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;checksum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">checksum</span>
+        <span class="k">if</span> <span class="n">file_extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;.nc&quot;</span><span class="p">:</span>  <span class="c1"># NetCDF file</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;netcdf check&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">check_netcdf_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">output_format</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Could not check NetCDF file.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;netcdf check&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;netcdf check&#39;</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;netcdf check&#39;</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                    <span class="p">[</span><span class="s1">&#39;Could not check NetCDF file.&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">file_extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.nas&#39;</span><span class="p">,</span> <span class="s1">&#39;.na&#39;</span><span class="p">]:</span>  <span class="c1"># NASA Ames Format</span>
+            <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;nasa ames format check&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">check_nasa_ames_format</span><span class="p">(</span>
+                <span class="n">f</span><span class="p">,</span> <span class="n">output_format</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resitem</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Welcome to pydabu’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">README: pydabu – Python Data Bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INSTALL.html">INSTALL: pydabu – Python data bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../walkthrough.html">walk-through pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../script_pydabu.html">command line script: <strong class="program">pydabu.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../schemas.html">Provided and used json schemas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_dabu.html">python module: <code class="docutils literal"><span class="pre">dabu</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_coverage_report/index.html">test coverage report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license_link.html">LICENSE: pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gpl.html">GPL</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Daniel Mohr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,552 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dabu.scripts.pydabu.pydabu_main &#8212; pydabu 2021-03-05 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2021-03-05',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within pydabu 2021-03-05 documentation"
+          href="../../../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dabu.scripts.pydabu.pydabu_main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:Author: Daniel Mohr</span>
+<span class="sd">:Email: daniel.mohr@dlr.de</span>
+<span class="sd">:Date: 2021-03-22 (last change).</span>
+<span class="sd">:License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">pwd</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">from</span> <span class="nn">.check_arg_file_not_exists</span> <span class="k">import</span> <span class="n">check_arg_file_not_exists</span>
+<span class="kn">from</span> <span class="nn">.check_arg_file</span> <span class="k">import</span> <span class="n">check_arg_file</span>
+<span class="kn">from</span> <span class="nn">.run_analyse_data_structure</span> <span class="k">import</span> <span class="n">run_analyse_data_structure</span>
+<span class="kn">from</span> <span class="nn">.run_check_file_format</span> <span class="k">import</span> <span class="n">run_check_file_format</span>
+<span class="kn">from</span> <span class="nn">.run_check_netcdf_file</span> <span class="k">import</span> <span class="n">run_check_netcdf_file</span>
+<span class="kn">from</span> <span class="nn">.run_check_nasa_ames_format</span> <span class="k">import</span> <span class="n">run_check_nasa_ames_format</span>
+<span class="kn">from</span> <span class="nn">.run_common_json_format</span> <span class="k">import</span> <span class="n">run_common_json_format</span>
+<span class="kn">from</span> <span class="nn">.run_create_data_bubble</span> <span class="k">import</span> <span class="n">run_create_data_bubble</span>
+<span class="kn">from</span> <span class="nn">.run_check_data_bubble</span> <span class="k">import</span> <span class="n">run_check_data_bubble</span>
+<span class="kn">from</span> <span class="nn">.run_listschemas</span> <span class="k">import</span> <span class="n">run_listschemas</span>
+<span class="kn">from</span> <span class="nn">.run_data_bubble2jsonld</span> <span class="k">import</span> <span class="n">run_data_bubble2jsonld</span>
+
+
+<span class="k">def</span> <span class="nf">check_arg_directory</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Email: daniel.mohr@dlr.de</span>
+<span class="sd">    :Date: 2021-01-19 (last change).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; is not a directory&#39;</span> <span class="o">%</span> <span class="n">data</span>
+        <span class="k">raise</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentTypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">my_argument_parser</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Email: daniel.mohr@dlr.de</span>
+<span class="sd">    :Date: 2021-03-22 (last change).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;You can few the json output for example in firefox, &quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;e. g. in bash:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;  output=$(tempfile --suffix=&#39;.json&#39;); &quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;pydabu.py analyse_data_structure -output_format json &gt; &quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;$output &amp;&amp; firefox $output; &quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;sleep 3; rm $output</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;  output=$(tempfile --suffix=&#39;.json&#39;); &quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;pydabu.py check_netcdf_file -f $(find . -iname &#39;*.nc&#39;) &quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;-output_format json &gt; $output &amp;&amp; firefox $output; &quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;sleep 3; rm $output</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;Author: Daniel Mohr</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;Date: 2021-03-22</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.&quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;pydabu.py is a script to check a data bubble.&#39;</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">)</span>
+    <span class="c1"># parent parser to describe common argument</span>
+    <span class="n">common_parser1</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">common_parser1</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-output_format&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;human_readable&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span> <span class="s1">&#39;json1&#39;</span><span class="p">],</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;json1&#39;</span><span class="p">],</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;output_format&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set the output format to use. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;human_readable gives a nice json output with skipped data. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;json is the normal json output. json1 is the full data with &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;nice output like human_readable. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;default: json1&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">common_parser2</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">common_parser2</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-directory&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_directory</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">],</span>  <span class="c1"># this is not checked against the required type</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;directory&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set the directory to use. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;You can also give a list of directories separated by space. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;default: .&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+    <span class="n">common_parser2_required</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">common_parser2_required</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-directory&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_directory</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;directory&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set the directory to use. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;You can also give a list of directories separated by space.&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+    <span class="n">common_parser3</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">common_parser3</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-file&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_file</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set the file(s) to use. &#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">common_parser4</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">common_parser4</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-indent&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;indent&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;In the output the elements will be indented &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;by this number of spaces.&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;i&#39;</span><span class="p">)</span>
+    <span class="n">common_parser5</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">common_parser5</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-skip_creating_checksums&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;skip_creating_checksums&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Skip creating checksums, which could take a while.&#39;</span><span class="p">)</span>
+    <span class="n">common_parser5</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-checksum_from_file&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_file</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;checksum_from_file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Try to get checksums from the given file.&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">common_parser6</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">common_parser6</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-dabu_instance_file&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_file</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.dabu.json&#39;</span><span class="p">],</span>   <span class="c1"># this is not checked</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;dabu_instance_file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Gives the name of the file describing the content &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;of a data bubble. The name is relative to the given directory.&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">common_parser6</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-dabu_schema_file&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_file</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.dabu.schema&#39;</span><span class="p">],</span>  <span class="c1"># this is not checked</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;dabu_schema_file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Gives the name of the file describing the necessary content &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;of a data bubble. The name is relative to the given directory.&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="c1"># subparsers</span>
+    <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;subparser_name&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;There are different sub-commands with there own flags.&#39;</span><span class="p">)</span>
+    <span class="c1"># subparser analyse_data_structure</span>
+    <span class="n">parser_analyse_data_structure</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;analyse_data_structure&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py analyse_data_structure -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser1</span><span class="p">,</span> <span class="n">common_parser2</span><span class="p">])</span>
+    <span class="n">parser_analyse_data_structure</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_analyse_data_structure</span><span class="p">)</span>
+    <span class="c1"># subparser check_nasa_ames_format</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command checks a file in the nasa ames format.&#39;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Example:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_nasa_ames_format -f a.na &gt; dabu_ames.json</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i dabu_ames.json &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;~/lib/python/dabu/schemas/dabu.schema</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i dabu_ames.json &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;~/lib/python/dabu/schemas/dabu_requires.schema</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">parser_check_nasa_ames_format</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;check_nasa_ames_format&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py check_nasa_ames_format -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser1</span><span class="p">,</span> <span class="n">common_parser3</span><span class="p">])</span>
+    <span class="n">parser_check_nasa_ames_format</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_check_nasa_ames_format</span><span class="p">)</span>
+    <span class="c1"># subparser check_netcdf_file</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command checks a file in the format netCDF. &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;It uses the CF Checker: &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;https://github.com/cedadev/cf-checker&#39;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Example:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_netcdf_file -f a.nc &gt; dabu_netcdf.json</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i dabu_netcdf.json &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;~/lib/python/dabu/schemas/dabu.schema</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i dabu_netcdf.json &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;~/lib/python/dabu/schemas/dabu_requires.schema</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">parser_check_netcdf_file</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;check_netcdf_file&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py check_netcdf_file -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser1</span><span class="p">,</span> <span class="n">common_parser3</span><span class="p">])</span>
+    <span class="n">parser_check_netcdf_file</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_check_netcdf_file</span><span class="p">)</span>
+    <span class="c1"># subparser check_file_format</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command checks the file formats. &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;In a first step the data structure is analysed like the &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;command &quot;analyse_data_structure&quot; does. &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;Each file is checked by a tool choosen by the &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;file extension. &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;For the file extension &quot;.nc&quot; the command &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;check_netcdf_file is used. &#39;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Examples:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_file_format -d . &gt; dabu.json</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i dabu.json &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;~/lib/python/dabu/schemas/dabu.schema</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i dabu.json &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;~/lib/python/dabu/schemas/dabu_requires.schema</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_file_format -skip_creating_checksums</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_file_format -checksum_from_file .checksum.sha512&#39;</span>
+    <span class="n">parser_check_file_format</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;check_file_format&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py check_file_format -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser1</span><span class="p">,</span> <span class="n">common_parser2</span><span class="p">,</span> <span class="n">common_parser5</span><span class="p">])</span>
+    <span class="n">parser_check_file_format</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_check_file_format</span><span class="p">)</span>
+    <span class="c1"># subparser common_json_format</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command read the given json file and writes it &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;in a common format to stdout.&#39;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Example:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py common_json_format -f .dabu.json</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py common_json_format -f .dabu.json &gt; foo</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  mv foo .dabu.json</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">parser_common_json_format</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;common_json_format&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py common_json_format -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser3</span><span class="p">,</span> <span class="n">common_parser4</span><span class="p">])</span>
+    <span class="n">parser_common_json_format</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_common_json_format</span><span class="p">)</span>
+    <span class="c1"># subparser create_data_bubble</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command creates a data bubble in the give directory. &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;The data is generated with the command &quot;check_file_format&quot; &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;from the data in the directory. &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;Also the resulting files are not a data management plan, &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;you can enhance it to become one.&#39;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Example:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py create_data_bubble -d mydata</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py create_data_bubble -dir .</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i .dabu.json .dabu.schema</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">parser_create_data_bubble</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;create_data_bubble&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py create_data_bubble -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser2_required</span><span class="p">,</span> <span class="n">common_parser4</span><span class="p">,</span> <span class="n">common_parser5</span><span class="p">])</span>
+    <span class="n">parser_create_data_bubble</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_create_data_bubble</span><span class="p">)</span>
+    <span class="n">parser_create_data_bubble</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-dabu_instance_file&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_file_not_exists</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.dabu.json&#39;</span><span class="p">],</span>   <span class="c1"># this is not checked</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;dabu_instance_file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Gives the name of the file describing the content &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;of a data bubble. If this file already exists an error is raised. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;The name is relative to the given directory.&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">parser_create_data_bubble</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-dabu_schema_file&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_file_not_exists</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.dabu.schema&#39;</span><span class="p">],</span>  <span class="c1"># this is not checked</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;dabu_schema_file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Gives the name of the file describing the necessary content &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;of a data bubble. If this file already exists an error is raised. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;The name is relative to the given directory.&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="c1"># subparser check_data_bubble</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command checks a data bubble in the given directory. &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;The data bubble should be created with &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;&quot;pydabu.py create_data_bubble&quot; and manually enhanced. &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;Instead of this script you can also use your preferred &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;tool to check a json instance (e. g. .dabu.json) against &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;a json schema (e. g. .dabu.schema) -- see examples.&#39;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Examples:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_data_bubble -dir mydata</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  cd mydata &amp;&amp; jsonschema -i .dabu.json .dabu.schema</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">parser_check_data_bubble</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;check_data_bubble&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py check_data_bubble -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser2_required</span><span class="p">,</span> <span class="n">common_parser6</span><span class="p">])</span>
+    <span class="n">parser_check_data_bubble</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_check_data_bubble</span><span class="p">)</span>
+    <span class="c1"># subparser listschemas</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command lists the provided and used json schemas.&#39;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Examples:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py listschemas</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">parser_listschemas</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;listschemas&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py listschemas -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">)</span>
+    <span class="n">parser_listschemas</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_listschemas</span><span class="p">)</span>
+    <span class="c1"># the following artificial parameter is necessary to build the documentation</span>
+    <span class="c1"># with sphinx-argparse or rather sphinxarg.ext</span>
+    <span class="n">parser_listschemas</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-output_format&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;simple&#39;</span><span class="p">,</span> <span class="s1">&#39;json&#39;</span><span class="p">],</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;simple&#39;</span><span class="p">],</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;output_format&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Set the output format to use. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;simple lists the json schmeas in lines. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;json leads to a json output. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;default: simple&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="c1"># subparser data_bubble2jsonld</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command reads the data bubble &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;(.dabu.json and .dabu.schema) and creates a &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;json-ld data bubble &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;(.dabu.json-ld and .dabu.json-ld.schema). &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;If you are fine with these new files, you should delete &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;the old ones by youself.&#39;</span>
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Examples:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir .</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir . -author &quot;Daniel Mohr&quot;</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir . -author </span><span class="se">\&#39;</span><span class="s1">{&quot;name&quot;: &quot;Daniel Mohr&quot;, &quot;identifier&quot;: {&quot;propertyID&quot;: &quot;https://orcid.org/&quot;, &quot;name&quot;: &quot;ORCID&quot;, &quot;value&quot;: &quot;0000-0002-9382-6586&quot;, &quot;url&quot;: &quot;https://orcid.org/0000-0002-9382-6586&quot;}}</span><span class="se">\&#39;\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir . -author </span><span class="se">\&#39;</span><span class="s1">[{&quot;name&quot;: &quot;er&quot;}, {&quot;name&quot;: &quot;sie&quot;}, {&quot;name&quot;: &quot;es&quot;}]</span><span class="se">\&#39;\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;Example to check the result:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_data_bubble -dir . &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;-dabu_instance_file .dabu.json-ld &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;-dabu_schema_file .dabu.json-ld.schema</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">parser_data_bubble2jsonld</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s1">&#39;data_bubble2jsonld&#39;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;For more help: pydabu.py data_bubble2jsonld -h&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">common_parser2_required</span><span class="p">,</span> <span class="n">common_parser4</span><span class="p">,</span> <span class="n">common_parser6</span><span class="p">])</span>
+    <span class="n">parser_data_bubble2jsonld</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_data_bubble2jsonld</span><span class="p">)</span>
+    <span class="n">parser_data_bubble2jsonld</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-dabu_jsonld_instance_file&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_file_not_exists</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.dabu.json-ld&#39;</span><span class="p">],</span>   <span class="c1"># this is not checked</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;dabu_jsonld_instance_file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Gives the name of the file describing the content &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;of a data bubble as jsonld. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;If this file already exists an error is raised. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;The name is relative to the given directory. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;default: .dabu.json-ld&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">parser_data_bubble2jsonld</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-dabu_jsonld_schema_file&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">check_arg_file_not_exists</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;.dabu.json-ld.schema&#39;</span><span class="p">],</span>  <span class="c1"># this is not checked</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;dabu_jsonld_schema_file&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Gives the name of the file describing the necessary content &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;of a data bubble with json-ld. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;If this file already exists an error is raised. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;The name is relative to the given directory. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;default: .dabu.json-ld.schema&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">parser_data_bubble2jsonld</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-vocabulary&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;schema.org&#39;</span><span class="p">],</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;schema.org&#39;</span><span class="p">],</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;vocabulary&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Sets the vocabulary to use. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;At the moment only schema.org is implemented. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;default: schema.org&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">)</span>
+    <span class="n">cachefilename</span> <span class="o">=</span> <span class="s1">&#39;schemaorg-current-https.jsonld.bz2&#39;</span>
+    <span class="n">parser_data_bubble2jsonld</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-cachefilename&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="n">cachefilename</span><span class="p">],</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;cachefilename&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;We need data from schema.org. &#39;</span>
+        <span class="s1">&#39;If you set cachefilename to an empty string, nothing is cached. &#39;</span>
+        <span class="s1">&#39;If the file ends with common extension for compression, &#39;</span>
+        <span class="s1">&#39;this comperession is used (e. g.: .gz, .lzma, .xz, .bz2). &#39;</span>
+        <span class="s1">&#39;The file is created in the cachefilepath (see this option). &#39;</span>
+        <span class="s1">&#39;default: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">cachefilename</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+    <span class="n">cachefilepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span>
+        <span class="s1">&#39;json_schema_from_schema_org_&#39;</span> <span class="o">+</span> <span class="n">pwd</span><span class="o">.</span><span class="n">getpwuid</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getuid</span><span class="p">())</span><span class="o">.</span><span class="n">pw_name</span><span class="p">)</span>
+    <span class="n">parser_data_bubble2jsonld</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-cachefilepath&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="n">cachefilepath</span><span class="p">],</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;cachefilepath&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;This path is used for the cachefilename. &#39;</span>
+        <span class="s1">&#39;If necessary, this directory will be created &#39;</span>
+        <span class="s1">&#39;(not the directory tree!). &#39;</span>
+        <span class="s1">&#39;default: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">cachefilepath</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+    <span class="n">parser_data_bubble2jsonld</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-author&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;author&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Sets the author of the data bubble. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;If not given, it is not added to the dabu_jsonld_instance_file. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;Anyway the dabu_jsonld_schema_file will require it. &#39;</span> <span class="o">+</span>
+        <span class="s1">&#39;You can just give a string or any json object.&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span>
+
+
+<div class="viewcode-block" id="pydabu_main"><a class="viewcode-back" href="../../../../module_dabu.html#dabu.scripts.pydabu.pydabu_main">[docs]</a><span class="k">def</span> <span class="nf">pydabu_main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Email: daniel.mohr@dlr.de</span>
+<span class="sd">    :Date: 2021-01-25 (last change).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># command line arguments:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">my_argument_parser</span><span class="p">()</span>
+    <span class="c1"># parse arguments</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">subparser_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>  <span class="c1"># call the programs</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># no sub command given</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Welcome to pydabu’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">README: pydabu – Python Data Bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../INSTALL.html">INSTALL: pydabu – Python data bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../walkthrough.html">walk-through pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../script_pydabu.html">command line script: <strong class="program">pydabu.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../schemas.html">Provided and used json schemas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_dabu.html">python module: <code class="docutils literal"><span class="pre">dabu</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../test_coverage_report/index.html">test coverage report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../license_link.html">LICENSE: pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../gpl.html">GPL</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Daniel Mohr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

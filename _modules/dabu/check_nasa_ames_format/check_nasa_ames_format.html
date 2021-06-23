@@ -1,0 +1,264 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dabu.check_nasa_ames_format.check_nasa_ames_format &#8212; pydabu 2021-03-05 documentation</title>
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2021-03-05',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within pydabu 2021-03-05 documentation"
+          href="../../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dabu.check_nasa_ames_format.check_nasa_ames_format</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">:Author: Daniel Mohr</span>
+<span class="sd">:Email: daniel.mohr@dlr.de</span>
+<span class="sd">:Date: 2021-02-08 (last change).</span>
+<span class="sd">:License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">def</span> <span class="nf">DATE_RDATE2isoformat</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Email: daniel.mohr@dlr.de</span>
+<span class="sd">    :Date: 2021-02-08 (last change).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">splited</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">splited</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                         <span class="nb">int</span><span class="p">(</span><span class="n">splited</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                         <span class="nb">int</span><span class="p">(</span><span class="n">splited</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="check_nasa_ames_format"><a class="viewcode-back" href="../../../module_dabu.html#dabu.check_nasa_ames_format.check_nasa_ames_format">[docs]</a><span class="k">def</span> <span class="nf">check_nasa_ames_format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;human_readable&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :Author: Daniel Mohr</span>
+<span class="sd">    :Email: daniel.mohr@dlr.de</span>
+<span class="sd">    :Date: 2021-02-08 (last change).</span>
+
+<span class="sd">    Checks the given file for the nasa ames format, see:</span>
+
+<span class="sd">      * http://cedadocs.ceda.ac.uk/73/</span>
+<span class="sd">      * http://cedadocs.ceda.ac.uk/73/4/index.html</span>
+<span class="sd">      * http://cedadocs.ceda.ac.uk/73/4/FFI-summary.html</span>
+
+<span class="sd">    :param filename: file to analyse</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">checker_name</span> <span class="o">=</span> <span class="s1">&#39;pydabu (nasa ames format check)&#39;</span>
+    <span class="n">addresult</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">metadata_part</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+            <span class="n">metadata_part</span> <span class="o">+=</span> <span class="p">[</span><span class="n">fd</span><span class="o">.</span><span class="n">readline</span><span class="p">()]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+        <span class="n">NLHEAD_FFI</span> <span class="o">=</span> <span class="n">metadata_part</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">NLHEAD_FFI</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">NLHEAD_FFI</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># NLHEAD: Number of lines in file header</span>
+            <span class="c1"># FFI: File format index</span>
+            <span class="n">NLHEAD</span><span class="p">,</span> <span class="n">FFI</span> <span class="o">=</span> <span class="n">NLHEAD_FFI</span>
+            <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;NLHEAD&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NLHEAD</span><span class="p">)</span>
+            <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;FFI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">FFI</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                <span class="s1">&#39;error: &#39;</span>
+                <span class="s1">&#39;no nasa ames format detected (cannot analyse first line)&#39;</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">IVOL_NVOL</span> <span class="o">=</span> <span class="n">metadata_part</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">IVOL_NVOL</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">IVOL_NVOL</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="c1"># IVOL: Number of the file in the above dataset</span>
+                    <span class="c1">#       (between 1 and NVOL).</span>
+                    <span class="c1"># NVOL: Total number of files belonging to the considered</span>
+                    <span class="c1">#       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).</span>
+                    <span class="n">IVOL</span><span class="p">,</span> <span class="n">NVOL</span> <span class="o">=</span> <span class="n">IVOL_NVOL</span>
+                    <span class="k">if</span> <span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">NVOL</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span>
+                            <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">IVOL</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">IVOL</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NVOL</span><span class="p">))):</span>
+                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;IVOL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">IVOL</span><span class="p">)</span>
+                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;NVOL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">NVOL</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                            <span class="s1">&#39;error: do not understand IVOL and NVOL&#39;</span><span class="p">]</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                        <span class="s1">&#39;error: cannot extract IVOL and NVOL&#39;</span><span class="p">]</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                    <span class="s1">&#39;error: IVOL and NVOL not found&#39;</span><span class="p">]</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">132</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># ONAME: List of author(s) in the format Lastname, Firstname</span>
+                    <span class="c1">#        separated by an arbitrary character</span>
+                    <span class="c1">#        (for example, a hyphen or a semi-colon).</span>
+                    <span class="c1"># since it is hard to automatic split at an arbitrary</span>
+                    <span class="c1"># character, we only check for a comma</span>
+                    <span class="k">if</span> <span class="s1">&#39;,&#39;</span> <span class="ow">in</span> <span class="n">metadata_part</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;ONAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata_part</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                            <span class="s1">&#39;warning: do not understand ONAME format&#39;</span><span class="p">]</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                        <span class="s1">&#39;warning: ONAME too long&#39;</span><span class="p">]</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                    <span class="s1">&#39;warning: ONAME is empty&#39;</span><span class="p">]</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">ln</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;ORG&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;SNAME&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;MNAME&#39;</span><span class="p">)]:</span>
+                <span class="c1"># ORG: Organisation name (university, institute, etc).</span>
+                <span class="c1">#      May include address and phone numbers.</span>
+                <span class="c1"># SNAME: Source of data, i.e. instrument, platform, model name,</span>
+                <span class="c1">#        etc.</span>
+                <span class="c1"># MNAME: Name of mission, campaign, programme and/or project.</span>
+                <span class="c1"># NVOL: Total number of files belonging to the considered</span>
+                <span class="c1">#       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="n">ln</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="n">ln</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">132</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">addresult</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata_part</span><span class="p">[</span><span class="n">ln</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                            <span class="s1">&#39;warning: &#39;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s1">&#39;too long&#39;</span><span class="p">]</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">DATE_RDATE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                    <span class="sa">r</span><span class="s1">&#39;([0-9]</span><span class="si">{4}</span><span class="s1">[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})&#39;</span><span class="p">,</span>
+                    <span class="n">metadata_part</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">DATE_RDATE</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                        <span class="s1">&#39;warning: too many &quot;dates&quot; in DATE RDATE&#39;</span><span class="p">]</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">DATE_RDATE</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DATE_RDATE2isoformat</span><span class="p">(</span><span class="n">DATE_RDATE</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">DATE_RDATE</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">DATE_RDATE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+                        <span class="sa">r</span><span class="s1">&#39;([0-9]</span><span class="si">{4}</span><span class="s1">[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})&#39;</span>
+                        <span class="sa">r</span><span class="s1">&#39;\s*&#39;</span>
+                        <span class="sa">r</span><span class="s1">&#39;([0-9]</span><span class="si">{4}</span><span class="s1">[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})&#39;</span><span class="p">,</span>
+                        <span class="n">metadata_part</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                    <span class="k">if</span> <span class="n">re</span><span class="p">:</span>
+                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DATE_RDATE2isoformat</span><span class="p">(</span>
+                            <span class="n">DATE_RDATE</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;RDATE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DATE_RDATE2isoformat</span><span class="p">(</span>
+                            <span class="n">DATE_RDATE</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                            <span class="s1">&#39;warning: do not understand DATE RDATE&#39;</span><span class="p">]</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
+                        <span class="s1">&#39;warning: do not understand DATE RDATE&#39;</span><span class="p">]</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">output_format</span> <span class="o">!=</span> <span class="s1">&#39;human_readable&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">addresult</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">addresult</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Welcome to pydabu’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">README: pydabu – Python Data Bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../INSTALL.html">INSTALL: pydabu – Python data bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../walkthrough.html">walk-through pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../script_pydabu.html">command line script: <strong class="program">pydabu.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../schemas.html">Provided and used json schemas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_dabu.html">python module: <code class="docutils literal"><span class="pre">dabu</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_coverage_report/index.html">test coverage report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license_link.html">LICENSE: pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gpl.html">GPL</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Daniel Mohr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>

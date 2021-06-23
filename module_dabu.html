@@ -1,0 +1,1356 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>python module: dabu &#8212; pydabu 2021-03-05 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2021-03-05',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within pydabu 2021-03-05 documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="test coverage report" href="test_coverage_report/index.html" />
+    <link rel="prev" title="Provided and used json schemas" href="schemas.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="test_coverage_report/index.html" title="test coverage report"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="schemas.html" title="Provided and used json schemas"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pydabu 2021-03-05 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-module-dabu">
+<h1><a class="toc-backref" href="#id316">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><a class="headerlink" href="#python-module-dabu" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">platform:</th><td class="field-body">Unix</td>
+</tr>
+<tr class="field-even field"><th class="field-name">synopsis:</th><td class="field-body">dabu is a python module to handle a data bubble</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<span class="target" id="module-dabu"></span><p>pydabu – python data bubble</p>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id28">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id29">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id30">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id31"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id32">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id33">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id34"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id35">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id36">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id37"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id38">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id39">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id40"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id41">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id42">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id43"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id44">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id45">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id46"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id47">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id48">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id49"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id50">description</a></li>
+<li><a class="reference internal" href="#id19" id="id51">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id52"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id53">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id54">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id55"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id56">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id57">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id58">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id59">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="description">
+<h2><a class="toc-backref" href="#id317">description</a><a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This is the description for the module dabu belonging to the project pydabu.</p>
+</div>
+<div class="section" id="module-dabu.analyse_data_structure">
+<span id="submodules"></span><h2><a class="toc-backref" href="#id318">submodules</a><a class="headerlink" href="#module-dabu.analyse_data_structure" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dabu-analyse-data-structure">
+<h3><a class="toc-backref" href="#id319"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><a class="headerlink" href="#dabu-analyse-data-structure" title="Permalink to this headline">¶</a></h3>
+<div class="contents topic" id="id1">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id60">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id61">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id62">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id63"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id64">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id65">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id66"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id67">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id68">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id69"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id70">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id71">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id72"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id73">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id74">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id75"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id76">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id77">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id78"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id79">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id80">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id81"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id82">description</a></li>
+<li><a class="reference internal" href="#id19" id="id83">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id84"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id85">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id86">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id87"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id88">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id89">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id90">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id91">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h4><a class="toc-backref" href="#id320">functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="dabu.analyse_data_structure.analyse_data_structure">
+<code class="descclassname">dabu.analyse_data_structure.</code><code class="descname">analyse_data_structure</code><span class="sig-paren">(</span><em>path_name='.'</em>, <em>result={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/analyse_data_structure/analyse_data_structure.html#analyse_data_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.analyse_data_structure.analyse_data_structure" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:daniel&#46;mohr&#37;&#52;&#48;dlr&#46;de">daniel<span>&#46;</span>mohr<span>&#64;</span>dlr<span>&#46;</span>de</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">2021-02-17 (last change).</td>
+</tr>
+</tbody>
+</table>
+<p>Analyse the data structure of the given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path_name</strong> – directory path to analyse</li>
+<li><strong>result</strong> – you can give a dict, where the results are appended
+or overridden</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="copyright-license">
+<h3><a class="toc-backref" href="#id321">copyright + license</a><a class="headerlink" href="#copyright-license" title="Permalink to this headline">¶</a></h3>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-01-19 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+<span class="target" id="module-dabu.analyse_file_format"></span><div class="section" id="dabu-analyse-file-format">
+<h3><a class="toc-backref" href="#id322"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><a class="headerlink" href="#dabu-analyse-file-format" title="Permalink to this headline">¶</a></h3>
+<div class="contents topic" id="id2">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id92">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id93">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id94">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id95"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id96">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id97">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id98"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id99">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id100">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id101"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id102">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id103">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id104"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id105">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id106">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id107"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id108">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id109">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id110"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id111">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id112">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id113"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id114">description</a></li>
+<li><a class="reference internal" href="#id19" id="id115">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id116"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id117">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id118">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id119"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id120">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id121">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id122">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id123">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h4><a class="toc-backref" href="#id323">functions</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="dabu.analyse_file_format.analyse_file_format">
+<code class="descclassname">dabu.analyse_file_format.</code><code class="descname">analyse_file_format</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/analyse_file_format/analyse_file_format.html#analyse_file_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.analyse_file_format.analyse_file_format" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:daniel&#46;mohr&#37;&#52;&#48;dlr&#46;de">daniel<span>&#46;</span>mohr<span>&#64;</span>dlr<span>&#46;</span>de</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">2021-01-19 (last change).</td>
+</tr>
+</tbody>
+</table>
+<p>Analyse the file format of the files stored in result.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – directory path to analyse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="dabu.analyse_file_format.analyse_file_format_dict">
+<code class="descclassname">dabu.analyse_file_format.</code><code class="descname">analyse_file_format_dict</code><span class="sig-paren">(</span><em>result</em>, <em>output_format</em>, <em>store_checksums=True</em>, <em>checksum_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/analyse_file_format/analyse_file_format_dict.html#analyse_file_format_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.analyse_file_format.analyse_file_format_dict" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:daniel&#46;mohr&#37;&#52;&#48;dlr&#46;de">daniel<span>&#46;</span>mohr<span>&#64;</span>dlr<span>&#46;</span>de</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">2021-02-17 (last change).</td>
+</tr>
+</tbody>
+</table>
+<p>Analyse the file format of the files stored in result.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>result</strong> – a dict; only the key ‘data’ will be adapted</li>
+<li><strong>output_format</strong> – describes the output format in a list</li>
+<li><strong>store_checksums</strong> – if True find/calculate checksums for each file</li>
+<li><strong>checksum_file</strong> – the file to import the checksums from</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id324">copyright + license</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-01-19 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+<span class="target" id="module-dabu.check_nasa_ames_format"></span><div class="section" id="dabu-check-nasa-ames-format">
+<h3><a class="toc-backref" href="#id325"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><a class="headerlink" href="#dabu-check-nasa-ames-format" title="Permalink to this headline">¶</a></h3>
+<div class="contents topic" id="id5">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id124">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id125">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id126">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id127"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id128">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id129">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id130"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id131">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id132">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id133"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id134">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id135">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id136"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id137">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id138">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id139"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id140">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id141">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id142"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id143">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id144">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id145"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id146">description</a></li>
+<li><a class="reference internal" href="#id19" id="id147">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id148"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id149">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id150">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id151"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id152">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id153">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id154">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id155">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h4><a class="toc-backref" href="#id326">functions</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="dabu.check_nasa_ames_format.check_nasa_ames_format">
+<code class="descclassname">dabu.check_nasa_ames_format.</code><code class="descname">check_nasa_ames_format</code><span class="sig-paren">(</span><em>filename</em>, <em>output_format='human_readable'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/check_nasa_ames_format/check_nasa_ames_format.html#check_nasa_ames_format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.check_nasa_ames_format.check_nasa_ames_format" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:daniel&#46;mohr&#37;&#52;&#48;dlr&#46;de">daniel<span>&#46;</span>mohr<span>&#64;</span>dlr<span>&#46;</span>de</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">2021-02-08 (last change).</td>
+</tr>
+</tbody>
+</table>
+<p>Checks the given file for the nasa ames format, see:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://cedadocs.ceda.ac.uk/73/">http://cedadocs.ceda.ac.uk/73/</a></li>
+<li><a class="reference external" href="http://cedadocs.ceda.ac.uk/73/4/index.html">http://cedadocs.ceda.ac.uk/73/4/index.html</a></li>
+<li><a class="reference external" href="http://cedadocs.ceda.ac.uk/73/4/FFI-summary.html">http://cedadocs.ceda.ac.uk/73/4/FFI-summary.html</a></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – file to analyse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id327">copyright + license</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-02-08 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+<span class="target" id="module-dabu.check_netcdf_file"></span><div class="section" id="dabu-check-netcdf-file">
+<h3><a class="toc-backref" href="#id328"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><a class="headerlink" href="#dabu-check-netcdf-file" title="Permalink to this headline">¶</a></h3>
+<div class="contents topic" id="id8">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id156">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id157">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id158">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id159"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id160">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id161">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id162"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id163">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id164">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id165"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id166">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id167">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id168"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id169">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id170">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id171"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id172">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id173">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id174"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id175">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id176">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id177"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id178">description</a></li>
+<li><a class="reference internal" href="#id19" id="id179">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id180"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id181">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id182">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id183"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id184">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id185">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id186">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id187">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h4><a class="toc-backref" href="#id329">functions</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="dabu.check_netcdf_file.check_netcdf_file">
+<code class="descclassname">dabu.check_netcdf_file.</code><code class="descname">check_netcdf_file</code><span class="sig-paren">(</span><em>file</em>, <em>output_format='human_readable'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/check_netcdf_file/check_netcdf_file.html#check_netcdf_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.check_netcdf_file.check_netcdf_file" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:daniel&#46;mohr&#37;&#52;&#48;dlr&#46;de">daniel<span>&#46;</span>mohr<span>&#64;</span>dlr<span>&#46;</span>de</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">2021-02-15 (last change).</td>
+</tr>
+</tbody>
+</table>
+<p>Checks the give file for the format netCDF.
+It uses the CF Checker: <a class="reference external" href="https://github.com/cedadev/cf-checker">https://github.com/cedadev/cf-checker</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> – file to analyse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id330">copyright + license</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-03-10 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+<span class="target" id="module-dabu.compare_json_schemas"></span><div class="section" id="dabu-compare-json-schemas">
+<h3><a class="toc-backref" href="#id331"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><a class="headerlink" href="#dabu-compare-json-schemas" title="Permalink to this headline">¶</a></h3>
+<div class="contents topic" id="id11">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id188">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id189">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id190">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id191"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id192">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id193">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id194"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id195">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id196">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id197"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id198">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id199">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id200"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id201">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id202">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id203"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id204">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id205">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id206"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id207">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id208">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id209"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id210">description</a></li>
+<li><a class="reference internal" href="#id19" id="id211">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id212"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id213">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id214">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id215"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id216">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id217">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id218">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id219">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h4><a class="toc-backref" href="#id332">functions</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="dabu.compare_json_schemas.compare_json_schemas">
+<code class="descclassname">dabu.compare_json_schemas.</code><code class="descname">compare_json_schemas</code><span class="sig-paren">(</span><em>a</em>, <em>b</em>, <em>comparefct=&lt;function assertEqual&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/compare_json_schemas/compare_json_schemas.html#compare_json_schemas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.compare_json_schemas.compare_json_schemas" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">2021-03-10</td>
+</tr>
+</tbody>
+</table>
+<p>This function compares the two json schemas a and b.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> – json schema to compare</li>
+<li><strong>b</strong> – json schema to compare</li>
+<li><strong>comparefct</strong> – compare function to use; 
+e. g. self.assertEqual in unittests</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id333">copyright + license</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-03-10 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+<span class="target" id="module-dabu.schema_org_data"></span><div class="section" id="dabu-schema-org-data">
+<h3><a class="toc-backref" href="#id334"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><a class="headerlink" href="#dabu-schema-org-data" title="Permalink to this headline">¶</a></h3>
+<div class="contents topic" id="id14">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id220">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id221">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id222">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id223"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id224">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id225">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id226"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id227">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id228">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id229"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id230">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id231">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id232"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id233">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id234">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id235"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id236">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id237">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id238"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id239">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id240">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id241"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id242">description</a></li>
+<li><a class="reference internal" href="#id19" id="id243">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id244"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id245">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id246">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id247"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id248">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id249">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id250">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id251">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h4><a class="toc-backref" href="#id335">functions</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="dabu.schema_org_data.get_schema_org_data">
+<code class="descclassname">dabu.schema_org_data.</code><code class="descname">get_schema_org_data</code><span class="sig-paren">(</span><em>cachefilepath=''</em>, <em>cachefilename=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/schema_org_data/get_schema_org_data.html#get_schema_org_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.schema_org_data.get_schema_org_data" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">2021-03-09</td>
+</tr>
+</tbody>
+</table>
+<p>This function returns the data from
+<a class="reference external" href="https://schema.org/version/latest/schemaorg-current-https.jsonld">https://schema.org/version/latest/schemaorg-current-https.jsonld</a>
+as a json-ld structure (parsed by the python module json).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cachefilepath</strong> – This path is used as the path for the cachefilename.</li>
+<li><strong>cachefilename</strong> – If not set to an empty string, the data is read
+from this file. If this file does not exists,
+the data is loadd from the website and stored
+in this file.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">json-ld structure (parsed by the python module json) as 
+dicts and lists</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="dabu.schema_org_data.json_schema_from_schema_org">
+<code class="descclassname">dabu.schema_org_data.</code><code class="descname">json_schema_from_schema_org</code><span class="sig-paren">(</span><em>schemaorg_data</em>, <em>vocabulary</em>, <em>draft='draft-04'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/schema_org_data/json_schema_from_schema_org.html#json_schema_from_schema_org"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.schema_org_data.json_schema_from_schema_org" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">2021-03-19</td>
+</tr>
+</tbody>
+</table>
+<p>This function generates a json schema from <a class="reference external" href="https://schema.org">https://schema.org</a> , which
+desribes the vocabulary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>schemaorg_data</strong> – json-ld data from <a class="reference external" href="https://schema.org">https://schema.org</a> as returned
+from <a class="reference internal" href="#dabu.schema_org_data.get_schema_org_data" title="dabu.schema_org_data.get_schema_org_data"><code class="xref py py-func docutils literal"><span class="pre">get_schema_org_data()</span></code></a>.</li>
+<li><strong>vocabulary</strong> – list of words, which are a 
+Schema.org Type (Schema.org vocabulary)</li>
+<li><strong>draft</strong> – <p>the used json schema, could be:</p>
+<ul>
+<li>’draft-04’</li>
+<li>’draft-06’</li>
+<li>’draft-07’</li>
+<li>’2019-09’</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">json schema describing a json-ld for the given vocabulary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="id16">
+<h3><a class="toc-backref" href="#id336">copyright + license</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-03-19 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+<span class="target" id="module-dabu.scripts"></span><div class="section" id="dabu-scripts">
+<h3><a class="toc-backref" href="#id337"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a><a class="headerlink" href="#dabu-scripts" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">synopsis:</th><td class="field-body"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a> is a python module to store the code for
+scripts belonging to pydabu.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="contents topic" id="id17">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id252">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id253">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id254">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id255"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id256">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id257">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id258"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id259">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id260">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id261"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id262">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id263">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id264"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id265">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id266">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id267"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id268">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id269">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id270"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id271">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id272">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id273"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id274">description</a></li>
+<li><a class="reference internal" href="#id19" id="id275">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id276"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id277">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id278">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id279"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id280">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id281">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id282">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id283">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id18">
+<h3><a class="toc-backref" href="#id338">description</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>This is the description for the module <a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a> belonging to the
+project pydabu.</p>
+<p><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a> is a python module to store the code for scripts belonging
+to pydabu.</p>
+</div>
+<div class="section" id="id19">
+<h3><a class="toc-backref" href="#id339">submodules</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-dabu.scripts.pydabu"></span><div class="section" id="dabu-scripts-pydabu">
+<h4><a class="toc-backref" href="#id340"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><a class="headerlink" href="#dabu-scripts-pydabu" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">synopsis:</th><td class="field-body"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a> is a python module to store the code 
+for the script pydabu.py.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="contents topic" id="id20">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id284">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id285">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id286">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id287"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id288">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id289">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id290"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id291">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id292">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id293"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id294">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id295">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id296"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id297">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id298">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id299"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id300">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id301">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id302"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id303">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id304">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id305"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id306">description</a></li>
+<li><a class="reference internal" href="#id19" id="id307">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id308"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id309">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id310">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id311"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id312">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id313">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id314">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id315">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id21">
+<h5><a class="toc-backref" href="#id341">functions</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h5>
+<dl class="function">
+<dt id="dabu.scripts.pydabu.pydabu_main">
+<code class="descclassname">dabu.scripts.pydabu.</code><code class="descname">pydabu_main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/scripts/pydabu/pydabu_main.html#pydabu_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.scripts.pydabu.pydabu_main" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Email:</th><td class="field-body"><a class="reference external" href="mailto:daniel&#46;mohr&#37;&#52;&#48;dlr&#46;de">daniel<span>&#46;</span>mohr<span>&#64;</span>dlr<span>&#46;</span>de</a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Date:</th><td class="field-body">2021-01-25 (last change).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="id22">
+<h4><a class="toc-backref" href="#id342">copyright + license</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-03-04 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+<span class="target" id="module-dabu.scripts.json_schema_from_schema_org"></span><div class="section" id="dabu-scripts-json-schema-from-schema-org">
+<h4><a class="toc-backref" href="#id343"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><a class="headerlink" href="#dabu-scripts-json-schema-from-schema-org" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">synopsis:</th><td class="field-body"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu.json_schema_from_schema_org</span></code> is a 
+python module to store the code for the script 
+json_schema_from_schema_org.py.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="contents topic" id="id23">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-module-dabu" id="id316">python module: <a class="reference internal" href="#module-dabu" title="dabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#description" id="id317">description</a></li>
+<li><a class="reference internal" href="#module-dabu.analyse_data_structure" id="id318">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-analyse-data-structure" id="id319"><a class="reference internal" href="#module-dabu.analyse_data_structure" title="dabu.analyse_data_structure"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_data_structure</span></code></a></a><ul>
+<li><a class="reference internal" href="#functions" id="id320">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#copyright-license" id="id321">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-analyse-file-format" id="id322"><a class="reference internal" href="#module-dabu.analyse_file_format" title="dabu.analyse_file_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.analyse_file_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id3" id="id323">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id324">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-nasa-ames-format" id="id325"><a class="reference internal" href="#module-dabu.check_nasa_ames_format" title="dabu.check_nasa_ames_format"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_nasa_ames_format</span></code></a></a><ul>
+<li><a class="reference internal" href="#id6" id="id326">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id327">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-check-netcdf-file" id="id328"><a class="reference internal" href="#module-dabu.check_netcdf_file" title="dabu.check_netcdf_file"><code class="xref py py-mod docutils literal"><span class="pre">dabu.check_netcdf_file</span></code></a></a><ul>
+<li><a class="reference internal" href="#id9" id="id329">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10" id="id330">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-compare-json-schemas" id="id331"><a class="reference internal" href="#module-dabu.compare_json_schemas" title="dabu.compare_json_schemas"><code class="xref py py-mod docutils literal"><span class="pre">dabu.compare_json_schemas</span></code></a></a><ul>
+<li><a class="reference internal" href="#id12" id="id332">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id333">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-schema-org-data" id="id334"><a class="reference internal" href="#module-dabu.schema_org_data" title="dabu.schema_org_data"><code class="xref py py-mod docutils literal"><span class="pre">dabu.schema_org_data</span></code></a></a><ul>
+<li><a class="reference internal" href="#id15" id="id335">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16" id="id336">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts" id="id337"><a class="reference internal" href="#module-dabu.scripts" title="dabu.scripts"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts</span></code></a></a></li>
+<li><a class="reference internal" href="#id18" id="id338">description</a></li>
+<li><a class="reference internal" href="#id19" id="id339">submodules</a><ul>
+<li><a class="reference internal" href="#dabu-scripts-pydabu" id="id340"><a class="reference internal" href="#module-dabu.scripts.pydabu" title="dabu.scripts.pydabu"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.pydabu</span></code></a></a><ul>
+<li><a class="reference internal" href="#id21" id="id341">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id342">copyright + license</a></li>
+<li><a class="reference internal" href="#dabu-scripts-json-schema-from-schema-org" id="id343"><a class="reference internal" href="#module-dabu.scripts.json_schema_from_schema_org" title="dabu.scripts.json_schema_from_schema_org"><code class="xref py py-mod docutils literal"><span class="pre">dabu.scripts.json_schema_from_schema_org</span></code></a></a><ul>
+<li><a class="reference internal" href="#id24" id="id344">functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id25" id="id345">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26" id="id346">copyright + license</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id27" id="id347">copyright + license</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id24">
+<h5><a class="toc-backref" href="#id344">functions</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h5>
+<dl class="function">
+<dt id="dabu.scripts.json_schema_from_schema_org.json_schema_from_schema_org_main">
+<code class="descclassname">dabu.scripts.json_schema_from_schema_org.</code><code class="descname">json_schema_from_schema_org_main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/dabu/scripts/json_schema_from_schema_org/json_schema_from_schema_org_main.html#json_schema_from_schema_org_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dabu.scripts.json_schema_from_schema_org.json_schema_from_schema_org_main" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">2021-03-09</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="id25">
+<h4><a class="toc-backref" href="#id345">copyright + license</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-03-04 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id26">
+<h3><a class="toc-backref" href="#id346">copyright + license</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-03-04 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id27">
+<h2><a class="toc-backref" href="#id347">copyright + license</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<p>Author: Daniel Mohr</p>
+<p>Date: 2021-03-10 (last change).</p>
+<p>License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
+<dl class="docutils">
+<dt>Copyright (C) 2021 Daniel Mohr</dt>
+<dd><p class="first">This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.</p>
+<p class="last">You should have received a copy of the GNU General Public License
+along with this program; if not, see
+<a class="reference external" href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="schemas.html"
+                        title="previous chapter">Provided and used json schemas</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="test_coverage_report/index.html"
+                        title="next chapter">test coverage report</a></p>
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Welcome to pydabu’s documentation!</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#content">Content</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html">README: pydabu – Python Data Bubble</a></li>
+<li class="toctree-l2"><a class="reference internal" href="INSTALL.html">INSTALL: pydabu – Python data bubble</a></li>
+<li class="toctree-l2"><a class="reference internal" href="walkthrough.html">walk-through pydabu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_pydabu.html">command line script: <strong class="program">pydabu.py</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="schemas.html">Provided and used json schemas</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">python module: <code class="docutils literal"><span class="pre">dabu</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_coverage_report/index.html">test coverage report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license_link.html">LICENSE: pydabu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpl.html">GPL</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#indices-and-tables">Indices and tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">README: pydabu – Python Data Bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="INSTALL.html">INSTALL: pydabu – Python data bubble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="walkthrough.html">walk-through pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_pydabu.html">command line script: <strong class="program">pydabu.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">Provided and used json schemas</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">python module: <code class="docutils literal"><span class="pre">dabu</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dabu.analyse_data_structure">submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id27">copyright + license</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="test_coverage_report/index.html">test coverage report</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license_link.html">LICENSE: pydabu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gpl.html">GPL</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/module_dabu.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="test_coverage_report/index.html" title="test coverage report"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="schemas.html" title="Provided and used json schemas"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pydabu 2021-03-05 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Daniel Mohr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+    </div>
+  </body>
+</html>
