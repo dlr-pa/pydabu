@@ -5,7 +5,7 @@
 # https://docs.github.com/en/actions/guides/building-and-testing-python
 # https://docs.github.com/en/actions/guides/caching-dependencies-to-speed-up-workflows
 
-name: unittests
+name: unittest_pytest_coverage_doc
 
 on:
   push:
@@ -41,5 +41,5 @@ jobs:
     - name: deploy pages
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
-        branch: doc
+        branch: documentation
         folder: manual_pydabu_html
