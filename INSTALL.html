@@ -60,7 +60,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">2021-06-21</td>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">2021-06-24</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Author:</th><td class="field-body">Daniel Mohr</td>
 </tr>
@@ -118,8 +118,8 @@
 <h3><a class="toc-backref" href="#id4">before you install</a><a class="headerlink" href="#before-you-install" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="modules">
 <h4><a class="toc-backref" href="#id5">Modules</a><a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h4>
-<p>pydabu needs the following python modules (most of them are standard and
-already in your python installation from a package management)</p>
+<p>pydabu needs the following Python modules (most of them are standard and
+already in your Python installation from a package management)</p>
 <blockquote>
 <div><ul class="simple">
 <li>argparse</li>
@@ -128,13 +128,13 @@ already in your python installation from a package management)</p>
 </div></blockquote>
 <p>and the own modules which comes with this package. Most of the modules
 are only necessary at runtime and only in some components.</p>
-<p>You can also asked the installation routine/script for the python modules:</p>
+<p>You can also asked the installation routine/script for the Python modules:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">help</span>
 <span class="n">env</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">requires</span>
 </pre></div>
 </div>
 <p>There is also a small extra command to check for availability of
-necessary python modules:</p>
+necessary Python modules:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">check_modules</span>
 </pre></div>
 </div>
@@ -169,7 +169,7 @@ After installation you can run unittests on the scripts as well
 <h4><a class="toc-backref" href="#id7">pytest</a><a class="headerlink" href="#pytest" title="Permalink to this headline">¶</a></h4>
 <p>Instead of the standard module unittest you can also use pytest to run
 all available unittests (including scripts):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">run_pytest</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">run_pytest</span> <span class="o">--</span><span class="n">src</span> <span class="n">local</span>
 </pre></div>
 </div>
 <p>But the scripts are not tested before installing.
@@ -237,7 +237,7 @@ export PYTHONPATH=~/lib/python
 </div>
 <div class="section" id="install-with-pip">
 <h3><a class="toc-backref" href="#id13">install with pip</a><a class="headerlink" href="#install-with-pip" title="Permalink to this headline">¶</a></h3>
-<p>You can also use the python package manager system pip. This allows you to
+<p>You can also use the Python package manager system pip. This allows you to
 handle dependencies, too.</p>
 <div class="section" id="install-pip">
 <h4><a class="toc-backref" href="#id14">install (pip)</a><a class="headerlink" href="#install-pip" title="Permalink to this headline">¶</a></h4>
@@ -292,7 +292,7 @@ all available unittests (including scripts):</p>
 </pre></div>
 </div>
 <p>This command has a few interesting parameters, e. g.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">run_pytest</span> <span class="o">--</span><span class="n">coverage</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">env</span> <span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">run_pytest</span> <span class="o">--</span><span class="n">parallel</span> <span class="o">--</span><span class="n">coverage</span>
 </pre></div>
 </div>
 </div>

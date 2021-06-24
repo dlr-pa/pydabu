@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-06-21
+:Version: 2021-06-24
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -28,8 +28,8 @@ before you install
 Modules
 -------
 
-pydabu needs the following python modules (most of them are standard and
-already in your python installation from a package management)
+pydabu needs the following Python modules (most of them are standard and
+already in your Python installation from a package management)
 
  * argparse
  * distutils
@@ -37,13 +37,13 @@ already in your python installation from a package management)
 and the own modules which comes with this package. Most of the modules
 are only necessary at runtime and only in some components.
 
-You can also asked the installation routine/script for the python modules::
+You can also asked the installation routine/script for the Python modules::
 
   env python3 setup.py --help
   env python3 setup.py --requires
 
 There is also a small extra command to check for availability of
-necessary python modules::
+necessary Python modules::
 
   env python3 setup.py check_modules
 
@@ -81,7 +81,7 @@ pytest
 Instead of the standard module unittest you can also use pytest to run
 all available unittests (including scripts)::
 
-  env python3 setup.py run_pytest
+  env python3 setup.py run_pytest --src local
 
 But the scripts are not tested before installing.
 After installation you can run these tests on the scripts as well
@@ -153,7 +153,7 @@ Keep in mind to have the right paths.
 install with pip
 ================
 
-You can also use the python package manager system pip. This allows you to
+You can also use the Python package manager system pip. This allows you to
 handle dependencies, too.
 
 
@@ -218,7 +218,7 @@ all available unittests (including scripts)::
 
 This command has a few interesting parameters, e. g.::
 
-  env python3 setup.py run_pytest --coverage
+  env python3 setup.py run_pytest --parallel --coverage
 
 
 hints
