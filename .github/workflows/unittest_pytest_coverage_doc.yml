@@ -15,11 +15,7 @@ on:
 
 jobs:
   ubuntu-1804_test_doc:
-
-#    runs-on: ubuntu-latest
-#    runs-on: ubuntu-20.04
     runs-on: ubuntu-18.04
-
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies (ubuntu packages)
@@ -37,9 +33,31 @@ jobs:
     - name: build doc
       run: ./create_doc
     - name: adapt doc fo jekyll
+      if: ${{ github.event_name == 'push' }}
       run: touch manual_pydabu_html/.nojekyll
     - name: deploy pages
+      if: ${{ github.event_name == 'push' }}
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
         branch: documentation
         folder: manual_pydabu_html
+
+  ubuntu-2004_test_doc:
+#    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install dependencies (ubuntu packages)
+      run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 python3-sphinx python3-sphinx-argparse python3-recommonmark python3-pytest python3-pytest-cov python3-pytest-xdist libudunits2-0 latexmk texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra
+    - name: install dependencies (cfchecker via pip)
+      run: pip3 install cfchecker
+    - name: install dependencies (sphinx-jsonschema via pip)
+      run: pip3 install sphinx-jsonschema
+    - name: install pydabu
+      run: pip3 install .
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
+    - name: build doc
+      run: ./create_doc
