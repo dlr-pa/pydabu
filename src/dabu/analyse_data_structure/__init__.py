@@ -32,4 +32,5 @@ Copyright (C) 2021 Daniel Mohr
  along with this program; if not, see
  http://www.gnu.org/licenses/
 """
+
 from .analyse_data_structure import analyse_data_structure

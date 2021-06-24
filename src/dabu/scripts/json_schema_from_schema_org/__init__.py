@@ -1,6 +1,6 @@
 """
 :mod:`dabu.scripts.json_schema_from_schema_org`
-==========================
+===============================================
    :synopsis: :mod:`dabu.scripts.pydabu.json_schema_from_schema_org` is a 
               python module to store the code for the script 
               json_schema_from_schema_org.py.

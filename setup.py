@@ -103,7 +103,8 @@ class TestWithPytest(Command):
             pyargs += ['--pylint']
         if self.pytestverbose:
             pyargs += ['--verbose']
-        pyargs += ['pydabu_unittests/main.py']
+        if self.src == 'installed':
+            pyargs += ['pydabu_unittests/main.py']
         pyargs += ['pydabu_unittests/package_data.py']
         pyargs += [
             'pydabu_unittests/dabu_scripts_pydabu_check_arg_file_not_exists.py'

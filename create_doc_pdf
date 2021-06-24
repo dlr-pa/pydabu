@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 
 skipcp='false'
 if [ ! $# -eq 0 ]; then
@@ -7,9 +8,9 @@ if [ ! $# -eq 0 ]; then
     fi
 fi
 if [ $skipcp != "true" ]; then
-    cp -p README.md INSTALL.txt doc/source/
+    cp -p README.md doc/source/
 fi
 
 cd doc
-make latexpdf && make latexpdf && cp -p build/latex/pydabu.pdf ../manual_pydabu.pdf
+make latexpdf && make latexpdf && cp -p build/latex/pydabu.pdf ../manual_pydabu.pdf || exit $?
 cd ..
