@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 d="manual_pydabu_html"
 if [ ! -d $d ]; then
     mkdir $d
@@ -11,7 +12,7 @@ if [ ! $# -eq 0 ]; then
     fi
 fi
 if [ $skipcp != "true" ]; then
-    cp -p README.md INSTALL.txt doc/source/
+    cp -p README.md doc/source/
 fi
 
 if [ -f doc/source/test_coverage_report/index.html ]; then
@@ -23,14 +24,13 @@ fi
 
 cd doc
 make html
-if [ $? -eq 0 ]; then
-    rsp="--archive --one-file-system --links --hard-links --sparse --checksum"
-    bhp="build/html"
-    dd="$d/test_coverage_report"
-    rsync --delete-after $rsp $bhp/ ../$d/
-    if [ -d ../coverage_report ]; then
-	rsync --delete-after $rsp  ../coverage_report/ ../$dd/
-	cp -p $bhp/test_coverage_report/index.html ../$dd/index.html
-    fi
+rsp="--archive --one-file-system --links --hard-links --sparse --checksum"
+bhp="build/html"
+dd="$d/test_coverage_report"
+rsync --delete-after $rsp $bhp/ ../$d/
+cp -p ../LICENSE.txt ../$d/
+if [ -d ../coverage_report ]; then
+    rsync --delete-after $rsp  ../coverage_report/ ../$dd/
+    cp -p $bhp/test_coverage_report/index.html ../$dd/index.html
 fi
 cd ..

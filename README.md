@@ -21,14 +21,37 @@ You can find more information on the web:
 
 ## install
 
-see [INSTALL](INSTALL)
+See [INSTALL.txt](doc/source/INSTALL.txt) or [INSTALL: pydabu (web)](https://dlr-pa.github.io/pydabu/INSTALL.html) for full install manual. You can find a
+very short overview in the next lines.
+
+pydabu needs some Python modules and you can also ask the installation
+routine/script for the required Python modules:
+
+    env python3 setup.py --help
+    env python3 setup.py --requires
+
+To install this software global to / the following step is to perform:
+
+    env python3 setup.py install --record installed_files.txt
+
+To install this software to your $HOME the following steps are to perform:
+
+    env python3 setup.py install --home=~ --record installed_files.txt
+
+You can also use pip to install:
+
+    pip3 install .
+
+For older versions of pip you need to choose explicit a home install:
+
+    pip3 install --user .
 
 
 ## copyright + license
 
 Author: Daniel Mohr.
 
-Date: 2021-06-23 (last change).
+Date: 2021-06-24 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
@@ -43,7 +66,7 @@ Copyright (C) 2021 Daniel Mohr and Deutsches Zentrum fuer Luft- und Raumfahrt e.
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  General Public License for more details.
 
- You should have received a copy (see :doc:`gpl` and gpl.txt) of the
+ You should have received a copy (see [LICENSE.txt](LICENSE.txt)) of the
  GNU General Public License along with this program.
  If not, see <http://www.gnu.org/licenses/>.
 

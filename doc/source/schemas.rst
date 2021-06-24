@@ -22,7 +22,7 @@ analyse_data_structure_output.schema
 The command :option:`pydabu.py analyse_data_structure` leeds to an output
 holding the following json schema:
 
-.. jsonschema:: ../../src/dabu/schemas/analyse_data_structure_output.schema
+  .. jsonschema:: ../../src/dabu/schemas/analyse_data_structure_output.schema
 
 dabu.schema
 -----------
@@ -31,7 +31,7 @@ The command :option:`pydabu.py check_file_format` leeds to an output
 holding the following json schema. The output file :file:`.dabu.json` of
 :option:`pydabu.py create_data_bubble` holds also this json schema:
 
-.. jsonschema:: ../../src/dabu/schemas/dabu.schema
+  .. jsonschema:: ../../src/dabu/schemas/dabu.schema
 
 dabu_requires.schema
 --------------------
@@ -39,6 +39,6 @@ dabu_requires.schema
 The following json schema is used in :option:`pydabu.py create_data_bubble`
 as :file:`.dabu.schema` (bold attributes are required):
 
-.. jsonschema:: ../../src/dabu/schemas/dabu_requires.schema
+  .. jsonschema:: ../../src/dabu/schemas/dabu_requires.schema
 
 

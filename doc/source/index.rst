@@ -33,7 +33,6 @@ which is good research practice (cf. [DFG]_; [Helmholtz]_).
    schemas
    module_dabu
    test_coverage_report/index
-   license_link
    gpl
 
 Indices and tables
