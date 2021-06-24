@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies (ubuntu packages)
-      run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 python3-sphinx python3-sphinx-argparse python3-recommonmark python3-pytest python3-pytest-cov python3-pytest-xdist libudunits2-0
+      run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 python3-sphinx python3-sphinx-argparse python3-recommonmark python3-pytest python3-pytest-cov python3-pytest-xdist libudunits2-0 latexmk
     - name: install dependencies (cfchecker via pip)
       run: pip3 install cfchecker
     - name: install dependencies (sphinx-jsonschema via pip)
