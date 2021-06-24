@@ -37,8 +37,10 @@ jobs:
     - name: build doc
       run: ./create_doc
     - name: adapt doc fo jekyll
+      if: ${{ github.event_name == 'push' }}
       run: touch manual_pydabu_html/.nojekyll
     - name: deploy pages
+      if: ${{ github.event_name == 'push' }}
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
         branch: documentation
