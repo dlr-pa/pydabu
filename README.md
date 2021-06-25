@@ -56,6 +56,7 @@ Date: 2021-06-24 (last change).
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
 Copyright (C) 2021 Daniel Mohr and Deutsches Zentrum fuer Luft- und Raumfahrt e. V., D-51170 Koeln
+
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License as
  published by the Free Software Foundation; either version 3 of
