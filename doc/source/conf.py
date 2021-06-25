@@ -134,7 +134,7 @@ html_sidebars = {
     ]
 }
 
-html_use_opensearch = 'https://mohr_da.pages.gitlab.dlr.de/pydabu'
+html_use_opensearch = 'https://dlr-pa.github.io/pydabu/'
 
 # -- Options for HTMLHelp output ------------------------------------------
 
