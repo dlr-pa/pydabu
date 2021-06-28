@@ -24,7 +24,6 @@ which is good research practice (cf. [DFG]_; [Helmholtz]_).
 .. toctree::
    :maxdepth: 2
 
-   index
    README.md
    INSTALL.txt
    walkthrough
