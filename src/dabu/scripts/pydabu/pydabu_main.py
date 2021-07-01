@@ -1,12 +1,12 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-22 (last change).
+:Date: 2021-03-22, 2021-07-01 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import argparse
-import pwd
+import getpass
 import os.path
 import tempfile
 
@@ -39,7 +39,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-22 (last change).
+    :Date: 2021-07-01 (last change).
     """
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
@@ -53,7 +53,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-03-22\n"
+    epilog += "Date: 2021-07-01\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -403,7 +403,7 @@ def my_argument_parser():
         metavar='f')
     cachefilepath = os.path.join(
         tempfile.gettempdir(),
-        'json_schema_from_schema_org_' + pwd.getpwuid(os.getuid()).pw_name)
+        'json_schema_from_schema_org_' + getpass.getuser())
     parser_data_bubble2jsonld.add_argument(
         '-cachefilepath',
         nargs=1,

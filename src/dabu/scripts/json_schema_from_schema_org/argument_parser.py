@@ -1,14 +1,14 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-09 (last change).
+:Date: 2021-03-09, 2021-07-01 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import argparse
+import getpass
 import os
 import os.path
-import pwd
 import sys
 import tempfile
 
@@ -17,11 +17,11 @@ def argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-09 (last change).
+    :Date: 2021-07-01 (last change).
     """
     epilog = ""
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-03-09\n"
+    epilog += "Date: 2021-07-01\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     description = 'json_schema_from_schema_org.py is a script ' \
@@ -63,7 +63,7 @@ def argument_parser():
         metavar='f')
     cachefilepath = os.path.join(
         tempfile.gettempdir(),
-        'json_schema_from_schema_org_' + pwd.getpwuid(os.getuid()).pw_name)
+        'json_schema_from_schema_org_' + getpass.getuser())
     parser.add_argument(
         '-cachefilepath',
         nargs=1,
