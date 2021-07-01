@@ -295,17 +295,17 @@ required_modules += ['importlib']
 # optional modules for python3 setup.py check_modules_modulefinder
 required_modules += ['modulefinder']
 # optional modules for json_schema_from_schema_org.py
-required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
+#required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
 # modules to build doc
-required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
+#required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 # modules to run tests with unittest
-required_modules += ['unittest', 'shutil']
+#required_modules += ['unittest', 'shutil']
 # modules to run tests with pytest
-required_modules += ['pytest']
+#required_modules += ['pytest']
 # optional modules to run tests with pytest in parallel
-required_modules += ['xdist']
+#required_modules += ['xdist']
 # optional modules to run tests with pytest and create coverage report
-required_modules += ['pytest_cov']
+#required_modules += ['pytest_cov']
 
 setup(
     name='pydabu',
