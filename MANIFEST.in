@@ -4,15 +4,14 @@ include doc/Makefile
 include doc/source/conf.py
 include doc/source/gpl.rst
 include doc/source/index.rst
-include doc/source/license_link.rst
+include doc/source/INSTALL.txt
 include doc/source/module_dabu.rst
 include doc/source/schemas.rst
+include doc/source/script_json_schema_from_schema_org.rst
 include doc/source/script_pydabu.rst
 include doc/source/test_coverage_report/index.rst
 include doc/source/walkthrough.rst
-include gpl.txt
 include install2home
-include INSTALL.txt
 include LICENSE.txt
 include manual_pydabu.pdf
 include pydabu_unittests/data/data_bubble/01/*
