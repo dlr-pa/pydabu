@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-05
+:Date: 2021-07-01
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -141,6 +141,7 @@ required_modules = ['argparse',
                     'base64',
                     'datetime',
                     'distutils',
+                    'getpass',
                     'hashlib',
                     'json',
                     'jsonschema',
@@ -148,7 +149,6 @@ required_modules = ['argparse',
                     'os',
                     'os.path',
                     'pkgutil',
-                    'pwd',
                     're',
                     'subprocess',
                     'sys',
@@ -206,7 +206,7 @@ install_requires += ['pytest_cov']
 
 setup(
     name='pydabu',
-    version='2021-03-05',
+    version='2021-07-01',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,

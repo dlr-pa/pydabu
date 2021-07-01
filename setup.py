@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-06-23
+:Date: 2021-07-01
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -272,6 +272,7 @@ required_modules = ['argparse',
                     'base64',
                     'datetime',
                     'distutils',
+                    'getpass',
                     'hashlib',
                     'json',
                     'jsonschema',
@@ -279,7 +280,6 @@ required_modules = ['argparse',
                     'os',
                     'os.path',
                     'pkgutil',
-                    'pwd',
                     're',
                     'subprocess',
                     'sys',
@@ -295,21 +295,21 @@ required_modules += ['importlib']
 # optional modules for python3 setup.py check_modules_modulefinder
 required_modules += ['modulefinder']
 # optional modules for json_schema_from_schema_org.py
-required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
+#required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
 # modules to build doc
-required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
+#required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 # modules to run tests with unittest
-required_modules += ['unittest', 'shutil']
+#required_modules += ['unittest', 'shutil']
 # modules to run tests with pytest
-required_modules += ['pytest']
+#required_modules += ['pytest']
 # optional modules to run tests with pytest in parallel
-required_modules += ['xdist']
+#required_modules += ['xdist']
 # optional modules to run tests with pytest and create coverage report
-required_modules += ['pytest_cov']
+#required_modules += ['pytest_cov']
 
 setup(
     name='pydabu',
-    version='2021-06-23',
+    version='2021.07.01',
     cmdclass={
         'check_modules': CheckModules,
         'check_modules_modulefinder': CheckModulesModulefinder,

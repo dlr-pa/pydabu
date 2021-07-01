@@ -18,18 +18,26 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
+    - name: check environment
+      run: lsb_release -a
+    - name: check python version
+      run: env python3 -V
     - name: install dependencies (ubuntu packages)
-      run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 python3-sphinx python3-sphinx-argparse python3-recommonmark python3-pytest python3-pytest-cov python3-pytest-xdist libudunits2-0 latexmk texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra
+      run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 libudunits2-0
     - name: install dependencies (cfchecker via pip)
       run: pip3 install cfchecker
-    - name: install dependencies (sphinx-jsonschema via pip)
-      run: pip3 install sphinx-jsonschema
     - name: install pydabu
       run: pip3 install .
     - name: unittest
       run: env python3 setup.py run_unittest
+    - name: install dependencies for pytest (ubuntu packages)
+      run: sudo apt install python3-pytest python3-pytest-cov python3-pytest-xdist
     - name: pytest
       run: env python3 setup.py run_pytest --parallel --coverage
+    - name: install dependencies for documentation (ubuntu packages)
+      run: sudo apt install python3-sphinx python3-sphinx-argparse python3-recommonmark latexmk texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra
+    - name: install dependencies for documentation (sphinx-jsonschema via pip)
+      run: pip3 install sphinx-jsonschema
     - name: build doc
       run: ./create_doc
     - name: adapt doc fo jekyll
@@ -47,17 +55,64 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
+    - name: check environment
+      run: lsb_release -a
+    - name: check python version
+      run: env python3 -V
     - name: install dependencies (ubuntu packages)
-      run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 python3-sphinx python3-sphinx-argparse python3-recommonmark python3-pytest python3-pytest-cov python3-pytest-xdist libudunits2-0 latexmk texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra
+      run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 libudunits2-0
     - name: install dependencies (cfchecker via pip)
       run: pip3 install cfchecker
-    - name: install dependencies (sphinx-jsonschema via pip)
+    - name: install pydabu
+      run: pip3 install .
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: install dependencies for pytest (ubuntu packages)
+      run: sudo apt install python3-pytest python3-pytest-cov python3-pytest-xdist
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
+    - name: install dependencies for documentation (ubuntu packages)
+      run: sudo apt install python3-sphinx python3-sphinx-argparse python3-recommonmark latexmk texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra
+    - name: install dependencies for documentation (sphinx-jsonschema via pip)
       run: pip3 install sphinx-jsonschema
+    - name: build doc
+      run: ./create_doc
+
+  macos-1015_test:
+    runs-on: macos-10.15
+    steps:
+    - uses: actions/checkout@v2
+    #- name: search packages (via Homebrew)
+    #  run: brew search udunits
+    - name: install dependencies (via Homebrew)
+      run: brew install udunits
+    - name: install dependencies via pip3
+      run: pip3 install wheel jsonschema netCDF4 pytest pytest-cov pytest-xdist cfchecker
+    #- name: install dependencies for documentation via pip3
+    #  run: pip3 install Sphinx sphinx-argparse recommonmark sphinx-jsonschema
     - name: install pydabu
       run: pip3 install .
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: pytest
       run: env python3 setup.py run_pytest --parallel --coverage
-    - name: build doc
-      run: ./create_doc
+
+  macos-11_test:
+    if: ${{ false }}
+    # https://github.com/actions/virtual-environments/issues/2486
+    # https://github.com/actions/virtual-environments/blob/main/docs/macos-11-onboarding.md
+    runs-on: macos-11
+    steps:
+    - uses: actions/checkout@v2
+    #- name: search packages (via Homebrew)
+    #  run: brew search udunits
+    - name: install dependencies (via Homebrew)
+      run: brew install udunits
+    - name: install dependencies via pip3
+      run: pip3 install wheel jsonschema netCDF4 Sphinx sphinx-argparse recommonmark pytest pytest-cov pytest-xdist cfchecker sphinx-jsonschema
+    - name: install pydabu
+      run: pip3 install .
+    - name: unittest
+      run: env python3 setup.py run_unittest
+    - name: pytest
+      run: env python3 setup.py run_pytest --parallel --coverage
