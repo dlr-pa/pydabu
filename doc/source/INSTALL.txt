@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-06-24
+:Version: 2021-07-05
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -49,14 +49,6 @@ necessary Python modules::
 
 If you want to use this complete software you should have no modules
 which are not available.
-
-Much more information you get from the following small extra command
-by using the modulefinder::
-
-  env python3 setup.py check_modules_modulefinder
-
-It is normal that there are many missing modules reported. Please look
-at the details.
 
 The following modules are optional:
 
