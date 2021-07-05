@@ -31,7 +31,7 @@ class mixin_common_json_format():
         test_dir_path = self.test_dir_path[4]
         cps = []  # completed process instances
         cp = subprocess.run(
-            ['pydabu common_json_format -f .dabu.json'],
+            'pydabu common_json_format -f .dabu.json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)

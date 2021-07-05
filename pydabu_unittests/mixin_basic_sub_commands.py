@@ -35,14 +35,14 @@ class mixin_basic_sub_commands():
         for cmd in ['analyse_data_structure', 'check_file_format',
                     'listschemas']:
             cp = subprocess.run(
-                ['pydabu ' + cmd],
+                'pydabu ' + cmd,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, timeout=self.subprocess_timeout, check=True)
         for cmd in ['check_nasa_ames_format', 'check_netcdf_file',
                     'common_json_format', 'create_data_bubble',
                     'check_data_bubble', 'data_bubble2jsonld']:
             cp = subprocess.run(
-                ['pydabu ' + cmd],
+                'pydabu ' + cmd,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, timeout=self.subprocess_timeout, check=False)
             with self.assertRaises(subprocess.CalledProcessError):
@@ -53,6 +53,6 @@ class mixin_basic_sub_commands():
                     'common_json_format', 'create_data_bubble',
                     'check_data_bubble', 'listschemas', 'data_bubble2jsonld']:
             cp = subprocess.run(
-                ['pydabu ' + cmd + ' -h'],
+                'pydabu ' + cmd + ' -h',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, timeout=self.subprocess_timeout, check=True)

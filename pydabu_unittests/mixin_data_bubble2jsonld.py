@@ -15,6 +15,7 @@ import os.path
 import subprocess
 import tempfile
 
+
 class mixin_data_bubble2jsonld():
     """
     :Author: Daniel Mohr
@@ -41,14 +42,14 @@ class mixin_data_bubble2jsonld():
                           ' -author \'[{"name": "er"}, {"name": "sie"}, {"name": "es"}]\'']:
                 cmd = 'pydabu data_bubble2jsonld -directory .' + param
                 cp = subprocess.run(
-                    [cmd],
+                    cmd,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
                     check=True)
                 cp = subprocess.run(
-                    ['pydabu check_data_bubble -dir .' +
-                     ' -dabu_instance_file .dabu.json-ld ' +
-                     '-dabu_schema_file .dabu.json-ld.schema'],
+                    'pydabu check_data_bubble -dir .' +
+                    ' -dabu_instance_file .dabu.json-ld ' +
+                    '-dabu_schema_file .dabu.json-ld.schema',
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
                     check=True)

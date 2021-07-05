@@ -46,7 +46,7 @@ class test_scripts_executable(unittest.TestCase):
         """
         import subprocess
         cp = subprocess.run(
-            ["pydabu"],
+            "pydabu",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
         # check at least minimal help output
@@ -65,7 +65,7 @@ class test_scripts_executable(unittest.TestCase):
         import subprocess
         # check error output
         cp = subprocess.run(
-            ["json_schema_from_schema_org"],
+            "json_schema_from_schema_org",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=False)
         with self.assertRaises(subprocess.CalledProcessError):
@@ -78,9 +78,9 @@ class test_scripts_executable(unittest.TestCase):
             cp.stderr.startswith(b'usage: json_schema_from_schema_org'))
         # check help output
         cp = subprocess.run(
-            ["json_schema_from_schema_org -h"],
+            "json_schema_from_schema_org -h",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
+            shell=True, timeout=3, check=False)
         self.assertTrue(len(cp.stdout) >= 1019)
         # check begin of help output
         self.assertTrue(

@@ -31,17 +31,17 @@ class mixin_check_file_format():
         test_dir_path = self.test_dir_path[0]
         cps = []  # completed process instances
         cps.append(subprocess.run(
-            ['pydabu check_file_format'],
+            'pydabu check_file_format',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True))
         cps.append(subprocess.run(
-            ['pydabu check_file_format -d ' + test_dir_path],
+            'pydabu check_file_format -d ' + test_dir_path,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=self.subprocess_timeout, check=True))
         self.assertEqual(cps[0].stdout, cps[1].stdout)
         cps.append(subprocess.run(
-            ['pydabu check_file_format -o json'],
+            'pydabu check_file_format -o json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True))
@@ -61,7 +61,7 @@ class mixin_check_file_format():
         # data bubble 01
         test_dir_path = self.test_dir_path[1]
         cp = subprocess.run(
-            ['pydabu check_file_format -o json'],
+            'pydabu check_file_format -o json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
@@ -81,7 +81,7 @@ class mixin_check_file_format():
         # data bubble 02
         test_dir_path = self.test_dir_path[2]
         cp = subprocess.run(
-            ['pydabu check_file_format -o json'],
+            'pydabu check_file_format -o json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
@@ -101,7 +101,7 @@ class mixin_check_file_format():
         # data bubble 03
         test_dir_path = self.test_dir_path[3]
         cp = subprocess.run(
-            ['pydabu check_file_format -o json'],
+            'pydabu check_file_format -o json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
@@ -126,7 +126,7 @@ class mixin_check_file_format():
             'dabu', 'schemas/dabu_requires.schema'))
         for outputformat in ['', ' -o json', ' -o json1', ' -o human_readable']:
             cp = subprocess.run(
-                ['pydabu check_file_format' + outputformat],
+                'pydabu check_file_format' + outputformat,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
                 check=True)
@@ -158,7 +158,7 @@ class mixin_check_file_format():
                     ' -checksum_from_file ' + checksum_files[test_path_n]]:
                 # check some command line parameters
                 cp = subprocess.run(
-                    ['pydabu check_file_format' + flags],
+                    'pydabu check_file_format' + flags,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=test_dir_path,
                     timeout=self.subprocess_timeout, check=True)
@@ -176,13 +176,13 @@ class mixin_check_file_format():
         """
         # data bubble 02
         cp1 = subprocess.run(
-            ['pydabu check_file_format'],
+            'pydabu check_file_format',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=self.test_dir_path[2],
             timeout=self.subprocess_timeout, check=True)
         instance1 = json.loads(cp1.stdout)
         cp2 = subprocess.run(
-            ['pydabu check_file_format -checksum_from_file .checksum'],
+            'pydabu check_file_format -checksum_from_file .checksum',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=self.test_dir_path[2],
             timeout=self.subprocess_timeout, check=True)

@@ -24,7 +24,7 @@ class mixin_listschemas():
         This script tests the script 'pydabu listschemas'.
         """
         cp = subprocess.run(
-            ['pydabu listschemas'],
+            'pydabu listschemas',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=self.subprocess_timeout,
             check=True)
@@ -34,7 +34,7 @@ class mixin_listschemas():
         self.assertTrue(stdout_lines[1].endswith(b'dabu.schema'))
         self.assertTrue(stdout_lines[2].endswith(b'dabu_requires.schema'))
         cp = subprocess.run(
-            ['pydabu listschemas -o json'],
+            'pydabu listschemas -o json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=self.subprocess_timeout,
             check=True)

@@ -37,7 +37,7 @@ class scripty_json_schema_from_schema_org(unittest.TestCase):
         """
         import subprocess
         cp = subprocess.run(
-            ["json_schema_from_schema_org dummy"],
+            "json_schema_from_schema_org dummy",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
         schema = json.loads(cp.stdout)
@@ -53,7 +53,7 @@ class scripty_json_schema_from_schema_org(unittest.TestCase):
         """
         import subprocess
         cp = subprocess.run(
-            ["json_schema_from_schema_org -cachefilename '' dummy"],
+            "json_schema_from_schema_org -cachefilename '' dummy",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
         schema = json.loads(cp.stdout)
@@ -61,8 +61,8 @@ class scripty_json_schema_from_schema_org(unittest.TestCase):
         jsonschema.validate(instance, schema)
         with tempfile.TemporaryDirectory() as tmpdir:
             cp = subprocess.run(
-                ["json_schema_from_schema_org -cachefilename " +
-                 os.path.join(tmpdir, 'foo') + " dummy"],
+                "json_schema_from_schema_org -cachefilename " +
+                os.path.join(tmpdir, 'foo') + " dummy",
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, timeout=3, check=True)
             schema = json.loads(cp.stdout)
@@ -77,7 +77,7 @@ class scripty_json_schema_from_schema_org(unittest.TestCase):
         """
         import subprocess
         cp = subprocess.run(
-            ["json_schema_from_schema_org Person"],
+            "json_schema_from_schema_org Person",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
         schema = json.loads(cp.stdout)
@@ -142,11 +142,11 @@ class scripty_json_schema_from_schema_org(unittest.TestCase):
         import subprocess
         import dabu.compare_json_schemas
         cp1 = subprocess.run(
-            ["json_schema_from_schema_org Person"],
+            "json_schema_from_schema_org Person",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
         cp2 = subprocess.run(
-            ["json_schema_from_schema_org dummy Person"],
+            "json_schema_from_schema_org dummy Person",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
         schema1 = json.loads(cp1.stdout)

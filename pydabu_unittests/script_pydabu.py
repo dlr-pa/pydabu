@@ -16,7 +16,6 @@ Or you can run only one test, e. g.::
 """
 
 import os.path
-import subprocess
 import sys
 import unittest
 
