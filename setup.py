@@ -1,13 +1,14 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-07-01
+:Date: 2021-07-05
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import os
 
-from distutils.core import setup, Command
+#from distutils.core import setup, Command
+from setuptools import setup, Command
 
 
 class TestWithPytest(Command):
@@ -240,32 +241,6 @@ class CheckModules(Command):
                 i, summary))
 
 
-class CheckModulesModulefinder(Command):
-    """
-    :Author: Daniel Mohr
-    :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-08
-    :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
-
-    checking for modules need to run the scripts (modulefinder)
-    """
-    description = "checking for modules need to run the scripts (modulefinder)"
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        import modulefinder
-        for script in self.distribution.scripts:
-            print("\nchecking for modules used in '%s':" % script)
-            finder = modulefinder.ModuleFinder()
-            finder.run_script(script)
-            finder.report()
-
 
 # necessary modules
 required_modules = ['argparse',
@@ -292,8 +267,6 @@ required_modules += ['cfchecker.cfchecks', 'netCDF4']
 required_modules += ['pkg_resources']
 # optional modules for python3 setup.py check_modules
 required_modules += ['importlib']
-# optional modules for python3 setup.py check_modules_modulefinder
-required_modules += ['modulefinder']
 # optional modules for json_schema_from_schema_org.py
 #required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
 # modules to build doc
@@ -309,10 +282,9 @@ required_modules += ['modulefinder']
 
 setup(
     name='pydabu',
-    version='2021.07.01',
+    version='2021.07.05',
     cmdclass={
         'check_modules': CheckModules,
-        'check_modules_modulefinder': CheckModulesModulefinder,
         'run_unittest': TestWithUnittest,
         'run_pytest': TestWithPytest},
     description='software to check a data bubble.',
@@ -336,9 +308,14 @@ setup(
         'dabu.scripts',
         'dabu.scripts.pydabu',
         'dabu.scripts.json_schema_from_schema_org'],
-    scripts=[
-        'src/scripts/pydabu.py',
-        'src/scripts/json_schema_from_schema_org.py'],
+    # scripts=[
+    #    'src/scripts/pydabu.py',
+    #    'src/scripts/json_schema_from_schema_org.py'],
+    entry_points={
+        'console_scripts':
+            ['pydabu=dabu.scripts.pydabu.pydabu_main:pydabu_main',
+             'json_schema_from_schema_org=dabu.scripts.json_schema_from_schema_org.json_schema_from_schema_org_main:json_schema_from_schema_org_main'],
+    },
     package_data={'dabu': ['schemas/analyse_data_structure_output.schema',
                            'schemas/dabu.schema',
                            'schemas/dabu_requires.schema']},

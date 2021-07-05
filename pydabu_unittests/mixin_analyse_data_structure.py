@@ -4,7 +4,7 @@
 :Date: 2021-02-19
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-tests the script: pydabu.py analyse_data_structure
+tests the script: pydabu analyse_data_structure
 """
 
 import json
@@ -26,23 +26,23 @@ class mixin_analyse_data_structure():
         :Date: 2021-02-09
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py analyse_data_structure'.
+        of the script 'pydabu analyse_data_structure'.
         """
         # data bubble 00
         test_dir_path = self.test_dir_path[0]
         cps = []  # completed process instances
         cps.append(subprocess.run(
-            ['pydabu.py analyse_data_structure'],
+            ['pydabu analyse_data_structure'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True))
         cps.append(subprocess.run(
-            ['pydabu.py analyse_data_structure -d ' + test_dir_path],
+            ['pydabu analyse_data_structure -d ' + test_dir_path],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=self.subprocess_timeout, check=True))
         self.assertEqual(cps[0].stdout, cps[1].stdout)
         cps.append(subprocess.run(
-            ['pydabu.py analyse_data_structure -o json'],
+            ['pydabu analyse_data_structure -o json'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True))
@@ -58,7 +58,7 @@ class mixin_analyse_data_structure():
         self.assertTrue(
             os.path.isfile(os.path.join(test_dir_path, 'README.md')))
         cp = subprocess.run(
-            ['pydabu.py analyse_data_structure'],
+            ['pydabu analyse_data_structure'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)

@@ -4,7 +4,7 @@
 :Date: 2021-03-22
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-tests the script: pydabu.py data_bubble2jsonld
+tests the script: pydabu data_bubble2jsonld
 
 Or you can run only one test from this file, e. g.::
 
@@ -39,14 +39,14 @@ class mixin_data_bubble2jsonld():
             for param in ['', ' -author "Daniel Mohr"',
                           ' -author \'{"name": "Daniel Mohr", "identifier": {"propertyID": "https://orcid.org/", "name": "ORCID", "value": "0000-0002-9382-6586", "url": "https://orcid.org/0000-0002-9382-6586"}}\'',
                           ' -author \'[{"name": "er"}, {"name": "sie"}, {"name": "es"}]\'']:
-                cmd = 'pydabu.py data_bubble2jsonld -directory .' + param
+                cmd = 'pydabu data_bubble2jsonld -directory .' + param
                 cp = subprocess.run(
                     [cmd],
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
                     check=True)
                 cp = subprocess.run(
-                    ['pydabu.py check_data_bubble -dir .' +
+                    ['pydabu check_data_bubble -dir .' +
                      ' -dabu_instance_file .dabu.json-ld ' +
                      '-dabu_schema_file .dabu.json-ld.schema'],
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,

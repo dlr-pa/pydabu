@@ -4,7 +4,7 @@
 :Date: 2021-02-19
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-tests the script: pydabu.py check_file_format
+tests the script: pydabu check_file_format
 """
 
 import json
@@ -25,23 +25,23 @@ class mixin_check_file_format():
         :Date: 2021-02-04
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
+        of the script 'pydabu check_file_format'.
         """
         # data bubble 00
         test_dir_path = self.test_dir_path[0]
         cps = []  # completed process instances
         cps.append(subprocess.run(
-            ['pydabu.py check_file_format'],
+            ['pydabu check_file_format'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True))
         cps.append(subprocess.run(
-            ['pydabu.py check_file_format -d ' + test_dir_path],
+            ['pydabu check_file_format -d ' + test_dir_path],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=self.subprocess_timeout, check=True))
         self.assertEqual(cps[0].stdout, cps[1].stdout)
         cps.append(subprocess.run(
-            ['pydabu.py check_file_format -o json'],
+            ['pydabu check_file_format -o json'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True))
@@ -56,12 +56,12 @@ class mixin_check_file_format():
         :Date: 2021-02-04
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
+        of the script 'pydabu check_file_format'.
         """
         # data bubble 01
         test_dir_path = self.test_dir_path[1]
         cp = subprocess.run(
-            ['pydabu.py check_file_format -o json'],
+            ['pydabu check_file_format -o json'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
@@ -76,12 +76,12 @@ class mixin_check_file_format():
         :Date: 2021-02-04
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
+        of the script 'pydabu check_file_format'.
         """
         # data bubble 02
         test_dir_path = self.test_dir_path[2]
         cp = subprocess.run(
-            ['pydabu.py check_file_format -o json'],
+            ['pydabu check_file_format -o json'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
@@ -96,12 +96,12 @@ class mixin_check_file_format():
         :Date: 2021-02-08
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
+        of the script 'pydabu check_file_format'.
         """
         # data bubble 03
         test_dir_path = self.test_dir_path[3]
         cp = subprocess.run(
-            ['pydabu.py check_file_format -o json'],
+            ['pydabu check_file_format -o json'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
@@ -116,7 +116,7 @@ class mixin_check_file_format():
         :Date: 2021-02-08
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py check_file_format'.
+        of the script 'pydabu check_file_format'.
         """
         # data bubble 03
         test_dir_path = self.test_dir_path[3]
@@ -126,7 +126,7 @@ class mixin_check_file_format():
             'dabu', 'schemas/dabu_requires.schema'))
         for outputformat in ['', ' -o json', ' -o json1', ' -o human_readable']:
             cp = subprocess.run(
-                ['pydabu.py check_file_format' + outputformat],
+                ['pydabu check_file_format' + outputformat],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
                 check=True)
@@ -140,7 +140,7 @@ class mixin_check_file_format():
         :Date: 2021-02-17
 
         This test uses the data in 'data/data_bubble' to test the checksums
-        of the script 'pydabu.py check_file_format'.
+        of the script 'pydabu check_file_format'.
         """
         # data bubble 01, 02, 03
         schema = json.loads(pkgutil.get_data(
@@ -158,7 +158,7 @@ class mixin_check_file_format():
                     ' -checksum_from_file ' + checksum_files[test_path_n]]:
                 # check some command line parameters
                 cp = subprocess.run(
-                    ['pydabu.py check_file_format' + flags],
+                    ['pydabu check_file_format' + flags],
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=test_dir_path,
                     timeout=self.subprocess_timeout, check=True)
@@ -172,17 +172,17 @@ class mixin_check_file_format():
         :Date: 2021-02-17
 
         This test uses the data in 'data/data_bubble' to test the checksums
-        of the script 'pydabu.py check_file_format'.
+        of the script 'pydabu check_file_format'.
         """
         # data bubble 02
         cp1 = subprocess.run(
-            ['pydabu.py check_file_format'],
+            ['pydabu check_file_format'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=self.test_dir_path[2],
             timeout=self.subprocess_timeout, check=True)
         instance1 = json.loads(cp1.stdout)
         cp2 = subprocess.run(
-            ['pydabu.py check_file_format -checksum_from_file .checksum'],
+            ['pydabu check_file_format -checksum_from_file .checksum'],
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=self.test_dir_path[2],
             timeout=self.subprocess_timeout, check=True)

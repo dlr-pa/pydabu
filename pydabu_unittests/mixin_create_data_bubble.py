@@ -4,7 +4,7 @@
 :Date: 2021-03-05
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
-tests the script: pydabu.py create_data_bubble
+tests the script: pydabu create_data_bubble
 """
 
 import json
@@ -32,7 +32,7 @@ class mixin_create_data_bubble():
             with open(os.path.join(tmpdir, 'bar'), 'w') as fd:
                 pass
             cp = subprocess.run(
-                ['pydabu.py create_data_bubble -directory ' + tmpdir],
+                ['pydabu create_data_bubble -directory ' + tmpdir],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, timeout=self.subprocess_timeout, check=True)
             for fn in ['.dabu.schema', '.dabu.json']:
@@ -53,7 +53,7 @@ class mixin_create_data_bubble():
             with open(os.path.join(tmpdir, 'bar'), 'w') as fd:
                 pass
             cp = subprocess.run(
-                ['pydabu.py create_data_bubble -directory .'],
+                ['pydabu create_data_bubble -directory .'],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
                 check=True)
@@ -66,7 +66,7 @@ class mixin_create_data_bubble():
         :Date: 2021-03-05
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu.py create_data_bubble'.
+        of the script 'pydabu create_data_bubble'.
         """
         import shutil
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -75,7 +75,7 @@ class mixin_create_data_bubble():
                 shutil.copyfile(os.path.join(self.test_dir_path[4], fn),
                                 os.path.join(tmpdir, fn))
             cp = subprocess.run(
-                ['pydabu.py create_data_bubble -directory . ' +
+                ['pydabu create_data_bubble -directory . ' +
                  '-checksum_from_file .checksum.sha256'],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
@@ -92,7 +92,7 @@ class mixin_create_data_bubble():
                 shutil.copyfile(os.path.join(self.test_dir_path[4], fn),
                                 os.path.join(tmpdir, fn))
             cp = subprocess.run(
-                ['pydabu.py create_data_bubble -directory .'],
+                ['pydabu create_data_bubble -directory .'],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
                 check=True)
@@ -120,7 +120,7 @@ class mixin_create_data_bubble():
                                 os.path.join(tmpdir, fn))
             os.mkdir(os.path.join(tmpdir, '.git'))
             cp = subprocess.run(
-                ['pydabu.py create_data_bubble -directory . ' +
+                ['pydabu create_data_bubble -directory . ' +
                  '-checksum_from_file .checksum.sha256'],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
