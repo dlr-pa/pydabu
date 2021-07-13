@@ -1,13 +1,12 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-07-05
+:Date: 2021-07-13
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import os
 
-#from distutils.core import setup, Command
 from setuptools import setup, Command
 
 
@@ -190,11 +189,8 @@ class TestWithUnittest(Command):
             sys.exit(0)
         else:
             sys.exit(1)
-        a = unittest.TextTestRunner(verbosity=2).run(suite)
-        print('\n########\n')
-        print(type(a))
-        print(a)
-        if a.wasSuccessful():
+        res = unittest.TextTestRunner(verbosity=2).run(suite)
+        if res.wasSuccessful():
             sys.exit(0)
         else:
             sys.exit(1)
@@ -282,7 +278,7 @@ required_modules += ['importlib']
 
 setup(
     name='pydabu',
-    version='2021.07.05',
+    version='2021.07.13',
     cmdclass={
         'check_modules': CheckModules,
         'run_unittest': TestWithUnittest,
