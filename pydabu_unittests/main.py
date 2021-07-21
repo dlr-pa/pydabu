@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-19
+:Date: 2021-07-13
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 aggregation of tests
@@ -36,13 +36,13 @@ class test_module_import(unittest.TestCase):
 class test_scripts_executable(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-04
+    :Date: 2021-07-13
     """
 
     def test_script_pydabu_executable(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-02-04
+        :Date: 2021-07-13
         """
         import subprocess
         cp = subprocess.run(
@@ -54,13 +54,13 @@ class test_scripts_executable(unittest.TestCase):
         # check begin of help output
         self.assertTrue(cp.stdout.startswith(b'usage: pydabu'))
         # check end of help output
-        self.assertTrue(cp.stdout.endswith(
-            b'License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n'))
+        self.assertTrue(cp.stdout.strip().endswith(
+            b'License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.'))
 
     def test_script_json_schema_from_schema_org_executable(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-03-04
+        :Date: 2021-07-13
         """
         import subprocess
         # check error output
@@ -86,8 +86,8 @@ class test_scripts_executable(unittest.TestCase):
         self.assertTrue(
             cp.stdout.startswith(b'usage: json_schema_from_schema_org'))
         # check end of help output
-        self.assertTrue(cp.stdout.endswith(
-            b'License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.\n'))
+        self.assertTrue(cp.stdout.strip().endswith(
+            b'License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.'))
 
 
 def module(suite):
