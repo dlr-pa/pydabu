@@ -21,9 +21,11 @@ def run_check_file_format(args):
 
     :param args: namespace return from ArgumentParser.parse_args
     """
+    actpath = os.getcwd()
     for path in args.directory:  # for every given directory
+        os.chdir(actpath)
         os.chdir(path)
-        result = analyse_data_structure(path)
+        result = analyse_data_structure()
         checksum_file = None
         if args.checksum_from_file is not None:
             checksum_file = args.checksum_from_file[0]
