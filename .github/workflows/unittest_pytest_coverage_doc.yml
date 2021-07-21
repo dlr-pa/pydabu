@@ -28,8 +28,18 @@ jobs:
       run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 libudunits2-0
     - name: install dependencies (cfchecker via pip)
       run: pip3 install cfchecker
+    - name: check all modules available
+      run: env python3 setup.py check_modules
     - name: install pydabu
       run: pip3 install .
+    - name: run pydabu
+      run: |
+        which pydabu
+        pydabu
+    - name: run json_schema_from_schema_org
+      run: |
+        which json_schema_from_schema_org
+        json_schema_from_schema_org -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies for pytest (ubuntu packages)
@@ -66,8 +76,18 @@ jobs:
       run: sudo apt install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 libudunits2-0
     - name: install dependencies (cfchecker via pip)
       run: pip3 install cfchecker
+    - name: check all modules available
+      run: env python3 setup.py check_modules
     - name: install pydabu
       run: pip3 install .
+    - name: run pydabu
+      run: |
+        which pydabu
+        pydabu
+    - name: run json_schema_from_schema_org
+      run: |
+        which json_schema_from_schema_org
+        json_schema_from_schema_org -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: install dependencies for pytest (ubuntu packages)
@@ -94,8 +114,18 @@ jobs:
       run: pip3 install wheel jsonschema netCDF4 pytest pytest-cov pytest-xdist cfchecker
     #- name: install dependencies for documentation via pip3
     #  run: pip3 install Sphinx sphinx-argparse recommonmark sphinx-jsonschema
+    - name: check all modules available
+      run: env python3 setup.py check_modules
     - name: install pydabu
       run: pip3 install .
+    - name: run pydabu
+      run: |
+        which pydabu
+        pydabu
+    - name: run json_schema_from_schema_org
+      run: |
+        which json_schema_from_schema_org
+        json_schema_from_schema_org -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: pytest
@@ -114,10 +144,106 @@ jobs:
     - name: install dependencies (via Homebrew)
       run: brew install udunits
     - name: install dependencies via pip3
-      run: pip3 install wheel jsonschema netCDF4 Sphinx sphinx-argparse recommonmark pytest pytest-cov pytest-xdist cfchecker sphinx-jsonschema
+      run: pip3 install wheel jsonschema netCDF4 pytest pytest-cov pytest-xdist cfchecker
+    #- name: install dependencies for documentation via pip3
+    #  run: pip3 install Sphinx sphinx-argparse recommonmark sphinx-jsonschema
+    - name: check all modules available
+      run: env python3 setup.py check_modules
     - name: install pydabu
       run: pip3 install .
+    - name: run pydabu
+      run: |
+        which pydabu
+        pydabu
+    - name: run json_schema_from_schema_org
+      run: |
+        which json_schema_from_schema_org
+        json_schema_from_schema_org -h
     - name: unittest
       run: env python3 setup.py run_unittest
     - name: pytest
       run: env python3 setup.py run_pytest --parallel --coverage
+
+  windows-2016_test:
+    # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2016-Readme.md
+    runs-on: windows-2016
+    steps:
+    - uses: actions/checkout@v2
+    - name: check python version
+      run: python -V
+    # use conda to install python, cfchecker and udunits
+    # https://anaconda.org/conda-forge/python
+    # https://anaconda.org/conda-forge/cfchecker
+    # https://anaconda.org/conda-forge/udunits
+    - name: conda init powershell
+      run: |
+        &($env:CONDA + "\Scripts\conda") init powershell
+    - name: install dependencies via conda
+      run: conda install -c conda-forge python jsonschema netcdf4 cfchecker pytest pytest-cov pytest-xdist
+      # sphinx sphinx-argparse recommonmark latexmk ...
+    - name: set conda environment for cfunits
+      run: conda env config vars set UDUNITS2_XML_PATH=$env:CONDA"\Library\share\udunits\udunits2.xml"
+    - name: check python and pip version (from conda)
+      run: |
+        Get-Command python
+        python -V
+        Get-Command pip
+        pip -V
+    - name: check all modules available
+      run: python setup.py check_modules
+    - name: install pydabu
+      run: pip install --verbose .
+    - name: run pydabu
+      run: |
+        Get-Command pydabu
+        pydabu
+    - name: run json_schema_from_schema_org
+      run: |
+        Get-Command json_schema_from_schema_org
+        json_schema_from_schema_org -h
+    - name: unittest
+      run: python setup.py run_unittest
+    - name: pytest
+      run: python setup.py run_pytest --parallel --coverage
+
+  windows-2019_test:
+    # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v2
+    - name: check python version
+      run: python -V
+    # use conda to install python, cfchecker and udunits
+    # https://anaconda.org/conda-forge/python
+    # https://anaconda.org/conda-forge/cfchecker
+    # https://anaconda.org/conda-forge/udunits
+    - name: conda init powershell
+      run: |
+        &($env:CONDA + "\Scripts\conda") init powershell
+    - name: install dependencies via conda
+      run: conda install -c conda-forge python jsonschema netcdf4 cfchecker pytest pytest-cov pytest-xdist
+      # sphinx sphinx-argparse recommonmark latexmk ...
+    - name: set conda environment for cfunits
+      run: conda env config vars set UDUNITS2_XML_PATH=$env:CONDA"\Library\share\udunits\udunits2.xml"
+    - name: check python and pip version (from conda)
+      run: |
+        Get-Command python
+        python -V
+        Get-Command pip
+        pip -V
+    - name: check all modules available
+      run: python setup.py check_modules
+    - name: install pydabu
+      run: pip install --verbose .
+    - name: run pydabu
+      run: |
+        Get-Command pydabu
+        pydabu
+    - name: run json_schema_from_schema_org
+      run: |
+        Get-Command json_schema_from_schema_org
+        json_schema_from_schema_org -h
+    - name: unittest
+      run: python setup.py run_unittest
+    - name: pytest
+      run: python setup.py run_pytest --parallel --coverage
