@@ -1,0 +1,6 @@
+# https://git-scm.com/docs/gitattributes
+# $GIT_DIR/info/attributes has the highest precedence and
+# can therefore overwrite the values here.
+# But at least the values here overwrite global and system-wide definitions.
+
+pydabu_unittests/data/** -text

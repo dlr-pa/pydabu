@@ -77,6 +77,8 @@ class mixin_check_file_format():
 
         This test uses the data in 'data/data_bubble' to test the output
         of the script 'pydabu check_file_format'.
+
+        env python3 script_pydabu.py scripty_pydabu.test_check_file_format_02
         """
         # data bubble 02
         test_dir_path = self.test_dir_path[2]

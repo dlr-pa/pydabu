@@ -1,5 +1,6 @@
 # https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions
 # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+# https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
 
 # todo:
 # https://docs.github.com/en/actions/guides/building-and-testing-python
@@ -15,6 +16,7 @@ on:
 
 jobs:
   ubuntu-1804_test_doc:
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
@@ -51,6 +53,7 @@ jobs:
         folder: manual_pydabu_html
 
   ubuntu-2004_test_doc:
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
 #    runs-on: ubuntu-latest
     runs-on: ubuntu-20.04
     steps:
@@ -79,6 +82,7 @@ jobs:
       run: ./create_doc
 
   macos-1015_test:
+    # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md
     runs-on: macos-10.15
     steps:
     - uses: actions/checkout@v2
@@ -98,6 +102,7 @@ jobs:
       run: env python3 setup.py run_pytest --parallel --coverage
 
   macos-11_test:
+    # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md
     if: ${{ false }}
     # https://github.com/actions/virtual-environments/issues/2486
     # https://github.com/actions/virtual-environments/blob/main/docs/macos-11-onboarding.md

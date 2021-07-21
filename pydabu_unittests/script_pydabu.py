@@ -1,13 +1,14 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-22
+:Date: 2021-07-21
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the package data of the module dabu
 
 You can run this file directly::
 
+  env python3 script_pydabu.py
   pytest-3 script_pydabu.py
 
 Or you can run only one test, e. g.::
@@ -19,17 +20,28 @@ import os.path
 import sys
 import unittest
 
-from .mixin_analyse_data_structure import mixin_analyse_data_structure
-from .mixin_check_nasa_ames_format import mixin_check_nasa_ames_format
-from .mixin_check_netcdf_file import mixin_check_netcdf_file
-from .mixin_check_file_format import mixin_check_file_format
-from .mixin_common_json_format import mixin_common_json_format
-from .mixin_create_data_bubble import mixin_create_data_bubble
-from .mixin_check_data_bubble import mixin_check_data_bubble
-from .mixin_listschemas import mixin_listschemas
-from .mixin_basic_sub_commands import mixin_basic_sub_commands
-from .mixin_data_bubble2jsonld import mixin_data_bubble2jsonld
-
+try:
+    from .mixin_analyse_data_structure import mixin_analyse_data_structure
+    from .mixin_check_nasa_ames_format import mixin_check_nasa_ames_format
+    from .mixin_check_netcdf_file import mixin_check_netcdf_file
+    from .mixin_check_file_format import mixin_check_file_format
+    from .mixin_common_json_format import mixin_common_json_format
+    from .mixin_create_data_bubble import mixin_create_data_bubble
+    from .mixin_check_data_bubble import mixin_check_data_bubble
+    from .mixin_listschemas import mixin_listschemas
+    from .mixin_basic_sub_commands import mixin_basic_sub_commands
+    from .mixin_data_bubble2jsonld import mixin_data_bubble2jsonld
+except ModuleNotFoundError:
+    from mixin_analyse_data_structure import mixin_analyse_data_structure
+    from mixin_check_nasa_ames_format import mixin_check_nasa_ames_format
+    from mixin_check_netcdf_file import mixin_check_netcdf_file
+    from mixin_check_file_format import mixin_check_file_format
+    from mixin_common_json_format import mixin_common_json_format
+    from mixin_create_data_bubble import mixin_create_data_bubble
+    from mixin_check_data_bubble import mixin_check_data_bubble
+    from mixin_listschemas import mixin_listschemas
+    from mixin_basic_sub_commands import mixin_basic_sub_commands
+    from mixin_data_bubble2jsonld import mixin_data_bubble2jsonld
 
 class mixin_data_bubble():
     """
@@ -61,11 +73,18 @@ class scripty_pydabu(
         mixin_data_bubble2jsonld):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-05
+    :Date: 2021-07-21
     """
+    try:
+        datapath = sys.modules['pydabu_unittests'].__file__
+    except KeyError:
+        datapath = ''
     test_dir_path = []
     for dir_name in ['00', '01', '02', '03', '04']:
         test_dir_path.append(os.path.join(
-            os.path.dirname(sys.modules['pydabu_unittests'].__file__),
+            os.path.dirname(datapath),
             'data', 'data_bubble', dir_name))
     subprocess_timeout = 5
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
