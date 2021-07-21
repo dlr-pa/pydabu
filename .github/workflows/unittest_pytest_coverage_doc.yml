@@ -133,6 +133,7 @@ jobs:
 
   macos-11_test:
     # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md
+    if: ${{ false }}
     # https://github.com/actions/virtual-environments/issues/2486
     # https://github.com/actions/virtual-environments/blob/main/docs/macos-11-onboarding.md
     runs-on: macos-11
