@@ -12,7 +12,7 @@ def dict_equal(a, b):
     :Date: 2021-03-09
     """
     for key in a.keys():
-        if not key in b:
+        if key not in b:
             return False
         elif isinstance(a[key], dict):
             if not dict_equal(a[key], b[key]):
@@ -30,6 +30,7 @@ def dict_equal(a, b):
                 return False
     return True
 
+
 def equal_list_as_set(a, b):
     """
     :Author: Daniel Mohr
@@ -46,6 +47,7 @@ def equal_list_as_set(a, b):
         else:
             return False
     return True
+
 
 def any_element_equal_list(e, l):
     """
@@ -99,8 +101,10 @@ def compare_dict(a, b, comparefct):
         else:
             comparefct(a[key], b[key])
 
+
 def assertEqual(a, b):
     assert(a == b)
+
 
 def compare_json_schemas_one_way(a, b, comparefct=assertEqual):
     """
@@ -112,7 +116,7 @@ def compare_json_schemas_one_way(a, b, comparefct=assertEqual):
 
     :param a: json schema to compare
     :param b: json schema to compare
-    :param comparefct: compare function to use; 
+    :param comparefct: compare function to use;
                        e. g. self.assertEqual in unittests
     """
     if isinstance(a, dict) and isinstance(b, dict):
@@ -121,6 +125,7 @@ def compare_json_schemas_one_way(a, b, comparefct=assertEqual):
         compare_list_as_set(a, b, comparefct)
     else:
         comparefct(a, b)
+
 
 def compare_json_schemas(a, b, comparefct=assertEqual):
     """
@@ -131,7 +136,7 @@ def compare_json_schemas(a, b, comparefct=assertEqual):
 
     :param a: json schema to compare
     :param b: json schema to compare
-    :param comparefct: compare function to use; 
+    :param comparefct: compare function to use;
                        e. g. self.assertEqual in unittests
     """
     compare_json_schemas_one_way(a, b, comparefct=comparefct)

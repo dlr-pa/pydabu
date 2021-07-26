@@ -28,7 +28,7 @@ def analyse_file_format_dict(
     :param store_checksums: if True find/calculate checksums for each file
     :param checksum_file: the file to import the checksums from
     """
-    if not 'data' in result:
+    if 'data' not in result:
         return result  # nothing to do, no data files available
     if checksum_file is not None:
         hash_from_checksum_file = extract_hash_from_checksum_file(
@@ -58,7 +58,7 @@ def analyse_file_format_dict(
         if file_extension.lower() == ".nc":  # NetCDF file
             try:
                 resitem['netcdf check'] = check_netcdf_file(f, output_format)
-            except:
+            except Exception:
                 sys.stderr.write('Could not check NetCDF file.\n')
                 resitem['netcdf check'] = dict()
                 resitem['netcdf check']['error'] = 1

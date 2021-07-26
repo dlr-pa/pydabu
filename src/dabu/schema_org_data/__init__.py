@@ -1,6 +1,6 @@
 """
 :mod:`dabu.schema_org_data`
-==================================
+===========================
 .. moduleauthor:: Daniel Mohr
 .. contents::
 

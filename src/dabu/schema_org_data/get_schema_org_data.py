@@ -38,7 +38,7 @@ def get_schema_org_data(cachefilepath='', cachefilename=''):
                           the data is loadd from the website and stored
                           in this file.
 
-    :return: json-ld structure (parsed by the python module json) as 
+    :return: json-ld structure (parsed by the python module json) as
              dicts and lists
     """
     schema_org_data = None
@@ -60,7 +60,8 @@ def get_schema_org_data(cachefilepath='', cachefilename=''):
         with open_cmd(cachefilenamepath, 'rb') as fd:
             schema_org_data = json.load(fd)
     else:
-        url = 'https://schema.org/version/latest/schemaorg-current-https.jsonld'
+        url = \
+          'https://schema.org/version/latest/schemaorg-current-https.jsonld'
         context = ssl.create_default_context()
         with urllib.request.urlopen(url, context=context) as fd:
             schema_org_data = json.load(fd)

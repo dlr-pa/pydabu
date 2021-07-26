@@ -22,7 +22,7 @@ def json_schema_from_schema_org(schemaorg_data, vocabulary, draft='draft-04'):
 
     :param schemaorg_data: json-ld data from https://schema.org as returned
                            from :func:`get_schema_org_data`.
-    :param vocabulary: list of words, which are a 
+    :param vocabulary: list of words, which are a
                        Schema.org Type (Schema.org vocabulary)
     :param draft: the used json schema, could be:
 

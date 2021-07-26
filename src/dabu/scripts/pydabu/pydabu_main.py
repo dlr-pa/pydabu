@@ -216,7 +216,8 @@ def my_argument_parser():
     epilog += '  jsonschema -i dabu.json '
     epilog += '~/lib/python/dabu/schemas/dabu_requires.schema\n\n'
     epilog += '  pydabu.py check_file_format -skip_creating_checksums\n\n'
-    epilog += '  pydabu.py check_file_format -checksum_from_file .checksum.sha512'
+    epilog += '  pydabu.py check_file_format '
+    epilog += '-checksum_from_file .checksum.sha512'
     parser_check_file_format = subparsers.add_parser(
         'check_file_format',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -242,7 +243,8 @@ def my_argument_parser():
     parser_common_json_format.set_defaults(func=run_common_json_format)
     # subparser create_data_bubble
     description = 'This command creates a data bubble in the give directory. '
-    description += 'The data is generated with the command "check_file_format" '
+    description += \
+        'The data is generated with the command "check_file_format" '
     description += 'from the data in the directory. '
     description += 'Also the resulting files are not a data management plan, '
     description += 'you can enhance it to become one.'
@@ -309,8 +311,8 @@ def my_argument_parser():
         description=description,
         epilog=epilog)
     parser_listschemas.set_defaults(func=run_listschemas)
-    # the following artificial parameter is necessary to build the documentation
-    # with sphinx-argparse or rather sphinxarg.ext
+    # the following artificial parameter is necessary to build the
+    # documentation with sphinx-argparse or rather sphinxarg.ext
     parser_listschemas.add_argument(
         '-output_format',
         nargs=1,
@@ -334,8 +336,13 @@ def my_argument_parser():
     epilog = 'Examples:\n\n'
     epilog += '  pydabu.py data_bubble2jsonld -dir .\n\n'
     epilog += '  pydabu.py data_bubble2jsonld -dir . -author "Daniel Mohr"\n\n'
-    epilog += '  pydabu.py data_bubble2jsonld -dir . -author \'{"name": "Daniel Mohr", "identifier": {"propertyID": "https://orcid.org/", "name": "ORCID", "value": "0000-0002-9382-6586", "url": "https://orcid.org/0000-0002-9382-6586"}}\'\n\n'
-    epilog += '  pydabu.py data_bubble2jsonld -dir . -author \'[{"name": "er"}, {"name": "sie"}, {"name": "es"}]\'\n\n'
+    epilog += '  pydabu.py data_bubble2jsonld -dir . -author \''
+    epilog += '{"name": "Daniel Mohr", "identifier": '
+    epilog += '{"propertyID": "https://orcid.org/", "name": "ORCID", '
+    epilog += '"value": "0000-0002-9382-6586", '
+    epilog += '"url": "https://orcid.org/0000-0002-9382-6586"}}\'\n\n'
+    epilog += '  pydabu.py data_bubble2jsonld -dir . -author '
+    epilog += '\'[{"name": "er"}, {"name": "sie"}, {"name": "es"}]\'\n\n'
     epilog += 'Example to check the result:\n\n'
     epilog += '  pydabu.py check_data_bubble -dir . '
     epilog += '-dabu_instance_file .dabu.json-ld '

@@ -35,7 +35,7 @@ def create_properties_schema2json(
         store_prop = properties[prop_name]
     else:
         if isinstance(properties[prop_name], dict):
-            if not "oneOf" in properties[prop_name]:
+            if "oneOf" not in properties[prop_name]:
                 if (("@id" in properties[prop_name]) and
                         (properties[prop_name]["@id"] == value)):
                     return
@@ -77,7 +77,7 @@ def create_properties_handle(
         store_prop = properties[prop_name]
     else:
         if isinstance(properties[prop_name], dict):
-            if not "oneOf" in properties[prop_name]:
+            if "oneOf" not in properties[prop_name]:
                 if (("$ref" in properties[prop_name]) and
                         (properties[prop_name]["$ref"] == value)):
                     return
@@ -176,7 +176,8 @@ def _get_property(item, data, properties, prop_name,
             data["schema:rangeIncludes"]["@id"].split('schema:')[1])
     elif item["@id"].split('schema:')[1] in handle:
         create_properties_handle(
-            properties, prop_name, missing_words, word,  item["@id"].split('schema:')[1])
+            properties, prop_name, missing_words, word,
+            item["@id"].split('schema:')[1])
     elif (("schema:rangeIncludes" in data) and
           ("@id" in data["schema:rangeIncludes"]) and
           (data["schema:rangeIncludes"]["@id"].split('schema:')[1] in
@@ -192,7 +193,8 @@ def _get_property(item, data, properties, prop_name,
                 for item_type in accept_list:
                     if item_type in schema2json:
                         create_properties_schema2json(
-                            properties, schema2json, word, prop_name, item_type)
+                            properties, schema2json, word, prop_name,
+                            item_type)
                     elif item_type in handle:
                         create_properties_handle(
                             properties, prop_name, missing_words,
@@ -225,7 +227,7 @@ def get_property(schemaorg_data, properties, prop_name, missing_words,
     elif ("@type" in data) and (data["@type"] == "rdf:Property"):
         if "schema:rangeIncludes" in data:
             if isinstance(data["schema:rangeIncludes"], dict):
-                if not "@id" in data["schema:rangeIncludes"]:
+                if "@id" not in data["schema:rangeIncludes"]:
                     raise NotImplementedError(json.dumps(data, indent=2))
                 _get_property(
                     data["schema:rangeIncludes"], data,

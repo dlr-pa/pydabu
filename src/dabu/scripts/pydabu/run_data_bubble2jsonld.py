@@ -72,7 +72,7 @@ def run_data_bubble2jsonld(args):
         jsonld_schema["definitions"]["DataCatalog"]["allOf"].append(
             schema["properties"])
         del schema["properties"]
-        if not "required" in jsonld_schema["definitions"]["DataCatalog"]:
+        if "required" not in jsonld_schema["definitions"]["DataCatalog"]:
             jsonld_schema["definitions"]["DataCatalog"]["required"] = []
         required = jsonld_schema["definitions"]["DataCatalog"]["required"]
         for prop in schema["required"]:

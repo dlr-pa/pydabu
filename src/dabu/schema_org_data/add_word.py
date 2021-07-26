@@ -58,11 +58,11 @@ def add_word(schemaorg_data, word, draft='draft-04'):
         schema["definitions"][word]["type"] = "object"
         if "rdfs:comment" in data:
             schema["definitions"][word]["description"] = data["rdfs:comment"]
-        #schema["definitions"][word]["required"] = ["@context"]
+        # schema["definitions"][word]["required"] = ["@context"]
         schema["definitions"][word]["required"] = []
         schema["definitions"][word]["properties"] = dict()
         properties = schema["definitions"][word]["properties"]
-        #properties["@context"] = create_context_schema(word)
+        # properties["@context"] = create_context_schema(word)
         if "rdfs:subClassOf" in data:
             subClassOf = []
             if isinstance(data["rdfs:subClassOf"], dict):

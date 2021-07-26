@@ -33,7 +33,7 @@ def run_check_data_bubble(args):
             schema = json.load(fd)
         # check schema
         # the schema test of jsonschema is insufficient
-        if not u"$schema" in schema:
+        if u"$schema" not in schema:
             warnings.warn(
                 'No "$schema" keyword in the given schema found. '
                 'It is recommended to use this keyword to specifiy the used '
@@ -43,7 +43,7 @@ def run_check_data_bubble(args):
                 raise NotImplementedError(
                     'Schema "' + schema[u"$schema"] +
                     '" not found in implemented validators of jsonschema.')
-        #jsonschema.validate(instance, schema)
+        # jsonschema.validate(instance, schema)
         validater = jsonschema.Draft4Validator(schema)
         try:
             jsonschema.Draft4Validator.check_schema(schema)
@@ -55,9 +55,9 @@ def run_check_data_bubble(args):
                 filenameoutput = ''
                 if ((err.path[0] == 'data') and
                     isinstance(err.path[1], int) and
-                    ('name' in instance['data'][err.path[1]])):
+                        ('name' in instance['data'][err.path[1]])):
                     filenameoutput = \
-                      " (file: '%s')" % instance['data'][err.path[1]]['name']
+                        " (file: '%s')" % instance['data'][err.path[1]]['name']
                 print(
                     '%s in%s:\n    %s' % (
                         err.message,
