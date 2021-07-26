@@ -88,8 +88,8 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
         if result[checker_name]['error'] == 0:
             if len(metadata_part[1]) > 0:
                 if len(metadata_part[1]) < 132 + 1:
-                    # ONAME: List of author(s) in the format Lastname, Firstname
-                    #        separated by an arbitrary character
+                    # ONAME: List of author(s) in the format Lastname,
+                    #        Firstname; separated by an arbitrary character
                     #        (for example, a hyphen or a semi-colon).
                     # since it is hard to automatic split at an arbitrary
                     # character, we only check for a comma

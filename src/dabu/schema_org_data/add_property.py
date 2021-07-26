@@ -13,7 +13,7 @@ def combine(json_instance1, json_instance2):
     :Author: Daniel Mohr
     :Date: 2021-03-16
 
-    This function combines/merges 2 json instances. 
+    This function combines/merges 2 json instances.
     Each are a combination of dicts and lists.
 
     :param json_instance1: json_instance
@@ -43,7 +43,7 @@ def add_property(schema, key, value):
             elif isinstance(value, list):
                 schema[key] = list(set(schema[key] + value))
             else:  # string, int, float, bool or None
-                if not value in schema[key]:
+                if value not in schema[key]:
                     schema[key].append(value)
         else:  # string, int, float, bool or None
             if isinstance(value, dict):
