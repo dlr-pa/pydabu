@@ -15,6 +15,16 @@ on:
     branches: [ master ]
 
 jobs:
+  pep8_check:
+    # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: install dependencies for PEP 8 code style check (ubuntu packages)
+      run: sudo apt install pep8
+    - name: check PEP 8 code style
+      run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
+
   ubuntu-1804_test_doc:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
     runs-on: ubuntu-18.04

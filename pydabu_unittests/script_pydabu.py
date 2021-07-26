@@ -31,7 +31,7 @@ try:
     from .mixin_listschemas import mixin_listschemas
     from .mixin_basic_sub_commands import mixin_basic_sub_commands
     from .mixin_data_bubble2jsonld import mixin_data_bubble2jsonld
-except ModuleNotFoundError:
+except (ModuleNotFoundError, ImportError):
     from mixin_analyse_data_structure import mixin_analyse_data_structure
     from mixin_check_nasa_ames_format import mixin_check_nasa_ames_format
     from mixin_check_netcdf_file import mixin_check_netcdf_file

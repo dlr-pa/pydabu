@@ -94,8 +94,8 @@ class TestWithPytest(Command):
             # first we need to clean the target directory
             if os.path.isdir(coverage_dir):
                 files = os.listdir(coverage_dir)
-                for f in files:
-                    os.remove(os.path.join(coverage_dir, f))
+                for filename in files:
+                    os.remove(os.path.join(coverage_dir, filename))
             pyargs += ['--cov=dabu', '--no-cov-on-fail',
                        '--cov-report=html:' + coverage_dir,
                        '--cov-report=term:skip-covered']
@@ -175,14 +175,14 @@ class TestWithUnittest(Command):
         pydabu_unittests.module(suite)
         setup_self = self
 
-        class test_required_module_import(unittest.TestCase):
+        class TestRequiredModuleImport(unittest.TestCase):
             def test_required_module_import(self):
                 import importlib
                 for module in setup_self.distribution.metadata.get_requires():
                     importlib.import_module(module)
         loader = unittest.defaultTestLoader
         suite.addTest(loader.loadTestsFromTestCase(
-            test_required_module_import))
+            TestRequiredModuleImport))
         if self.src == 'installed':
             pydabu_unittests.scripts(suite)
         if unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful():
@@ -285,7 +285,7 @@ setup(
         'run_pytest': TestWithPytest},
     description='software to check a data bubble.',
     long_description='',
-    keywords='data managment',
+    keywords=['data managment', 'metadata', 'data management plan'],
     author='Daniel Mohr',
     author_email='daniel.mohr@dlr.de',
     maintainer='Daniel Mohr',
@@ -304,9 +304,6 @@ setup(
         'dabu.scripts',
         'dabu.scripts.pydabu',
         'dabu.scripts.json_schema_from_schema_org'],
-    # scripts=[
-    #    'src/scripts/pydabu.py',
-    #    'src/scripts/json_schema_from_schema_org.py'],
     entry_points={
         'console_scripts':
             ['pydabu=dabu.scripts.pydabu.pydabu_main:pydabu_main',
@@ -319,7 +316,9 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
-        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Intended Audience :: Science/Research',
+        'Intended Audience :: System Administrators',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Natural Language :: English',
         'Operating System :: POSIX',
         'Operating System :: POSIX :: BSD :: FreeBSD',
@@ -327,8 +326,11 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Operating System :: Unix',
         'Operating System :: MacOS',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3'],
+        'Programming Language :: Python :: 3',
+        'Topic :: System :: Archiving'],
     # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | egrep -i --only-matching "import .*$" | sort -u
     requires=required_modules,
     provides=['dabu']
