@@ -138,8 +138,8 @@
         <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">132</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="c1"># ONAME: List of author(s) in the format Lastname, Firstname</span>
-                    <span class="c1">#        separated by an arbitrary character</span>
+                    <span class="c1"># ONAME: List of author(s) in the format Lastname,</span>
+                    <span class="c1">#        Firstname; separated by an arbitrary character</span>
                     <span class="c1">#        (for example, a hyphen or a semi-colon).</span>
                     <span class="c1"># since it is hard to automatic split at an arbitrary</span>
                     <span class="c1"># character, we only check for a comma</span>
