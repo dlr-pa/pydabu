@@ -24,8 +24,8 @@ jobs:
       run: sudo apt install pep8 pylint3
     - name: check PEP 8 code style
       run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
-    - name: run pylint3
-      run: pylint3 -j 3 --include-naming-hint=y --good-names=i,j,k,fd $(find -name "*.py")
+    - name: run pylint
+      run: pylint -j 3 --include-naming-hint=y --good-names=i,j,k,fd $(find -name "*.py")
   
   ubuntu-1804_test_doc:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
