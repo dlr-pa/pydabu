@@ -9,7 +9,6 @@ import argparse
 import getpass
 import os
 import os.path
-import sys
 import tempfile
 
 

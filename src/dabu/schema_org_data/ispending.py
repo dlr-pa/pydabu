@@ -6,44 +6,44 @@
 """
 
 
-def _Includes_dict(object, content):
+def _includes_dict(analyse_object, content):
     """
     :Author: Daniel Mohr
     :Date: 2021-02-26
     """
-    if ("@id" in object) and (object["@id"] == content):
+    if ("@id" in analyse_object) and (analyse_object["@id"] == content):
         return True
     else:
         return False
 
 
-def _Includes_list(object, content):
+def _includes_list(analyse_object, content):
     """
     :Author: Daniel Mohr
     :Date: 2021-02-26
     """
     ret = False
-    for element in object:
-        ret = _Includes_dict(element, content)
+    for element in analyse_object:
+        ret = _includes_dict(element, content)
         if ret:
             break
     return ret
 
 
-def _Includes(object, content):
+def _includes(analyse_object, content):
     """
     :Author: Daniel Mohr
     :Date: 2021-02-26
     """
-    if isinstance(object, dict):
-        return _Includes_dict(object, content)
-    elif isinstance(object, list):
-        return _Includes_list(object, content)
+    if isinstance(analyse_object, dict):
+        return _includes_dict(analyse_object, content)
+    elif isinstance(analyse_object, list):
+        return _includes_list(analyse_object, content)
     else:
         return False
 
 
-def ispending(object):
+def ispending(analyse_object):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-09
@@ -51,7 +51,7 @@ def ispending(object):
     We ignore work-in-progress terms marked as pending:
     https://schema.org/docs/howwework.html#pending
     """
-    if "schema:isPartOf" in object:
-        return _Includes(object["schema:isPartOf"],
+    if "schema:isPartOf" in analyse_object:
+        return _includes(analyse_object["schema:isPartOf"],
                          "https://pending.schema.org")
     return False

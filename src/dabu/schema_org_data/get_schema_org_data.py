@@ -15,12 +15,12 @@ import ssl
 import urllib.request
 
 
-def lzma_open(filename, mode, format=lzma.FORMAT_ALONE, *params):
+def lzma_open(filename, mode, container_format=lzma.FORMAT_ALONE, *params):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-09
     """
-    return lzma.open(filename, mode, format=format, *params)
+    return lzma.open(filename, mode, format=container_format, *params)
 
 
 def get_schema_org_data(cachefilepath='', cachefilename=''):
@@ -61,7 +61,7 @@ def get_schema_org_data(cachefilepath='', cachefilename=''):
             schema_org_data = json.load(fd)
     else:
         url = \
-          'https://schema.org/version/latest/schemaorg-current-https.jsonld'
+            'https://schema.org/version/latest/schemaorg-current-https.jsonld'
         context = ssl.create_default_context()
         with urllib.request.urlopen(url, context=context) as fd:
             schema_org_data = json.load(fd)

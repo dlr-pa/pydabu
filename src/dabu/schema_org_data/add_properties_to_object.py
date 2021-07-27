@@ -5,6 +5,8 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import json
+
 from .ispending import ispending
 from .get_property import get_property
 
@@ -19,7 +21,7 @@ def add_property_to_object(
         raise NotImplementedError(json.dumps(item, indent=2))
     elif domainIncludes["@id"] == "schema:" + word:
         if "@id" not in item:
-            raise NotImplementedError(json.dumps(data, indent=2))
+            raise NotImplementedError(json.dumps(item, indent=2))
         prop_name = item["@id"].split('schema:')[1]  # e. g.: additionalName
         get_property(schemaorg_data, properties, prop_name, missing_words)
     # if item["@type"] == "rdf:Property":

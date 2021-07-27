@@ -6,9 +6,9 @@
 """
 
 import json
-import jsonschema
 import os.path
 import warnings
+import jsonschema
 
 from .check_arg_file import check_arg_file
 

@@ -5,9 +5,6 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import json
-
-from .add_property import add_property
 from .add_properties_to_object import add_properties_to_object
 from .get_graph_item import get_graph_item
 
@@ -64,22 +61,22 @@ def add_word(schemaorg_data, word, draft='draft-04'):
         properties = schema["definitions"][word]["properties"]
         # properties["@context"] = create_context_schema(word)
         if "rdfs:subClassOf" in data:
-            subClassOf = []
+            sub_class_of = []
             if isinstance(data["rdfs:subClassOf"], dict):
                 if data["rdfs:subClassOf"]["@id"].startswith('schema:'):
-                    subClassOf.append(data["rdfs:subClassOf"]["@id"])
+                    sub_class_of.append(data["rdfs:subClassOf"]["@id"])
             elif isinstance(data["rdfs:subClassOf"], list):
                 for sco in data["rdfs:subClassOf"]:
                     if sco["@id"].startswith('schema:'):
-                        subClassOf.append(sco["@id"])
+                        sub_class_of.append(sco["@id"])
             else:
                 raise NotImplementedError(
                     'data type of "rdfs:subClassOf" not handled')
-            if len(subClassOf) > 0:
+            if len(sub_class_of) > 0:
                 schema["definitions"][word]["allOf"] = list()
                 schema["definitions"][word]["allOf"].append(properties)
                 properties = schema["definitions"][word]["allOf"][0]
-                for sco in subClassOf:
+                for sco in sub_class_of:
                     new_word = sco.split('schema:')[1]
                     schema["definitions"][word]["allOf"].append(
                         {"$ref": "#/definitions/" + new_word})

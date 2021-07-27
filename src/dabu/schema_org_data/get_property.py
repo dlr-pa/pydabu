@@ -5,6 +5,8 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import json
+
 from dabu.compare_json_schemas import compare_json_schemas
 
 from .get_graph_item import get_graph_item
@@ -56,7 +58,7 @@ def create_properties_schema2json(
                 properties[prop_name]["oneOf"].append(dict())
                 store_prop = properties[prop_name]["oneOf"][-1]
         else:
-            raise NotImplementedError(json.dumps(data, indent=2))
+            raise NotImplementedError(json.dumps(properties, indent=2))
     store_prop["@id"] = value
     if isinstance(schema2json[item_type], str):
         store_prop["type"] = schema2json[item_type]
@@ -90,7 +92,7 @@ def create_properties_handle(
             properties[prop_name]["oneOf"].append(dict())
             store_prop = properties[prop_name]["oneOf"][-1]
         else:
-            raise NotImplementedError(json.dumps(data, indent=2))
+            raise NotImplementedError(json.dumps(properties, indent=2))
     store_prop["$ref"] = value
     missing_words.append(item_type_ref)
 
@@ -101,7 +103,7 @@ def _rangeincludes_list(data, schema2json, handle):
     :Date: 2021-03-17
     """
     accept_list = []
-    if not ("schema:rangeIncludes" in data):
+    if "schema:rangeIncludes" not in data:
         return None
     if not isinstance(data["schema:rangeIncludes"], list):
         return None

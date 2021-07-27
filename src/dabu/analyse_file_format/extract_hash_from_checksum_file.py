@@ -16,7 +16,7 @@ import os
 import re
 
 
-class extract_hash_from_checksum_file():
+class ExtractHashFromChecksumFile():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
