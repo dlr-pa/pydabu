@@ -25,9 +25,7 @@ jobs:
     - name: check PEP 8 code style
       run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
     - name: run pylint (only output; skipping warnings)
-      run: |
-        pylint -j 3 --include-naming-hint=y --good-names=i,j,k,fd $(find -name "*.py")
-        python3 -c "r=$?;print('\n%i:' % r, bin(r)[2:]);import sys;sys.exit(max(r-31, 0))"
+      run: pylint -j 3 --include-naming-hint=y --good-names=i,j,k,fd $(find -name "*.py"); python3 -c "r=$?;print('\n%i:' % r, bin(r)[2:]);import sys;sys.exit(max(r-31, 0))"
   
   ubuntu-1804_test_doc:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
