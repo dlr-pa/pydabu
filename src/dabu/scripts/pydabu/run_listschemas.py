@@ -20,7 +20,13 @@ def run_listschemas(args):
     :param args: namespace return from ArgumentParser.parse_args
     """
     schema_list = os.listdir(os.path.join(dabu.__path__[0], 'schemas'))
-    add_path = lambda path: os.path.join(dabu.__path__[0], 'schemas', path)
+
+    def add_path(path):
+        """
+        a kind of lambda function
+        """
+        return os.path.join(dabu.__path__[0], 'schemas', path)
+
     schema_list = list(map(add_path, schema_list))
     schema_list.sort()
     if 'simple' in args.output_format:

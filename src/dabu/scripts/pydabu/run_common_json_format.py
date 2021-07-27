@@ -7,6 +7,7 @@
 
 import json
 
+
 def run_common_json_format(args):
     """
     :Author: Daniel Mohr
@@ -19,4 +20,3 @@ def run_common_json_format(args):
         with open(file_name, mode='r') as fd:
             instance = json.load(fd)
         print(json.dumps(instance, indent=args.indent[0]))
-

@@ -37,9 +37,17 @@ class mixin_data_bubble2jsonld():
                        'test.nc']:
                 shutil.copyfile(os.path.join(self.test_dir_path[4], fn),
                                 os.path.join(tmpdir, fn))
-            for param in ['', ' -author "Daniel Mohr"',
-                          ' -author "{\\"name\\": \\"Daniel Mohr\\", \\"identifier\\": {\\"propertyID\\": \\"https://orcid.org/\\", \\"name\\": \\"ORCID\\", \\"value\\": \\"0000-0002-9382-6586\\", \\"url\\": \\"https://orcid.org/0000-0002-9382-6586\\"}}"',
-                          ' -author "[{\\"name\\": \\"er\\"}, {\\"name\\": \\"sie\\"}, {\\"name\\": \\"es\\"}]"']:
+            for param in ['',
+                          ' -author "Daniel Mohr"',
+                          ' -author "{\\"name\\": \\"Daniel Mohr\\", '
+                          '\\"identifier\\": '
+                          '{\\"propertyID\\": \\"https://orcid.org/\\", '
+                          '\\"name\\": \\"ORCID\\", '
+                          '\\"value\\": \\"0000-0002-9382-6586\\", '
+                          '\\"url\\": '
+                          '\\"https://orcid.org/0000-0002-9382-6586\\"}}"',
+                          ' -author "[{\\"name\\": \\"er\\"}, '
+                          '{\\"name\\": \\"sie\\"}, {\\"name\\": \\"es\\"}]"']:
                 cmd = 'pydabu data_bubble2jsonld -directory .' + param
                 cp = subprocess.run(
                     cmd,

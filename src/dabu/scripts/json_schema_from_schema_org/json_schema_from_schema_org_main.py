@@ -7,10 +7,12 @@
 
 import json
 
-from .argument_parser import argument_parser
 import dabu.schema_org_data
 
+from .argument_parser import argument_parser
 
+
+# pylint: disable=invalid-name
 def json_schema_from_schema_org_main():
     """
     :Author: Daniel Mohr

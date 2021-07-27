@@ -28,6 +28,7 @@ def add_property(schema, key, value):
     :Author: Daniel Mohr
     :Date: 2021-03-16
     """
+    # pylint: disable=too-many-branches
     if key in schema:
         if isinstance(schema[key], dict):
             if isinstance(value, dict):

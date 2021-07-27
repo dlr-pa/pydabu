@@ -20,14 +20,15 @@ def check_netcdf_file(file, output_format='human_readable'):
 
     :param file: file to analyse
     """
+    # pylint: disable=no-member
     import cfchecker.cfchecks
-    from netCDF4 import Dataset
+    import netCDF4
     result = dict()
     result['error'] = 0
     result['log'] = []
     checker_name = 'pydabu (netcdf check)'
     result[checker_name] = dict()
-    rootgrp = Dataset(file, "r")
+    rootgrp = netCDF4.Dataset(file, "r")
     convention = None
     if hasattr(rootgrp, 'Conventions'):
         # Climate and Forecasts (CF) Metadata Convention is used

@@ -5,6 +5,8 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import json
+
 from dabu.compare_json_schemas import compare_json_schemas
 
 from .get_graph_item import get_graph_item
@@ -35,7 +37,7 @@ def create_properties_schema2json(
         store_prop = properties[prop_name]
     else:
         if isinstance(properties[prop_name], dict):
-            if not "oneOf" in properties[prop_name]:
+            if "oneOf" not in properties[prop_name]:
                 if (("@id" in properties[prop_name]) and
                         (properties[prop_name]["@id"] == value)):
                     return
@@ -56,7 +58,7 @@ def create_properties_schema2json(
                 properties[prop_name]["oneOf"].append(dict())
                 store_prop = properties[prop_name]["oneOf"][-1]
         else:
-            raise NotImplementedError(json.dumps(data, indent=2))
+            raise NotImplementedError(json.dumps(properties, indent=2))
     store_prop["@id"] = value
     if isinstance(schema2json[item_type], str):
         store_prop["type"] = schema2json[item_type]
@@ -66,7 +68,7 @@ def create_properties_schema2json(
 
 
 def create_properties_handle(
-        properties, prop_name, missing_words, word, item_type_ref):
+        properties, prop_name, missing_words, item_type_ref):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-17
@@ -77,7 +79,7 @@ def create_properties_handle(
         store_prop = properties[prop_name]
     else:
         if isinstance(properties[prop_name], dict):
-            if not "oneOf" in properties[prop_name]:
+            if "oneOf" not in properties[prop_name]:
                 if (("$ref" in properties[prop_name]) and
                         (properties[prop_name]["$ref"] == value)):
                     return
@@ -90,7 +92,7 @@ def create_properties_handle(
             properties[prop_name]["oneOf"].append(dict())
             store_prop = properties[prop_name]["oneOf"][-1]
         else:
-            raise NotImplementedError(json.dumps(data, indent=2))
+            raise NotImplementedError(json.dumps(properties, indent=2))
     store_prop["$ref"] = value
     missing_words.append(item_type_ref)
 
@@ -101,7 +103,7 @@ def _rangeincludes_list(data, schema2json, handle):
     :Date: 2021-03-17
     """
     accept_list = []
-    if not ("schema:rangeIncludes" in data):
+    if "schema:rangeIncludes" not in data:
         return None
     if not isinstance(data["schema:rangeIncludes"], list):
         return None
@@ -131,8 +133,6 @@ def _get_property(item, data, properties, prop_name,
                    "Time": "string",
                    "email": {"oneOf": [{"type": "string"},
                                        {"type": "string", "format": "email"}]}}
-    schema2json7 = {"Date": {"type": "string", "format": "date"},
-                    "Time": {"type": "string", "format": "datetime"}}
     if draft in ['draft-06']:
         schema2json["URL"] = {
             "oneOf": [{"type": "string", "format": "uri"},
@@ -176,14 +176,15 @@ def _get_property(item, data, properties, prop_name,
             data["schema:rangeIncludes"]["@id"].split('schema:')[1])
     elif item["@id"].split('schema:')[1] in handle:
         create_properties_handle(
-            properties, prop_name, missing_words, word,  item["@id"].split('schema:')[1])
+            properties, prop_name, missing_words,
+            item["@id"].split('schema:')[1])
     elif (("schema:rangeIncludes" in data) and
           ("@id" in data["schema:rangeIncludes"]) and
           (data["schema:rangeIncludes"]["@id"].split('schema:')[1] in
            handle)):
         # e. g.: follows
         create_properties_handle(
-            properties, prop_name, missing_words, word,
+            properties, prop_name, missing_words,
             data["schema:rangeIncludes"]["@id"].split('schema:')[1])
     else:
         accept_list = _rangeincludes_list(data, schema2json, handle)
@@ -192,11 +193,11 @@ def _get_property(item, data, properties, prop_name,
                 for item_type in accept_list:
                     if item_type in schema2json:
                         create_properties_schema2json(
-                            properties, schema2json, word, prop_name, item_type)
+                            properties, schema2json, word, prop_name,
+                            item_type)
                     elif item_type in handle:
                         create_properties_handle(
-                            properties, prop_name, missing_words,
-                            word, item_type)
+                            properties, prop_name, missing_words, item_type)
             elif len(accept_list) == 1:
                 item_type = accept_list[0]
                 if item_type in schema2json:
@@ -204,7 +205,7 @@ def _get_property(item, data, properties, prop_name,
                         properties, schema2json, word, prop_name, item_type)
                 elif item_type in handle:
                     create_properties_handle(
-                        properties, prop_name, missing_words, word, item_type)
+                        properties, prop_name, missing_words, item_type)
         else:
             pass  # not implemented now
 
@@ -225,7 +226,7 @@ def get_property(schemaorg_data, properties, prop_name, missing_words,
     elif ("@type" in data) and (data["@type"] == "rdf:Property"):
         if "schema:rangeIncludes" in data:
             if isinstance(data["schema:rangeIncludes"], dict):
-                if not "@id" in data["schema:rangeIncludes"]:
+                if "@id" not in data["schema:rangeIncludes"]:
                     raise NotImplementedError(json.dumps(data, indent=2))
                 _get_property(
                     data["schema:rangeIncludes"], data,
@@ -239,6 +240,6 @@ def get_property(schemaorg_data, properties, prop_name, missing_words,
                 raise NotImplementedError(json.dumps(data, indent=2))
         else:
             raise NotImplementedError(json.dumps(data, indent=2))
-    elif "@type":
+    else:
         raise NotImplementedError(json.dumps(data, indent=2))
     return None

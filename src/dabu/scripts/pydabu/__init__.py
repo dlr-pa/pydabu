@@ -1,7 +1,7 @@
 """
 :mod:`dabu.scripts.pydabu`
 ==========================
-   :synopsis: :mod:`dabu.scripts.pydabu` is a python module to store the code 
+   :synopsis: :mod:`dabu.scripts.pydabu` is a python module to store the code
               for the script pydabu.py.
 
 .. moduleauthor:: Daniel Mohr

@@ -7,11 +7,12 @@
 
 import sys
 
-from .analyse_file_format import analyse_file_format
-from .extract_hash_from_checksum_file import extract_hash_from_checksum_file
-from .create_checksum import create_checksum
-from dabu.check_netcdf_file import check_netcdf_file
 from dabu.check_nasa_ames_format import check_nasa_ames_format
+from dabu.check_netcdf_file import check_netcdf_file
+
+from .analyse_file_format import analyse_file_format
+from .create_checksum import create_checksum
+from .extract_hash_from_checksum_file import ExtractHashFromChecksumFile
 
 
 def analyse_file_format_dict(
@@ -28,26 +29,27 @@ def analyse_file_format_dict(
     :param store_checksums: if True find/calculate checksums for each file
     :param checksum_file: the file to import the checksums from
     """
-    if not 'data' in result:
+    if 'data' not in result:
         return result  # nothing to do, no data files available
     if checksum_file is not None:
-        hash_from_checksum_file = extract_hash_from_checksum_file(
+        hash_from_checksum_file = ExtractHashFromChecksumFile(
             checksum_file)
     files = result['data'].copy()
     result['data'] = []
-    for f in files:
-        file_extension = analyse_file_format(f)
-        resitem = {'name': f, 'file_extension': file_extension}
+    for filename in files:
+        file_extension = analyse_file_format(filename)
+        resitem = {'name': filename, 'file_extension': file_extension}
         if store_checksums:
             checksum = None
             if checksum_file is not None:
-                hash_info = hash_from_checksum_file(f, encoding='base64')
+                hash_info = hash_from_checksum_file(
+                    filename, encoding='base64')
                 if hash_info is not None:
                     checksum = {'hash': hash_info[0],
                                 'algorithm': hash_info[1][0],
                                 'encoding': hash_info[1][1]}
             if checksum is None:
-                hash_byte_array = create_checksum(f,
+                hash_byte_array = create_checksum(filename,
                                                   algorithm='sha512',
                                                   encoding='base64')
                 checksum = {'hash': hash_byte_array.decode(encoding='utf-8'),
@@ -57,8 +59,9 @@ def analyse_file_format_dict(
                 resitem['checksum'] = checksum
         if file_extension.lower() == ".nc":  # NetCDF file
             try:
-                resitem['netcdf check'] = check_netcdf_file(f, output_format)
-            except:
+                resitem['netcdf check'] = check_netcdf_file(filename,
+                                                            output_format)
+            except Exception:
                 sys.stderr.write('Could not check NetCDF file.\n')
                 resitem['netcdf check'] = dict()
                 resitem['netcdf check']['error'] = 1
@@ -66,6 +69,6 @@ def analyse_file_format_dict(
                     ['Could not check NetCDF file.']
         if file_extension.lower() in ['.nas', '.na']:  # NASA Ames Format
             resitem['nasa ames format check'] = check_nasa_ames_format(
-                f, output_format)
+                filename, output_format)
         result['data'].append(resitem)
     return result

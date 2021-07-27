@@ -6,9 +6,10 @@
 """
 
 import json
-import jsonschema
 import os.path
 import sys
+
+import jsonschema
 
 import dabu.schema_org_data
 
@@ -17,7 +18,12 @@ from .check_arg_file_not_exists import check_arg_file_not_exists
 from .run_check_data_bubble import run_check_data_bubble
 
 
-class empty_namespace_class():
+class EmptyNamespaceClass():
+    """
+    simple empty class
+
+    You can use it to get an empty namespace.
+    """
     pass
 
 
@@ -51,11 +57,11 @@ def run_data_bubble2jsonld(args):
         with open(os.path.join(path, args.dabu_schema_file[0]),
                   mode='r') as fd:
             schema = json.load(fd)
-        validater = jsonschema.Draft4Validator(schema)
+        jsonschema.Draft4Validator(schema)
         # call run_check_data_bubble:
         sys.stderr.write(
             f'run: pydabu.py check_data_bubble -directory {path}\n')
-        check_data_bubble_args = empty_namespace_class()
+        check_data_bubble_args = EmptyNamespaceClass()
         check_data_bubble_args.directory = [path]
         check_data_bubble_args.dabu_instance_file = args.dabu_instance_file
         check_data_bubble_args.dabu_schema_file = args.dabu_schema_file
@@ -72,13 +78,13 @@ def run_data_bubble2jsonld(args):
         jsonld_schema["definitions"]["DataCatalog"]["allOf"].append(
             schema["properties"])
         del schema["properties"]
-        if not "required" in jsonld_schema["definitions"]["DataCatalog"]:
+        if "required" not in jsonld_schema["definitions"]["DataCatalog"]:
             jsonld_schema["definitions"]["DataCatalog"]["required"] = []
         required = jsonld_schema["definitions"]["DataCatalog"]["required"]
         for prop in schema["required"]:
             if prop not in required:
                 required.append(prop)
-        if len(jsonld_schema["definitions"]["DataCatalog"]["required"]) == 0:
+        if not bool(jsonld_schema["definitions"]["DataCatalog"]["required"]):
             del jsonld_schema["definitions"]["DataCatalog"]["required"]
         schema["required"] = ["DataCatalog"]
         jsonld_schema["definitions"]["DataCatalog"]["dependencies"] = \
@@ -89,7 +95,6 @@ def run_data_bubble2jsonld(args):
         if isinstance(schema["$schema"], list):
             index = len(schema["$schema"]) - 1
             while 0 < index:
-                item = schema["$schema"][index]
                 nindex = schema["$schema"].index(
                     schema["$schema"][index])
                 if nindex != index:
