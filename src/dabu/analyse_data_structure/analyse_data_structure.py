@@ -84,7 +84,7 @@ def analyse_data_structure(path_name='.', result=dict()):
             break
     # analyse if checksums are available (look for checksums)
     regexp = re.compile(
-        '.*checksum.*|.*\.md5|.*\.sha256|.*\.sha512|.*\.sha1',
+        r'.*checksum.*|.*\.md5|.*\.sha256|.*\.sha512|.*\.sha1',
         flags=re.IGNORECASE)
     for filename in file_names:
         if regexp.findall(filename):
