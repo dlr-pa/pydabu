@@ -25,11 +25,15 @@ jobs:
     - name: check PEP 8 code style
       run: pep8 --show-source --show-pep8 --statistics $(find -name "*.py")
     - name: run pylint (only output; skipping warnings)
-      run: pylint -j 3 --include-naming-hint=y --good-names=i,j,k,fd $(find -name "*.py"); python3 -c "r=$?;print('\n%i:' % r, bin(r)[2:]);import sys;sys.exit(max(r-31, 0))"
+      run: |
+        pylint -j 3 --include-naming-hint=y --good-names=i,j,k,fd $(find -name "*.py")
+        python3 -c "r=$?;print('\n%i:' % r, bin(r)[2:]);import sys;sys.exit(max(r-31, 0))"
+      continue-on-error: true
   
   ubuntu-1804_test_doc:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
     runs-on: ubuntu-18.04
+    needs: pep8_check
     steps:
     - uses: actions/checkout@v2
     - name: check environment
@@ -78,6 +82,7 @@ jobs:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
 #    runs-on: ubuntu-latest
     runs-on: ubuntu-20.04
+    needs: pep8_check
     steps:
     - uses: actions/checkout@v2
     - name: check environment
@@ -116,6 +121,7 @@ jobs:
   macos-1015_test:
     # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md
     runs-on: macos-10.15
+    needs: pep8_check
     steps:
     - uses: actions/checkout@v2
     #- name: search packages (via Homebrew)
@@ -149,6 +155,7 @@ jobs:
     # https://github.com/actions/virtual-environments/issues/2486
     # https://github.com/actions/virtual-environments/blob/main/docs/macos-11-onboarding.md
     runs-on: macos-11
+    needs: pep8_check
     steps:
     - uses: actions/checkout@v2
     #- name: search packages (via Homebrew)
@@ -179,6 +186,7 @@ jobs:
   windows-2016_test:
     # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2016-Readme.md
     runs-on: windows-2016
+    needs: pep8_check
     steps:
     - uses: actions/checkout@v2
     - name: check python version
@@ -221,6 +229,7 @@ jobs:
   windows-2019_test:
     # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md
     runs-on: windows-2019
+    needs: pep8_check
     steps:
     - uses: actions/checkout@v2
     - name: check python version
