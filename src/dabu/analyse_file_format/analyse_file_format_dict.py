@@ -7,12 +7,12 @@
 
 import sys
 
-from dabu.check_netcdf_file import check_netcdf_file
 from dabu.check_nasa_ames_format import check_nasa_ames_format
+from dabu.check_netcdf_file import check_netcdf_file
 
 from .analyse_file_format import analyse_file_format
-from .extract_hash_from_checksum_file import ExtractHashFromChecksumFile
 from .create_checksum import create_checksum
+from .extract_hash_from_checksum_file import ExtractHashFromChecksumFile
 
 
 def analyse_file_format_dict(

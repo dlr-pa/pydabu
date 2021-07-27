@@ -22,7 +22,9 @@ def run_listschemas(args):
     schema_list = os.listdir(os.path.join(dabu.__path__[0], 'schemas'))
 
     def add_path(path):
-        # a kind of lambda function
+        """
+        a kind of lambda function
+        """
         return os.path.join(dabu.__path__[0], 'schemas', path)
 
     schema_list = list(map(add_path, schema_list))

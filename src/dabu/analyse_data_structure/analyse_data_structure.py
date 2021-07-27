@@ -17,9 +17,9 @@ def check_file_available(files, key):
     """
     res = None
     key = key.lower()
-    for f in files:
-        if f.lower().startswith(key):
-            res = f
+    for filename in files:
+        if filename.lower().startswith(key):
+            res = filename
             break
     return res
 
@@ -74,11 +74,11 @@ def analyse_data_structure(path_name='.', result=dict()):
             result[key] = res
             analysed_file_names.append(res)
     # analyse if directory is a repository
-    for d in dir_names:
-        if (d in ['.git', '.bzr']) and os.path.isdir(d):
+    for dirname in dir_names:
+        if (dirname in ['.git', '.bzr']) and os.path.isdir(dirname):
             # assume repository
-            result['repository'] = d
-            analysed_file_names.append(d)
+            result['repository'] = dirname
+            analysed_file_names.append(dirname)
             add_append_integrate_data(
                 result, 'data integrity control', 'repository')
             break
@@ -86,16 +86,16 @@ def analyse_data_structure(path_name='.', result=dict()):
     regexp = re.compile(
         '.*checksum.*|.*\.md5|.*\.sha256|.*\.sha512|.*\.sha1',
         flags=re.IGNORECASE)
-    for f in file_names:
-        if regexp.findall(f):
-            result['checksum file'] = f
-            analysed_file_names.append(f)
+    for filename in file_names:
+        if regexp.findall(filename):
+            result['checksum file'] = filename
+            analysed_file_names.append(filename)
             add_append_integrate_data(
                 result, 'data integrity control', 'checksums')
             break
     result['data'] = list(set(file_names).difference(analysed_file_names))
     result['data'] += all_file_names
-    if len(result['data']) == 0:
+    if not bool(result['data']):
         del result['data']
     # result['author'] = [{'name': 'foo', 'email': 'bar'},
     #                    {'name': 'a', 'email': 'b'}]

@@ -8,6 +8,7 @@
 import json
 import os.path
 import sys
+
 import jsonschema
 
 import dabu.schema_org_data
@@ -83,7 +84,7 @@ def run_data_bubble2jsonld(args):
         for prop in schema["required"]:
             if prop not in required:
                 required.append(prop)
-        if len(jsonld_schema["definitions"]["DataCatalog"]["required"]) == 0:
+        if not bool(jsonld_schema["definitions"]["DataCatalog"]["required"]):
             del jsonld_schema["definitions"]["DataCatalog"]["required"]
         schema["required"] = ["DataCatalog"]
         jsonld_schema["definitions"]["DataCatalog"]["dependencies"] = \

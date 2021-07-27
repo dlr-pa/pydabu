@@ -7,8 +7,8 @@
 
 import json
 
-from .ispending import ispending
 from .get_property import get_property
+from .ispending import ispending
 
 
 def add_property_to_object(

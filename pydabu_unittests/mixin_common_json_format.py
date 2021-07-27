@@ -8,9 +8,10 @@ tests the script: pydabu common_json_format
 """
 
 import json
-import jsonschema
 import os.path
 import subprocess
+
+import jsonschema
 
 
 class mixin_common_json_format():

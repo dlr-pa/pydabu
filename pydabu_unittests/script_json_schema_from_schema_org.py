@@ -17,10 +17,11 @@ env python3 script_json_schema_from_schema_org.py \
 """
 
 import json
-import jsonschema
 import os.path
 import tempfile
 import unittest
+
+import jsonschema
 
 
 class script_json_schema_from_schema_org(unittest.TestCase):

@@ -7,8 +7,8 @@
 
 import sys
 
-from .add_word import add_word
 from .add_property import add_property, combine
+from .add_word import add_word
 from .set_property import set_property
 
 

@@ -8,11 +8,12 @@ tests the script: pydabu create_data_bubble
 """
 
 import json
-import jsonschema
 import os.path
 import pkgutil
 import subprocess
 import tempfile
+
+import jsonschema
 
 
 class mixin_create_data_bubble():

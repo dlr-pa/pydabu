@@ -15,7 +15,7 @@ import ssl
 import urllib.request
 
 
-def lzma_open(filename, mode, container_format=lzma.FORMAT_ALONE, *params):
+def lzma_open(filename, mode, *params, container_format=lzma.FORMAT_ALONE):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-09
@@ -49,14 +49,14 @@ def get_schema_org_data(cachefilepath='', cachefilename=''):
                 '.xz': lzma.open,
                 '.bz2': bz2.open}
     cachefilenamepath = os.path.join(cachefilepath, cachefilename)
-    if len(cachefilename) > 0:
+    if bool(cachefilename):  # len(cachefilename) > 0
         _, ext = os.path.splitext(cachefilenamepath)
         ext = ext.lower()
         if ext in opencmds:
             open_cmd = opencmds[ext]
         else:
             open_cmd = opencmds['default']
-    if (len(cachefilename) > 0) and os.path.isfile(cachefilenamepath):
+    if bool(cachefilename) and os.path.isfile(cachefilenamepath):
         with open_cmd(cachefilenamepath, 'rb') as fd:
             schema_org_data = json.load(fd)
     else:
@@ -65,8 +65,8 @@ def get_schema_org_data(cachefilepath='', cachefilename=''):
         context = ssl.create_default_context()
         with urllib.request.urlopen(url, context=context) as fd:
             schema_org_data = json.load(fd)
-        if (schema_org_data is not None) and (len(cachefilename) > 0):
-            if (len(cachefilepath) > 0) and (not os.path.isdir(cachefilepath)):
+        if (schema_org_data is not None) and bool(cachefilename):
+            if bool(cachefilepath) and (not os.path.isdir(cachefilepath)):
                 os.mkdir(cachefilepath)
             with open_cmd(cachefilenamepath, 'wb') as fd:
                 fd.write(json.dumps(schema_org_data,).encode())

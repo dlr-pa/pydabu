@@ -8,9 +8,10 @@ tests the script: pydabu check_file_format
 """
 
 import json
-import jsonschema
 import pkgutil
 import subprocess
+
+import jsonschema
 
 
 class mixin_check_file_format():

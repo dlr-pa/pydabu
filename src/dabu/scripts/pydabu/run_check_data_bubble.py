@@ -8,6 +8,7 @@
 import json
 import os.path
 import warnings
+
 import jsonschema
 
 from .check_arg_file import check_arg_file
@@ -51,7 +52,7 @@ def run_check_data_bubble(args):
             print(msg)
             exit()
         for err in sorted(validater.iter_errors(instance), key=str):
-            if len(err.path) > 0:
+            if bool(err.path):
                 filenameoutput = ''
                 if ((err.path[0] == 'data') and
                     isinstance(err.path[1], int) and

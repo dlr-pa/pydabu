@@ -8,10 +8,11 @@ tests the script: pydabu analyse_data_structure
 """
 
 import json
-import jsonschema
-import pkgutil
 import os.path
+import pkgutil
 import subprocess
+
+import jsonschema
 
 
 class mixin_analyse_data_structure():

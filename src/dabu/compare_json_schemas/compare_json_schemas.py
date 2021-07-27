@@ -5,6 +5,8 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+# pylint: disable=invalid-name
+
 
 def dict_equal(a, b):
     """
@@ -103,6 +105,9 @@ def compare_dict(a, b, comparefct):
 
 
 def assertEqual(a, b):
+    """
+    a simple assert function
+    """
     assert(a == b)
 
 

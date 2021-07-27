@@ -62,7 +62,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                 'no nasa ames format detected (cannot analyse first line)']
             result[checker_name]['error'] += 1
         if result[checker_name]['error'] == 0:
-            if len(metadata_part[5]) > 0:
+            if bool(metadata_part[5]):  # len(metadata_part[5]) > 0
                 IVOL_NVOL = metadata_part[5].strip().split()
                 if isinstance(IVOL_NVOL, list) and len(IVOL_NVOL) == 2:
                     # IVOL: Number of the file in the above dataset
@@ -87,7 +87,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                     'error: IVOL and NVOL not found']
                 result[checker_name]['error'] += 1
         if result[checker_name]['error'] == 0:
-            if len(metadata_part[1]) > 0:
+            if bool(metadata_part[1]):  # len(metadata_part[1]) > 0
                 if len(metadata_part[1]) < 132 + 1:
                     # ONAME: List of author(s) in the format Lastname,
                     #        Firstname; separated by an arbitrary character
@@ -116,14 +116,14 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                 # MNAME: Name of mission, campaign, programme and/or project.
                 # NVOL: Total number of files belonging to the considered
                 #       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).
-                if len(metadata_part[ln]) > 0:
+                if bool(metadata_part[ln]):  # len(metadata_part[ln]) > 0
                     if len(metadata_part[ln]) < 132 + 1:
                         addresult[tag] = metadata_part[ln].strip()
                     else:
                         result[checker_name]['log'] += [
                             'warning: ' + tag + 'too long']
                         result[checker_name]['warning'] += 1
-            if len(metadata_part[6]) > 0:
+            if bool(metadata_part[6]):  # len(metadata_part[6]) > 0
                 DATE_RDATE = re.findall(
                     r'([0-9]{4}[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})',
                     metadata_part[6].strip())
