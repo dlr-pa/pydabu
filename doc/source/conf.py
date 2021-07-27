@@ -21,6 +21,7 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+from recommonmark.parser import CommonMarkParser
 
 # -- General configuration ------------------------------------------------
 
@@ -47,7 +48,7 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-#source_suffix = '.rst'
+# source_suffix = '.rst'
 
 # use README.md in markdown here:
 #
@@ -60,7 +61,7 @@ templates_path = ['_templates']
 #
 # for sphinx 1.6.7, we need to do:
 source_suffix = ['.rst', '.txt', '.md']
-from recommonmark.parser import CommonMarkParser
+# from recommonmark.parser import CommonMarkParser
 source_parsers = {
     '.md': CommonMarkParser,
 }
@@ -118,7 +119,7 @@ html_theme = 'nature'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-#html_static_path = ['_static']
+# html_static_path = ['_static']
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -163,10 +164,10 @@ latex_elements = {
     # 'figure_align': 'htbp',
     #
     # additional stuff for the LaTeX preamble:
-    #'preamble': '\setcounter{tocdepth}{7}'
+    # 'preamble': '\setcounter{tocdepth}{7}'
     #
     # adapt maximal list depth:
-    'maxlistdepth' : '5',
+    'maxlistdepth': '5',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples

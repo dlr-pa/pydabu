@@ -87,7 +87,7 @@ class TestWithPytest(Command):
                 else:
                     nthreads = max(2, int(0.5 * os.cpu_count()))
                 pyargs += ['-n %i' % nthreads]
-            except:
+            except Exception:
                 pass
         if self.coverage:
             coverage_dir = 'coverage_report/'
@@ -113,7 +113,8 @@ class TestWithPytest(Command):
         pyargs += ['pydabu_unittests/schema_org_data.py']
         if self.src == 'installed':
             pyargs += ['pydabu_unittests/script_pydabu.py']
-            pyargs += ['pydabu_unittests/script_json_schema_from_schema_org.py']
+            pyargs += \
+                ['pydabu_unittests/script_json_schema_from_schema_org.py']
         pyplugins = []
         print('call: pytest', ' '.join(pyargs))
         sys.exit(pytest.main(pyargs, pyplugins))
@@ -237,7 +238,6 @@ class CheckModules(Command):
                 i, summary))
 
 
-
 # necessary modules
 required_modules = ['argparse',
                     'base64',
@@ -264,17 +264,17 @@ required_modules += ['pkg_resources']
 # optional modules for python3 setup.py check_modules
 required_modules += ['importlib']
 # optional modules for json_schema_from_schema_org.py
-#required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
+# required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
 # modules to build doc
-#required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
+# required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
 # modules to run tests with unittest
-#required_modules += ['unittest', 'shutil']
+# required_modules += ['unittest', 'shutil']
 # modules to run tests with pytest
-#required_modules += ['pytest']
+# required_modules += ['pytest']
 # optional modules to run tests with pytest in parallel
-#required_modules += ['xdist']
+# required_modules += ['xdist']
 # optional modules to run tests with pytest and create coverage report
-#required_modules += ['pytest_cov']
+# required_modules += ['pytest_cov']
 
 setup(
     name='pydabu',
@@ -307,7 +307,10 @@ setup(
     entry_points={
         'console_scripts':
             ['pydabu=dabu.scripts.pydabu.pydabu_main:pydabu_main',
-             'json_schema_from_schema_org=dabu.scripts.json_schema_from_schema_org.json_schema_from_schema_org_main:json_schema_from_schema_org_main'],
+             'json_schema_from_schema_org='
+             'dabu.scripts.json_schema_from_schema_org.'
+             'json_schema_from_schema_org_main:'
+             'json_schema_from_schema_org_main'],
     },
     package_data={'dabu': ['schemas/analyse_data_structure_output.schema',
                            'schemas/dabu.schema',
@@ -318,7 +321,8 @@ setup(
         'Environment :: Console',
         'Intended Audience :: Science/Research',
         'Intended Audience :: System Administrators',
-        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'License :: OSI Approved :: '
+        'GNU General Public License v3 or later (GPLv3+)',
         'Natural Language :: English',
         'Operating System :: POSIX',
         'Operating System :: POSIX :: BSD :: FreeBSD',
@@ -331,7 +335,8 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Topic :: System :: Archiving'],
-    # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | egrep -i --only-matching "import .*$" | sort -u
+    # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | \
+    #   egrep -i --only-matching "import .*$" | sort -u
     requires=required_modules,
     provides=['dabu']
 )
