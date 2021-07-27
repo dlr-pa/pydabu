@@ -57,11 +57,12 @@
 
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">.analyse_file_format</span> <span class="k">import</span> <span class="n">analyse_file_format</span>
-<span class="kn">from</span> <span class="nn">.extract_hash_from_checksum_file</span> <span class="k">import</span> <span class="n">extract_hash_from_checksum_file</span>
-<span class="kn">from</span> <span class="nn">.create_checksum</span> <span class="k">import</span> <span class="n">create_checksum</span>
-<span class="kn">from</span> <span class="nn">dabu.check_netcdf_file</span> <span class="k">import</span> <span class="n">check_netcdf_file</span>
 <span class="kn">from</span> <span class="nn">dabu.check_nasa_ames_format</span> <span class="k">import</span> <span class="n">check_nasa_ames_format</span>
+<span class="kn">from</span> <span class="nn">dabu.check_netcdf_file</span> <span class="k">import</span> <span class="n">check_netcdf_file</span>
+
+<span class="kn">from</span> <span class="nn">.analyse_file_format</span> <span class="k">import</span> <span class="n">analyse_file_format</span>
+<span class="kn">from</span> <span class="nn">.create_checksum</span> <span class="k">import</span> <span class="n">create_checksum</span>
+<span class="kn">from</span> <span class="nn">.extract_hash_from_checksum_file</span> <span class="k">import</span> <span class="n">ExtractHashFromChecksumFile</span>
 
 
 <div class="viewcode-block" id="analyse_file_format_dict"><a class="viewcode-back" href="../../../module_dabu.html#dabu.analyse_file_format.analyse_file_format_dict">[docs]</a><span class="k">def</span> <span class="nf">analyse_file_format_dict</span><span class="p">(</span>
@@ -78,26 +79,27 @@
 <span class="sd">    :param store_checksums: if True find/calculate checksums for each file</span>
 <span class="sd">    :param checksum_file: the file to import the checksums from</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;data&#39;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s1">&#39;data&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">result</span>  <span class="c1"># nothing to do, no data files available</span>
     <span class="k">if</span> <span class="n">checksum_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">hash_from_checksum_file</span> <span class="o">=</span> <span class="n">extract_hash_from_checksum_file</span><span class="p">(</span>
+        <span class="n">hash_from_checksum_file</span> <span class="o">=</span> <span class="n">ExtractHashFromChecksumFile</span><span class="p">(</span>
             <span class="n">checksum_file</span><span class="p">)</span>
     <span class="n">files</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">result</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-        <span class="n">file_extension</span> <span class="o">=</span> <span class="n">analyse_file_format</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="n">resitem</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">f</span><span class="p">,</span> <span class="s1">&#39;file_extension&#39;</span><span class="p">:</span> <span class="n">file_extension</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">file_extension</span> <span class="o">=</span> <span class="n">analyse_file_format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">resitem</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;file_extension&#39;</span><span class="p">:</span> <span class="n">file_extension</span><span class="p">}</span>
         <span class="k">if</span> <span class="n">store_checksums</span><span class="p">:</span>
             <span class="n">checksum</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">checksum_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">hash_info</span> <span class="o">=</span> <span class="n">hash_from_checksum_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;base64&#39;</span><span class="p">)</span>
+                <span class="n">hash_info</span> <span class="o">=</span> <span class="n">hash_from_checksum_file</span><span class="p">(</span>
+                    <span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;base64&#39;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">hash_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">checksum</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;hash&#39;</span><span class="p">:</span> <span class="n">hash_info</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                 <span class="s1">&#39;algorithm&#39;</span><span class="p">:</span> <span class="n">hash_info</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
                                 <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="n">hash_info</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]}</span>
             <span class="k">if</span> <span class="n">checksum</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">hash_byte_array</span> <span class="o">=</span> <span class="n">create_checksum</span><span class="p">(</span><span class="n">f</span><span class="p">,</span>
+                <span class="n">hash_byte_array</span> <span class="o">=</span> <span class="n">create_checksum</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span>
                                                   <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;sha512&#39;</span><span class="p">,</span>
                                                   <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;base64&#39;</span><span class="p">)</span>
                 <span class="n">checksum</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;hash&#39;</span><span class="p">:</span> <span class="n">hash_byte_array</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
@@ -107,8 +109,9 @@
                 <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;checksum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">checksum</span>
         <span class="k">if</span> <span class="n">file_extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;.nc&quot;</span><span class="p">:</span>  <span class="c1"># NetCDF file</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;netcdf check&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">check_netcdf_file</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">output_format</span><span class="p">)</span>
-            <span class="k">except</span><span class="p">:</span>
+                <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;netcdf check&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">check_netcdf_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span>
+                                                            <span class="n">output_format</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Could not check NetCDF file.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;netcdf check&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
                 <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;netcdf check&#39;</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
@@ -116,7 +119,7 @@
                     <span class="p">[</span><span class="s1">&#39;Could not check NetCDF file.&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">file_extension</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.nas&#39;</span><span class="p">,</span> <span class="s1">&#39;.na&#39;</span><span class="p">]:</span>  <span class="c1"># NASA Ames Format</span>
             <span class="n">resitem</span><span class="p">[</span><span class="s1">&#39;nasa ames format check&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">check_nasa_ames_format</span><span class="p">(</span>
-                <span class="n">f</span><span class="p">,</span> <span class="n">output_format</span><span class="p">)</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="p">)</span>
         <span class="n">result</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resitem</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>

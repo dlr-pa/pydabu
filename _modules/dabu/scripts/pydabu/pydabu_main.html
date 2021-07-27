@@ -60,17 +60,17 @@
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
 
-<span class="kn">from</span> <span class="nn">.check_arg_file_not_exists</span> <span class="k">import</span> <span class="n">check_arg_file_not_exists</span>
 <span class="kn">from</span> <span class="nn">.check_arg_file</span> <span class="k">import</span> <span class="n">check_arg_file</span>
+<span class="kn">from</span> <span class="nn">.check_arg_file_not_exists</span> <span class="k">import</span> <span class="n">check_arg_file_not_exists</span>
 <span class="kn">from</span> <span class="nn">.run_analyse_data_structure</span> <span class="k">import</span> <span class="n">run_analyse_data_structure</span>
+<span class="kn">from</span> <span class="nn">.run_check_data_bubble</span> <span class="k">import</span> <span class="n">run_check_data_bubble</span>
 <span class="kn">from</span> <span class="nn">.run_check_file_format</span> <span class="k">import</span> <span class="n">run_check_file_format</span>
-<span class="kn">from</span> <span class="nn">.run_check_netcdf_file</span> <span class="k">import</span> <span class="n">run_check_netcdf_file</span>
 <span class="kn">from</span> <span class="nn">.run_check_nasa_ames_format</span> <span class="k">import</span> <span class="n">run_check_nasa_ames_format</span>
+<span class="kn">from</span> <span class="nn">.run_check_netcdf_file</span> <span class="k">import</span> <span class="n">run_check_netcdf_file</span>
 <span class="kn">from</span> <span class="nn">.run_common_json_format</span> <span class="k">import</span> <span class="n">run_common_json_format</span>
 <span class="kn">from</span> <span class="nn">.run_create_data_bubble</span> <span class="k">import</span> <span class="n">run_create_data_bubble</span>
-<span class="kn">from</span> <span class="nn">.run_check_data_bubble</span> <span class="k">import</span> <span class="n">run_check_data_bubble</span>
-<span class="kn">from</span> <span class="nn">.run_listschemas</span> <span class="k">import</span> <span class="n">run_listschemas</span>
 <span class="kn">from</span> <span class="nn">.run_data_bubble2jsonld</span> <span class="k">import</span> <span class="n">run_data_bubble2jsonld</span>
+<span class="kn">from</span> <span class="nn">.run_listschemas</span> <span class="k">import</span> <span class="n">run_listschemas</span>
 
 
 <span class="k">def</span> <span class="nf">check_arg_directory</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
@@ -266,7 +266,8 @@
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i dabu.json &#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;~/lib/python/dabu/schemas/dabu_requires.schema</span><span class="se">\n\n</span><span class="s1">&#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_file_format -skip_creating_checksums</span><span class="se">\n\n</span><span class="s1">&#39;</span>
-    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_file_format -checksum_from_file .checksum.sha512&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_file_format &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;-checksum_from_file .checksum.sha512&#39;</span>
     <span class="n">parser_check_file_format</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
         <span class="s1">&#39;check_file_format&#39;</span><span class="p">,</span>
         <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
@@ -292,7 +293,8 @@
     <span class="n">parser_common_json_format</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_common_json_format</span><span class="p">)</span>
     <span class="c1"># subparser create_data_bubble</span>
     <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This command creates a data bubble in the give directory. &#39;</span>
-    <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;The data is generated with the command &quot;check_file_format&quot; &#39;</span>
+    <span class="n">description</span> <span class="o">+=</span> \
+        <span class="s1">&#39;The data is generated with the command &quot;check_file_format&quot; &#39;</span>
     <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;from the data in the directory. &#39;</span>
     <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;Also the resulting files are not a data management plan, &#39;</span>
     <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;you can enhance it to become one.&#39;</span>
@@ -359,8 +361,8 @@
         <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
         <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">)</span>
     <span class="n">parser_listschemas</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">run_listschemas</span><span class="p">)</span>
-    <span class="c1"># the following artificial parameter is necessary to build the documentation</span>
-    <span class="c1"># with sphinx-argparse or rather sphinxarg.ext</span>
+    <span class="c1"># the following artificial parameter is necessary to build the</span>
+    <span class="c1"># documentation with sphinx-argparse or rather sphinxarg.ext</span>
     <span class="n">parser_listschemas</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s1">&#39;-output_format&#39;</span><span class="p">,</span>
         <span class="n">nargs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
@@ -384,8 +386,13 @@
     <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Examples:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir .</span><span class="se">\n\n</span><span class="s1">&#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir . -author &quot;Daniel Mohr&quot;</span><span class="se">\n\n</span><span class="s1">&#39;</span>
-    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir . -author </span><span class="se">\&#39;</span><span class="s1">{&quot;name&quot;: &quot;Daniel Mohr&quot;, &quot;identifier&quot;: {&quot;propertyID&quot;: &quot;https://orcid.org/&quot;, &quot;name&quot;: &quot;ORCID&quot;, &quot;value&quot;: &quot;0000-0002-9382-6586&quot;, &quot;url&quot;: &quot;https://orcid.org/0000-0002-9382-6586&quot;}}</span><span class="se">\&#39;\n\n</span><span class="s1">&#39;</span>
-    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir . -author </span><span class="se">\&#39;</span><span class="s1">[{&quot;name&quot;: &quot;er&quot;}, {&quot;name&quot;: &quot;sie&quot;}, {&quot;name&quot;: &quot;es&quot;}]</span><span class="se">\&#39;\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir . -author </span><span class="se">\&#39;</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;{&quot;name&quot;: &quot;Daniel Mohr&quot;, &quot;identifier&quot;: &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;{&quot;propertyID&quot;: &quot;https://orcid.org/&quot;, &quot;name&quot;: &quot;ORCID&quot;, &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;&quot;value&quot;: &quot;0000-0002-9382-6586&quot;, &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;&quot;url&quot;: &quot;https://orcid.org/0000-0002-9382-6586&quot;}}</span><span class="se">\&#39;\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py data_bubble2jsonld -dir . -author &#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">[{&quot;name&quot;: &quot;er&quot;}, {&quot;name&quot;: &quot;sie&quot;}, {&quot;name&quot;: &quot;es&quot;}]</span><span class="se">\&#39;\n\n</span><span class="s1">&#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;Example to check the result:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu.py check_data_bubble -dir . &#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;-dabu_instance_file .dabu.json-ld &#39;</span>

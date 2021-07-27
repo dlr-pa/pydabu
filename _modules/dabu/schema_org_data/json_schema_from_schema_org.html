@@ -57,8 +57,8 @@
 
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">.add_word</span> <span class="k">import</span> <span class="n">add_word</span>
 <span class="kn">from</span> <span class="nn">.add_property</span> <span class="k">import</span> <span class="n">add_property</span><span class="p">,</span> <span class="n">combine</span>
+<span class="kn">from</span> <span class="nn">.add_word</span> <span class="k">import</span> <span class="n">add_word</span>
 <span class="kn">from</span> <span class="nn">.set_property</span> <span class="k">import</span> <span class="n">set_property</span>
 
 
@@ -72,7 +72,7 @@
 
 <span class="sd">    :param schemaorg_data: json-ld data from https://schema.org as returned</span>
 <span class="sd">                           from :func:`get_schema_org_data`.</span>
-<span class="sd">    :param vocabulary: list of words, which are a </span>
+<span class="sd">    :param vocabulary: list of words, which are a</span>
 <span class="sd">                       Schema.org Type (Schema.org vocabulary)</span>
 <span class="sd">    :param draft: the used json schema, could be:</span>
 
@@ -106,21 +106,21 @@
                  <span class="s2">&quot;All necessary words should be defined.&quot;</span><span class="p">)</span>
     <span class="n">update_description</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">found_vocabulary</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_words</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">while</span> <span class="nb">bool</span><span class="p">(</span><span class="n">missing_words</span><span class="p">):</span>  <span class="c1"># len(missing_words) &gt; 0</span>
         <span class="n">word</span> <span class="o">=</span> <span class="n">missing_words</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;searching: </span><span class="si">{word}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">new_missing_words</span><span class="p">,</span> <span class="n">word_schema</span> <span class="o">=</span> <span class="n">add_word</span><span class="p">(</span>
-            <span class="n">schemaorg_data</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">draft</span><span class="o">=</span><span class="n">draft</span><span class="p">)</span>
+            <span class="n">schemaorg_data</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">word_schema</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">del</span> <span class="n">vocabulary</span><span class="p">[</span><span class="n">vocabulary</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span>
             <span class="n">update_description</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">found_vocabulary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
             <span class="n">combine</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">word_schema</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_missing_words</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">new_missing_words</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;definitions&quot;</span><span class="p">]:</span>
-                        <span class="n">missing_words</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">new_missing_words</span><span class="p">):</span>  <span class="c1"># len(new_missing_words) &gt; 0</span>
+                <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">new_missing_words</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;definitions&quot;</span><span class="p">]:</span>
+                        <span class="n">missing_words</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;finished: </span><span class="si">{word}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="c1"># return schema  # workaround for debugging</span>
     <span class="k">if</span> <span class="n">update_description</span><span class="p">:</span>
@@ -130,7 +130,7 @@
                      <span class="s2">&quot;from schema.org is defined as a json schema. &quot;</span>
                      <span class="s2">&quot;It should be a valid json-ld file. &quot;</span>
                      <span class="s2">&quot;All necessary words should be defined.&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">found_vocabulary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">found_vocabulary</span><span class="p">):</span>  <span class="c1"># len(found_vocabulary) == 0</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;nothing found</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">schema</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">schema</span></div>
