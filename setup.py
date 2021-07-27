@@ -276,7 +276,7 @@ required_modules += ['importlib']
 # optional modules to run tests with pytest and create coverage report
 # required_modules += ['pytest_cov']
 
-setup( 
+setup(
     name='pydabu',
     version='2021.07.21',
     cmdclass={
