@@ -21,7 +21,7 @@ def create_context_schema(word):
     return context
 
 
-def add_word(schemaorg_data, word, draft='draft-04'):
+def add_word(schemaorg_data, word):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-23
@@ -32,12 +32,7 @@ def add_word(schemaorg_data, word, draft='draft-04'):
     :param schemaorg_data: json-ld data from https://schema.org as returned
                            from :func:`get_schema_org_data`.
     :param word: word, which are a Schema.org Type (Schema.org vocabulary)
-    :param draft: the used json schema, could be:
 
-                  * 'draft-04'
-                  * 'draft-06'
-                  * 'draft-07'
-                  * '2019-09'
     :return: return a list of:
 
              * missing words
@@ -72,7 +67,7 @@ def add_word(schemaorg_data, word, draft='draft-04'):
             else:
                 raise NotImplementedError(
                     'data type of "rdfs:subClassOf" not handled')
-            if len(sub_class_of) > 0:
+            if bool(sub_class_of):  # len(sub_class_of) > 0
                 schema["definitions"][word]["allOf"] = list()
                 schema["definitions"][word]["allOf"].append(properties)
                 properties = schema["definitions"][word]["allOf"][0]
@@ -90,6 +85,6 @@ def add_word(schemaorg_data, word, draft='draft-04'):
         schema["required"] = ["@context"]
         schema["properties"] = dict()
         schema["properties"]["@context"] = create_context_schema(word)
-        if len(schema["definitions"][word]["required"]) == 0:
+        if not bool(schema["definitions"][word]["required"]):  # len(..) == 0
             del schema["definitions"][word]["required"]
     return missing_words, schema

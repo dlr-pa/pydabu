@@ -45,6 +45,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
     result[checker_name]['log'] = []
     metadata_part = []
     with open(filename, mode='r') as fd:
+        # pylint: disable=unused-variable
         for i in range(7):
             metadata_part += [fd.readline()]
     if len(metadata_part) == 7:

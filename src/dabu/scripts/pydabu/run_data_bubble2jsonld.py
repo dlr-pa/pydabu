@@ -56,7 +56,7 @@ def run_data_bubble2jsonld(args):
         with open(os.path.join(path, args.dabu_schema_file[0]),
                   mode='r') as fd:
             schema = json.load(fd)
-        validater = jsonschema.Draft4Validator(schema)
+        jsonschema.Draft4Validator(schema)
         # call run_check_data_bubble:
         sys.stderr.write(
             f'run: pydabu.py check_data_bubble -directory {path}\n')
@@ -94,7 +94,6 @@ def run_data_bubble2jsonld(args):
         if isinstance(schema["$schema"], list):
             index = len(schema["$schema"]) - 1
             while 0 < index:
-                item = schema["$schema"][index]
                 nindex = schema["$schema"].index(
                     schema["$schema"][index])
                 if nindex != index:

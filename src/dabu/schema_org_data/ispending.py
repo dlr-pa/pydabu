@@ -11,10 +11,8 @@ def _includes_dict(analyse_object, content):
     :Author: Daniel Mohr
     :Date: 2021-02-26
     """
-    if ("@id" in analyse_object) and (analyse_object["@id"] == content):
-        return True
-    else:
-        return False
+    return bool(("@id" in analyse_object) and
+                (analyse_object["@id"] == content))
 
 
 def _includes_list(analyse_object, content):
@@ -39,8 +37,8 @@ def _includes(analyse_object, content):
         return _includes_dict(analyse_object, content)
     elif isinstance(analyse_object, list):
         return _includes_list(analyse_object, content)
-    else:
-        return False
+    # else:
+    return False
 
 
 def ispending(analyse_object):

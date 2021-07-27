@@ -68,7 +68,7 @@ def create_properties_schema2json(
 
 
 def create_properties_handle(
-        properties, prop_name, missing_words, word, item_type_ref):
+        properties, prop_name, missing_words, item_type_ref):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-17
@@ -133,8 +133,6 @@ def _get_property(item, data, properties, prop_name,
                    "Time": "string",
                    "email": {"oneOf": [{"type": "string"},
                                        {"type": "string", "format": "email"}]}}
-    schema2json7 = {"Date": {"type": "string", "format": "date"},
-                    "Time": {"type": "string", "format": "datetime"}}
     if draft in ['draft-06']:
         schema2json["URL"] = {
             "oneOf": [{"type": "string", "format": "uri"},
@@ -178,7 +176,7 @@ def _get_property(item, data, properties, prop_name,
             data["schema:rangeIncludes"]["@id"].split('schema:')[1])
     elif item["@id"].split('schema:')[1] in handle:
         create_properties_handle(
-            properties, prop_name, missing_words, word,
+            properties, prop_name, missing_words,
             item["@id"].split('schema:')[1])
     elif (("schema:rangeIncludes" in data) and
           ("@id" in data["schema:rangeIncludes"]) and
@@ -186,7 +184,7 @@ def _get_property(item, data, properties, prop_name,
            handle)):
         # e. g.: follows
         create_properties_handle(
-            properties, prop_name, missing_words, word,
+            properties, prop_name, missing_words,
             data["schema:rangeIncludes"]["@id"].split('schema:')[1])
     else:
         accept_list = _rangeincludes_list(data, schema2json, handle)
@@ -199,8 +197,7 @@ def _get_property(item, data, properties, prop_name,
                             item_type)
                     elif item_type in handle:
                         create_properties_handle(
-                            properties, prop_name, missing_words,
-                            word, item_type)
+                            properties, prop_name, missing_words, item_type)
             elif len(accept_list) == 1:
                 item_type = accept_list[0]
                 if item_type in schema2json:
@@ -208,7 +205,7 @@ def _get_property(item, data, properties, prop_name,
                         properties, schema2json, word, prop_name, item_type)
                 elif item_type in handle:
                     create_properties_handle(
-                        properties, prop_name, missing_words, word, item_type)
+                        properties, prop_name, missing_words, item_type)
         else:
             pass  # not implemented now
 
@@ -243,6 +240,6 @@ def get_property(schemaorg_data, properties, prop_name, missing_words,
                 raise NotImplementedError(json.dumps(data, indent=2))
         else:
             raise NotImplementedError(json.dumps(data, indent=2))
-    elif "@type":
+    else:
         raise NotImplementedError(json.dumps(data, indent=2))
     return None

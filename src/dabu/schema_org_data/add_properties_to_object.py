@@ -12,14 +12,15 @@ from .get_property import get_property
 
 
 def add_property_to_object(
-        schemaorg_data, item, domainIncludes, word, properties, missing_words):
+        schemaorg_data, item,
+        domain_includes, word, properties, missing_words):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-16
     """
-    if "@id" not in domainIncludes:
+    if "@id" not in domain_includes:
         raise NotImplementedError(json.dumps(item, indent=2))
-    elif domainIncludes["@id"] == "schema:" + word:
+    elif domain_includes["@id"] == "schema:" + word:
         if "@id" not in item:
             raise NotImplementedError(json.dumps(item, indent=2))
         prop_name = item["@id"].split('schema:')[1]  # e. g.: additionalName
