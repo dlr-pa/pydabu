@@ -94,7 +94,7 @@ class mixin_check_data_bubble():
         :Date: 2021-03-05
 
         This test uses the data in 'data/data_bubble' to test the output
-        of the script 'pydabu create_data_bubble' and 
+        of the script 'pydabu create_data_bubble' and
         'pydabu check_data_bubble'.
         """
         import shutil

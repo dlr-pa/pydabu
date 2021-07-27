@@ -25,8 +25,8 @@ class extract_hash_from_checksum_file():
 
     class to extract check checksums from a file
     """
-    # we allow here many hash functions, but better only use common ones, e. g.:
-    # md5, sha256, sha512
+    # we allow here many hash functions, but better only use common ones,
+    # e. g.: md5, sha256, sha512
     # (md5 is only acceptable for very small files!)
     hashfcts = hashlib.algorithms_guaranteed
     hashtype = {128: ('sha512', 'base16'),  # other hashes are hard to
@@ -53,9 +53,11 @@ class extract_hash_from_checksum_file():
                'Base64': base64.b64encode}
     regexps = [
         re.compile(
-            r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes (?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$"),
+            r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+) \(bytes "
+            r"(?P<start>[0-9]+) - (?P<stop>[0-9]+)\)$"),
         re.compile(r"(?P<hash>[0-9a-zA-Z/+=]+) [ \*]{1}(?P<filename>.+)$"),
-        re.compile(r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}\((?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$")]
+        re.compile(r"(?P<type>MD5|SHA256|SHA512|SHA1|SHA224|SHA384)[ ]{0,1}\("
+                   r"(?P<filename>.+)\)[ ]{0,1}= (?P<hash>[0-9a-zA-Z/+=]+)$")]
 
     def __init__(self,
                  checksum_file,
@@ -260,8 +262,8 @@ class extract_hash_from_checksum_file():
                                     sres, self.hash_file_name)
                             else:
                                 self.log.warning(
-                                    "do not understand line in hash file \"%s\": %s",
-                                    self.hash_file_name, line)
+                                    "do not understand line in hash file "
+                                    "\"%s\": %s", self.hash_file_name, line)
         elif not os.access(self.hash_file_name, os.R_OK):
             self.log.warning('hash file "%s" is not readable',
                              self.hash_file_name)

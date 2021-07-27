@@ -111,7 +111,8 @@ class mixin_create_data_bubble():
                             ("algorithm", "sha512"),
                             ("encoding", "base64"),
                             ("hash",
-                             "CZgzkcNy77d2n4W6vqbdRYFKp2rskJ3LCdRlVxiy3rmVt7w+YOmSDH0jxC6xp1AWs+HUCMbGqt6Z+dAN1dUpaA==")]:
+                             "CZgzkcNy77d2n4W6vqbdRYFKp2rskJ3LCdRlVxiy3rmV"
+                             "t7w+YOmSDH0jxC6xp1AWs+HUCMbGqt6Z+dAN1dUpaA==")]:
                         self.assertEqual(data["checksum"][k], v)
         with tempfile.TemporaryDirectory() as tmpdir:
             for fn in ['a.na', '.checksum.sha256', 'LICENSE.txt', 'README.md',

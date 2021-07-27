@@ -12,7 +12,8 @@ env python3 script_json_schema_from_schema_org.py
 
 Or you can run only one test, e. g.:
 
-env python3 script_json_schema_from_schema_org.py scripty_json_schema_from_schema_org.test_dummy
+env python3 script_json_schema_from_schema_org.py \
+  script_json_schema_from_schema_org.test_dummy_1
 """
 
 import json
@@ -22,7 +23,7 @@ import tempfile
 import unittest
 
 
-class scripty_json_schema_from_schema_org(unittest.TestCase):
+class script_json_schema_from_schema_org(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-18

@@ -66,7 +66,8 @@ class mixin_check_file_format():
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
         instance = json.loads(cp.stdout)
-        for filename in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
+        for filename in ['schemas/dabu.schema',
+                         'schemas/dabu_requires.schema']:
             schema = json.loads(pkgutil.get_data('dabu', filename))
             jsonschema.validate(instance, schema)
 
@@ -78,7 +79,7 @@ class mixin_check_file_format():
         This test uses the data in 'data/data_bubble' to test the output
         of the script 'pydabu check_file_format'.
 
-        env python3 script_pydabu.py scripty_pydabu.test_check_file_format_02
+        env python3 script_pydabu.py script_pydabu.test_check_file_format_02
         """
         # data bubble 02
         test_dir_path = self.test_dir_path[2]
@@ -88,7 +89,8 @@ class mixin_check_file_format():
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
         instance = json.loads(cp.stdout)
-        for filename in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
+        for filename in ['schemas/dabu.schema',
+                         'schemas/dabu_requires.schema']:
             schema = json.loads(pkgutil.get_data('dabu', filename))
             jsonschema.validate(instance, schema)
 
@@ -108,7 +110,8 @@ class mixin_check_file_format():
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
         instance = json.loads(cp.stdout)
-        for filename in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
+        for filename in ['schemas/dabu.schema',
+                         'schemas/dabu_requires.schema']:
             schema = json.loads(pkgutil.get_data('dabu', filename))
             jsonschema.validate(instance, schema)
 
@@ -126,7 +129,8 @@ class mixin_check_file_format():
             'dabu', 'schemas/dabu.schema'))
         required_schema = json.loads(pkgutil.get_data(
             'dabu', 'schemas/dabu_requires.schema'))
-        for outputformat in ['', ' -o json', ' -o json1', ' -o human_readable']:
+        for outputformat in ['', ' -o json', ' -o json1',
+                             ' -o human_readable']:
             cp = subprocess.run(
                 'pydabu check_file_format' + outputformat,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -191,7 +195,8 @@ class mixin_check_file_format():
         instance2 = json.loads(cp2.stdout)
         for i in range(len(instance1['data'])):
             for j in range(len(instance2['data'])):
-                if instance1['data'][i]['name'] == instance2['data'][j]['name']:
+                if (instance1['data'][i]['name'] ==
+                        instance2['data'][j]['name']):
                     i1 = i
                     i2 = j
                     break

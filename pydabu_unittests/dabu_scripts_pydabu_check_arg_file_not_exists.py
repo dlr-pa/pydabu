@@ -12,7 +12,8 @@ env python3 dabu_scripts_pydabu_check_arg_file_not_exists.py
 
 Or you can run only one test, e. g.:
 
-env python3 dabu_scripts_pydabu_check_arg_file_not_exists.py check_arg_file_not_exists.test_check_arg_file_not_exists
+env python3 dabu_scripts_pydabu_check_arg_file_not_exists.py \
+  check_arg_file_not_exists.test_check_arg_file_not_exists
 """
 
 import os.path

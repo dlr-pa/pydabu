@@ -44,5 +44,5 @@ try:
     # try to get version from package metadata
     import pkg_resources
     __version__ = pkg_resources.require('pydabu')[0].version
-except:
+except Exception:
     pass

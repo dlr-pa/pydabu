@@ -43,6 +43,7 @@ except (ModuleNotFoundError, ImportError):
     from mixin_basic_sub_commands import mixin_basic_sub_commands
     from mixin_data_bubble2jsonld import mixin_data_bubble2jsonld
 
+
 class mixin_data_bubble():
     """
     :Author: Daniel Mohr
@@ -63,7 +64,7 @@ class mixin_data_bubble():
                     os.path.isfile(os.path.join(test_dir_path, fn)))
 
 
-class scripty_pydabu(
+class script_pydabu(
         unittest.TestCase,
         mixin_basic_sub_commands, mixin_data_bubble,
         mixin_analyse_data_structure, mixin_check_netcdf_file,
@@ -85,6 +86,7 @@ class scripty_pydabu(
             os.path.dirname(datapath),
             'data', 'data_bubble', dir_name))
     subprocess_timeout = 5
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

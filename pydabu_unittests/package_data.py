@@ -40,7 +40,8 @@ class package_data(unittest.TestCase):
         import jsonschema
         import pkgutil
         import dabu
-        for dataname in ['schemas/dabu.schema', 'schemas/dabu_requires.schema']:
+        for dataname in ['schemas/dabu.schema',
+                         'schemas/dabu_requires.schema']:
             data = pkgutil.get_data('dabu', dataname)
             schema = json.loads(data)
             jsonschema.Draft4Validator.check_schema(schema)
