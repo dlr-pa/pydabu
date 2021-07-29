@@ -8,6 +8,13 @@
 # pylint: disable=invalid-name
 
 
+def assertEqual(a, b):
+    """
+    a simple assert function
+    """
+    assert a == b
+
+
 def dict_equal(a, b):
     """
     :Author: Daniel Mohr
@@ -38,13 +45,13 @@ def equal_list_as_set(a, b):
     :Author: Daniel Mohr
     :Date: 2021-03-10
 
-    return True if for every element in a if it is also available in b
+    return True if for every element in a it is also available in b
     """
     if not len(a) == len(b):
         return False
-    for i in range(len(a)):
-        # is any element in b equal to i?
-        if any_element_equal_list(a[i], b):
+    for e in a:
+        # is any element in b equal to e?
+        if any_element_equal_list(e, b):
             pass
         else:
             return False
@@ -58,32 +65,33 @@ def any_element_equal_list(e, l):
 
     checks if any element of l is in e
     """
-    for i in range(len(l)):
-        if isinstance(l[i], dict):
-            if isinstance(e, dict) and dict_equal(e, l[i]):
+    for el in l:
+        if isinstance(el, dict):
+            if isinstance(e, dict) and dict_equal(e, el):
                 return True
-        elif isinstance(l[i], list):
-            if isinstance(e, list) and equal_list_as_set(e, l[i]):
+        elif isinstance(el, list):
+            if isinstance(e, list) and equal_list_as_set(e, el):
                 return True
-        elif isinstance(e, dict) or isinstance(e, list):
+        elif isinstance(e, (dict, list)):
             pass
-        elif e == l[i]:
+        elif e == el:
             return True
     return False
 
 
-def compare_list_as_set(a, b, comparefct):
+def compare_list_as_set(a, b, comparefct=assertEqual):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-10
 
     checks for every element in a if it is also available in b
+    and if a and b have the same type and the same number of elements
     """
     comparefct(type(a), type(b))
     comparefct(len(a), len(b))
-    for i in range(len(a)):
-        # is any element in b equal to i?
-        if any_element_equal_list(a[i], b):
+    for e in a:
+        # is any element in b equal to e?
+        if any_element_equal_list(e, b):
             pass
         else:
             raise comparefct(0, 1)
@@ -102,13 +110,6 @@ def compare_dict(a, b, comparefct):
             compare_list_as_set(a[key], b[key], comparefct)
         else:
             comparefct(a[key], b[key])
-
-
-def assertEqual(a, b):
-    """
-    a simple assert function
-    """
-    assert(a == b)
 
 
 def compare_json_schemas_one_way(a, b, comparefct=assertEqual):

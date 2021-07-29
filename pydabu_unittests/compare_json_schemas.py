@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-10
+:Date: 2021-03-10, 2021-07-29
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests compare_json_schemas from the module dabu
@@ -22,8 +22,30 @@ import unittest
 class compare_json_schemas(unittest.TestCase):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-10
+    :Date: 2021-07-29
     """
+
+    def test_compare_list_as_set(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2021-07-29
+
+        env python3 compare_json_schemas.py \
+          compare_json_schemas.test_compare_list_as_set
+        """
+        from dabu.compare_json_schemas.compare_json_schemas \
+            import compare_list_as_set, assertEqual
+        compare_list_as_set([1, 2, 3], [3, 2, 1], comparefct=assertEqual)
+        compare_list_as_set([1, 2, 3], [3, 2, 1])
+        compare_list_as_set((1, 2, 3), (3, 2, 1))
+        with self.assertRaises(AssertionError):
+            compare_list_as_set([1, 2, 4], [3, 2, 1], comparefct=assertEqual)
+        with self.assertRaises(AssertionError):
+            compare_list_as_set([1, 2, 4], [3, 2, 1])
+        with self.assertRaises(AssertionError):
+            compare_list_as_set([1, 2, 3], [4, 3, 2, 1])
+        with self.assertRaises(AssertionError):
+            compare_list_as_set((1, 2, 3), [3, 2, 1])
 
     def test_simple_compare(self):
         """

@@ -15,7 +15,7 @@ import ssl
 import urllib.request
 
 
-def lzma_open(filename, mode, container_format=lzma.FORMAT_ALONE, *params):
+def lzma_open(filename, mode, *params, container_format=lzma.FORMAT_ALONE):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-09

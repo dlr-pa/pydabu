@@ -1,13 +1,14 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-23 (last change).
+:Date: 2021-03-23, 2021-07-29 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
 import json
 import os.path
 import sys
+import types
 
 import jsonschema
 
@@ -16,15 +17,6 @@ import dabu.schema_org_data
 from .check_arg_file import check_arg_file
 from .check_arg_file_not_exists import check_arg_file_not_exists
 from .run_check_data_bubble import run_check_data_bubble
-
-
-class EmptyNamespaceClass():
-    """
-    simple empty class
-
-    You can use it to get an empty namespace.
-    """
-    pass
 
 
 def run_data_bubble2jsonld(args):
@@ -61,7 +53,7 @@ def run_data_bubble2jsonld(args):
         # call run_check_data_bubble:
         sys.stderr.write(
             f'run: pydabu.py check_data_bubble -directory {path}\n')
-        check_data_bubble_args = EmptyNamespaceClass()
+        check_data_bubble_args = types.SimpleNamespace()
         check_data_bubble_args.directory = [path]
         check_data_bubble_args.dabu_instance_file = args.dabu_instance_file
         check_data_bubble_args.dabu_schema_file = args.dabu_schema_file
@@ -94,7 +86,7 @@ def run_data_bubble2jsonld(args):
         del jsonld_schema
         if isinstance(schema["$schema"], list):
             index = len(schema["$schema"]) - 1
-            while 0 < index:
+            while index > 0:
                 nindex = schema["$schema"].index(
                     schema["$schema"][index])
                 if nindex != index:
