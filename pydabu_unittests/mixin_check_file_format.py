@@ -148,6 +148,9 @@ class mixin_check_file_format():
 
         This test uses the data in 'data/data_bubble' to test the checksums
         of the script 'pydabu check_file_format'.
+
+        env python3 script_pydabu.py \
+          script_pydabu.test_check_file_format_01_02_03_checksums
         """
         # data bubble 01, 02, 03
         schema = json.loads(pkgutil.get_data(

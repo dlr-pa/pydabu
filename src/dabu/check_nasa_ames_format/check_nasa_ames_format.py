@@ -10,7 +10,7 @@ import re
 import time
 
 
-def DATE_RDATE2isoformat(data):
+def date_rdate2isoformat(data):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
@@ -49,13 +49,13 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
         for i in range(7):
             metadata_part += [fd.readline()]
     if len(metadata_part) == 7:
-        NLHEAD_FFI = metadata_part[0].strip().split()
-        if isinstance(NLHEAD_FFI, list) and len(NLHEAD_FFI) == 2:
+        nlhead_ffi = metadata_part[0].strip().split()
+        if isinstance(nlhead_ffi, list) and len(nlhead_ffi) == 2:
             # NLHEAD: Number of lines in file header
             # FFI: File format index
-            NLHEAD, FFI = NLHEAD_FFI
-            addresult['NLHEAD'] = int(NLHEAD)
-            addresult['FFI'] = int(FFI)
+            nlhead, ffi = nlhead_ffi
+            addresult['NLHEAD'] = int(nlhead)
+            addresult['FFI'] = int(ffi)
         else:
             result[checker_name]['log'] += [
                 'error: '
@@ -63,17 +63,17 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
             result[checker_name]['error'] += 1
         if result[checker_name]['error'] == 0:
             if bool(metadata_part[5]):  # len(metadata_part[5]) > 0
-                IVOL_NVOL = metadata_part[5].strip().split()
-                if isinstance(IVOL_NVOL, list) and len(IVOL_NVOL) == 2:
+                ivol_nvol = metadata_part[5].strip().split()
+                if isinstance(ivol_nvol, list) and len(ivol_nvol) == 2:
                     # IVOL: Number of the file in the above dataset
                     #       (between 1 and NVOL).
                     # NVOL: Total number of files belonging to the considered
                     #       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).
-                    IVOL, NVOL = IVOL_NVOL
-                    if ((int(NVOL) >= 1) and
-                            (1 <= int(IVOL)) and (int(IVOL) <= int(NVOL))):
-                        addresult['IVOL'] = int(IVOL)
-                        addresult['NVOL'] = int(NVOL)
+                    ivol, nvol = ivol_nvol
+                    if ((int(nvol) >= 1) and
+                            (int(ivol) >= 1) and (int(ivol) <= int(nvol))):
+                        addresult['IVOL'] = int(ivol)
+                        addresult['NVOL'] = int(nvol)
                     else:
                         result[checker_name]['log'] += [
                             'error: do not understand IVOL and NVOL']
@@ -108,7 +108,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                 result[checker_name]['log'] += [
                     'warning: ONAME is empty']
                 result[checker_name]['warning'] += 1
-            for (ln, tag) in [(2, 'ORG'), (3, 'SNAME'), (4, 'MNAME')]:
+            for (pos, tag) in [(2, 'ORG'), (3, 'SNAME'), (4, 'MNAME')]:
                 # ORG: Organisation name (university, institute, etc).
                 #      May include address and phone numbers.
                 # SNAME: Source of data, i.e. instrument, platform, model name,
@@ -116,34 +116,34 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                 # MNAME: Name of mission, campaign, programme and/or project.
                 # NVOL: Total number of files belonging to the considered
                 #       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).
-                if bool(metadata_part[ln]):  # len(metadata_part[ln]) > 0
-                    if len(metadata_part[ln]) < 132 + 1:
-                        addresult[tag] = metadata_part[ln].strip()
+                if bool(metadata_part[pos]):  # len(metadata_part[pos]) > 0
+                    if len(metadata_part[pos]) < 132 + 1:
+                        addresult[tag] = metadata_part[pos].strip()
                     else:
                         result[checker_name]['log'] += [
                             'warning: ' + tag + 'too long']
                         result[checker_name]['warning'] += 1
             if bool(metadata_part[6]):  # len(metadata_part[6]) > 0
-                DATE_RDATE = re.findall(
+                date_rdate = re.findall(
                     r'([0-9]{4}[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})',
                     metadata_part[6].strip())
-                if len(DATE_RDATE) > 2:
+                if len(date_rdate) > 2:
                     result[checker_name]['log'] += [
                         'warning: too many "dates" in DATE RDATE']
                     result[checker_name]['warning'] += 1
-                elif len(DATE_RDATE) == 1:
-                    addresult['DATE'] = DATE_RDATE2isoformat(DATE_RDATE[0])
-                elif len(DATE_RDATE) == 2:
-                    DATE_RDATE = re.findall(
+                elif len(date_rdate) == 1:
+                    addresult['DATE'] = date_rdate2isoformat(date_rdate[0])
+                elif len(date_rdate) == 2:
+                    date_rdate = re.findall(
                         r'([0-9]{4}[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})'
                         r'\s*'
                         r'([0-9]{4}[ ]{1,2}[0-9]{1,2}[ ]{1,2}[0-9]{1,2})',
                         metadata_part[6].strip())
-                    if re:
-                        addresult['DATE'] = DATE_RDATE2isoformat(
-                            DATE_RDATE[0][0])
-                        addresult['RDATE'] = DATE_RDATE2isoformat(
-                            DATE_RDATE[0][1])
+                    if date_rdate:
+                        addresult['DATE'] = date_rdate2isoformat(
+                            date_rdate[0][0])
+                        addresult['RDATE'] = date_rdate2isoformat(
+                            date_rdate[0][1])
                     else:
                         result[checker_name]['log'] += [
                             'warning: do not understand DATE RDATE']

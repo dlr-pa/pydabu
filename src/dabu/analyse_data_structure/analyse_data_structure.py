@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-02-17 (last change).
+:Date: 2021-02-17, 2021-07-29 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -32,7 +32,7 @@ def add_append_integrate_data(store, key, data):
     """
     if ((key in store) and
             store[key] != data):
-        if type(store[key]) in (list, tuple):
+        if isinstance(store[key], (list, tuple)):
             if data not in store[key]:
                 store[key].append(data)
         else:
@@ -43,11 +43,11 @@ def add_append_integrate_data(store, key, data):
         store[key] = data
 
 
-def analyse_data_structure(path_name='.', result=dict()):
+def analyse_data_structure(path_name='.', result=None):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-02-17 (last change).
+    :Date: 2021-07-29 (last change).
 
     Analyse the data structure of the given path.
 
@@ -55,6 +55,8 @@ def analyse_data_structure(path_name='.', result=dict()):
     :param result: you can give a dict, where the results are appended
                    or overridden
     """
+    if result is None:
+        result = dict()
     file_names = []  # only files in the actual directory
     dir_names = []  # only directory in the actual directory
     all_file_names = []  # all other files in the directory tree

@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-07-21
+:Date: 2021-07-29
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -256,6 +256,7 @@ required_modules = ['argparse',
                     'sys',
                     'tempfile',
                     'time',
+                    'types',
                     'warnings']
 # optional modules
 required_modules += ['cfchecker.cfchecks', 'netCDF4']
@@ -278,7 +279,7 @@ required_modules += ['importlib']
 
 setup(
     name='pydabu',
-    version='2021.07.21',
+    version='2021.07.29',
     cmdclass={
         'check_modules': CheckModules,
         'run_unittest': TestWithUnittest,

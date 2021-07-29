@@ -55,7 +55,7 @@ def run_check_data_bubble(args):
             if bool(err.path):
                 filenameoutput = ''
                 if ((err.path[0] == 'data') and
-                    isinstance(err.path[1], int) and
+                        isinstance(err.path[1], int) and
                         ('name' in instance['data'][err.path[1]])):
                     filenameoutput = \
                         " (file: '%s')" % instance['data'][err.path[1]]['name']
