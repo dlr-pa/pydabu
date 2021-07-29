@@ -49,9 +49,9 @@ def equal_list_as_set(a, b):
     """
     if not len(a) == len(b):
         return False
-    for i in range(len(a)):
-        # is any element in b equal to i?
-        if any_element_equal_list(a[i], b):
+    for e in a:
+        # is any element in b equal to e?
+        if any_element_equal_list(e, b):
             pass
         else:
             return False
@@ -65,16 +65,16 @@ def any_element_equal_list(e, l):
 
     checks if any element of l is in e
     """
-    for i in range(len(l)):
-        if isinstance(l[i], dict):
-            if isinstance(e, dict) and dict_equal(e, l[i]):
+    for el in l:
+        if isinstance(el, dict):
+            if isinstance(e, dict) and dict_equal(e, el):
                 return True
-        elif isinstance(l[i], list):
-            if isinstance(e, list) and equal_list_as_set(e, l[i]):
+        elif isinstance(el, list):
+            if isinstance(e, list) and equal_list_as_set(e, el):
                 return True
-        elif isinstance(e, dict) or isinstance(e, list):
+        elif isinstance(e, (dict, list)):
             pass
-        elif e == l[i]:
+        elif e == el:
             return True
     return False
 
