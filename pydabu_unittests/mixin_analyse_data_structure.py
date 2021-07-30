@@ -14,8 +14,14 @@ import subprocess
 
 import jsonschema
 
+try:
+    from .data_path_class import DataPathClass
+except (ModuleNotFoundError, ImportError):
+    from data_path_class import DataPathClass
 
-class mixin_analyse_data_structure():
+
+# pylint: disable=too-few-public-methods
+class MixinAnalyseDataStructure(DataPathClass):
     """
     :Author: Daniel Mohr
     :Date: 2021-02-19
@@ -50,15 +56,15 @@ class mixin_analyse_data_structure():
         schema = json.loads(
             pkgutil.get_data(
                 'dabu', 'schemas/analyse_data_structure_output.schema'))
-        for cp in cps:
-            instance = json.loads(cp.stdout)
+        for cpi in cps:
+            instance = json.loads(cpi.stdout)
             jsonschema.validate(instance, schema)
         # data bubble 01
         test_dir_path = self.test_dir_path[1]
         self.assertTrue(os.path.isdir(test_dir_path))
         self.assertTrue(
             os.path.isfile(os.path.join(test_dir_path, 'README.md')))
-        cp = subprocess.run(
+        subprocess.run(
             'pydabu analyse_data_structure',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,

@@ -13,7 +13,7 @@ env python3 dabu_scripts_pydabu_check_arg_file_not_exists.py
 Or you can run only one test, e. g.:
 
 env python3 dabu_scripts_pydabu_check_arg_file_not_exists.py \
-  check_arg_file_not_exists.test_check_arg_file_not_exists
+  CheckArgFileNotExists.test_check_arg_file_not_exists
 """
 
 import os.path
@@ -21,7 +21,7 @@ import tempfile
 import unittest
 
 
-class check_arg_file_not_exists(unittest.TestCase):
+class CheckArgFileNotExists(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-05
@@ -35,6 +35,7 @@ class check_arg_file_not_exists(unittest.TestCase):
         import argparse
         from dabu.scripts.pydabu import check_arg_file_not_exists as cafne
         with tempfile.TemporaryDirectory() as tmpdir:
+            # pylint: disable=unused-variable
             with open(os.path.join(tmpdir, 'foo'), 'w') as fd:
                 pass
             cafne.check_arg_file_not_exists(os.path.join(tmpdir, 'bar'))
