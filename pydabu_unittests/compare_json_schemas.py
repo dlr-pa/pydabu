@@ -13,13 +13,14 @@ env python3 compare_json_schemas.py
 
 Or you can run only one test, e. g.:
 
-env python3 compare_json_schemas.py compare_json_schemas.test_simple_compare
+env python3 compare_json_schemas.py CompareJsonSchemas.test_simple_compare
 """
 
 import unittest
 
 
-class compare_json_schemas(unittest.TestCase):
+# pylint: disable=invalid-name
+class CompareJsonSchemas(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-07-29
@@ -31,7 +32,7 @@ class compare_json_schemas(unittest.TestCase):
         :Date: 2021-07-29
 
         env python3 compare_json_schemas.py \
-          compare_json_schemas.test_compare_list_as_set
+          CompareJsonSchemas.test_compare_list_as_set
         """
         from dabu.compare_json_schemas.compare_json_schemas \
             import compare_list_as_set, assertEqual
