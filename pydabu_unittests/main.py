@@ -5,23 +5,35 @@
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 aggregation of tests
+
+You can run this file directly::
+
+  env python3 main.py
+  pytest-3 main.py
+
+Or you can run only one test, e. g.::
+
+  env python3 main.py TestScriptsExecutable
+  pytest-3 -k TestScriptsExecutable main.py
 """
 
 
 import unittest
 
 
-class test_module_import(unittest.TestCase):
+class TestModuleImport(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-04
     """
 
+    # pylint: disable=no-self-use
     def test_module_import(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-03-04
         """
+        # pylint: disable=unused-variable
         import dabu
         import dabu.analyse_data_structure
         import dabu.check_nasa_ames_format
@@ -33,30 +45,35 @@ class test_module_import(unittest.TestCase):
         import dabu.scripts.json_schema_from_schema_org
 
 
-class test_scripts_executable(unittest.TestCase):
+class TestScriptsExecutable(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-07-13
+
+    env python3 main.py TestScriptsExecutable
     """
 
     def test_script_pydabu_executable(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-07-13
+
+        env python3 main.py TestScriptsExecutable.test_script_pydabu_executable
         """
         import subprocess
-        cp = subprocess.run(
+        cpi = subprocess.run(
             "pydabu",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
         # check at least minimal help output
-        self.assertTrue(len(cp.stdout) >= 1111)
+        self.assertTrue(len(cpi.stdout) >= 1111)
         # check begin of help output
-        self.assertTrue(cp.stdout.startswith(b'usage: pydabu'))
+        self.assertTrue(cpi.stdout.startswith(b'usage: pydabu'))
         # check end of help output
-        self.assertTrue(cp.stdout.strip().endswith(
+        self.assertTrue(cpi.stdout.strip().endswith(
             b'License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.'))
 
+    # pylint: disable=invalid-name
     def test_script_json_schema_from_schema_org_executable(self):
         """
         :Author: Daniel Mohr
@@ -64,29 +81,29 @@ class test_scripts_executable(unittest.TestCase):
         """
         import subprocess
         # check error output
-        cp = subprocess.run(
+        cpi = subprocess.run(
             "json_schema_from_schema_org",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=False)
         with self.assertRaises(subprocess.CalledProcessError):
             # parameter is necessary
-            cp.check_returncode()
-        self.assertEqual(len(cp.stdout), 0)
-        self.assertTrue(len(cp.stderr) >= 210)
+            cpi.check_returncode()
+        self.assertEqual(len(cpi.stdout), 0)
+        self.assertTrue(len(cpi.stderr) >= 210)
         # check begin of error output
         self.assertTrue(
-            cp.stderr.startswith(b'usage: json_schema_from_schema_org'))
+            cpi.stderr.startswith(b'usage: json_schema_from_schema_org'))
         # check help output
-        cp = subprocess.run(
+        cpi = subprocess.run(
             "json_schema_from_schema_org -h",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=False)
-        self.assertTrue(len(cp.stdout) >= 1019)
+        self.assertTrue(len(cpi.stdout) >= 1019)
         # check begin of help output
         self.assertTrue(
-            cp.stdout.startswith(b'usage: json_schema_from_schema_org'))
+            cpi.stdout.startswith(b'usage: json_schema_from_schema_org'))
         # check end of help output
-        self.assertTrue(cp.stdout.strip().endswith(
+        self.assertTrue(cpi.stdout.strip().endswith(
             b'License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.'))
 
 
@@ -101,7 +118,7 @@ def module(suite):
     """
     print('add tests for the module')
     loader = unittest.defaultTestLoader
-    suite.addTest(loader.loadTestsFromTestCase(test_module_import))
+    suite.addTest(loader.loadTestsFromTestCase(TestModuleImport))
     # dabu.schemas
     suite.addTest(loader.loadTestsFromName('pydabu_unittests.package_data'))
     # dabu.scripts.pydabu.check_arg_file_not_exists.py
@@ -126,10 +143,14 @@ def scripts(suite):
     """
     print('add tests for the scripts')
     loader = unittest.defaultTestLoader
-    suite.addTest(loader.loadTestsFromTestCase(test_scripts_executable))
+    suite.addTest(loader.loadTestsFromTestCase(TestScriptsExecutable))
     # pydabu
     suite.addTest(loader.loadTestsFromName('pydabu_unittests.script_pydabu'))
     # json_schema_from_schema_org
     suite.addTest(
         loader.loadTestsFromName(
             'pydabu_unittests.script_json_schema_from_schema_org'))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

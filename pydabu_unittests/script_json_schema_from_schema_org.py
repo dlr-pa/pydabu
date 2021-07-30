@@ -24,12 +24,13 @@ import unittest
 import jsonschema
 
 
-class script_json_schema_from_schema_org(unittest.TestCase):
+class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-18
     """
 
+    # pylint: disable=no-self-use
     def test_dummy_1(self):
         """
         :Author: Daniel Mohr
@@ -38,11 +39,11 @@ class script_json_schema_from_schema_org(unittest.TestCase):
         This test calls json_schema_from_schema_org dummy
         """
         import subprocess
-        cp = subprocess.run(
+        cpi = subprocess.run(
             "json_schema_from_schema_org dummy",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
-        schema = json.loads(cp.stdout)
+        schema = json.loads(cpi.stdout)
         instance = dict()
         jsonschema.validate(instance, schema)
 
@@ -54,20 +55,20 @@ class script_json_schema_from_schema_org(unittest.TestCase):
         This test calls json_schema_from_schema_org dummy
         """
         import subprocess
-        cp = subprocess.run(
+        cpi = subprocess.run(
             "json_schema_from_schema_org -cachefilename '' dummy",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
-        schema = json.loads(cp.stdout)
+        schema = json.loads(cpi.stdout)
         instance = dict()
         jsonschema.validate(instance, schema)
         with tempfile.TemporaryDirectory() as tmpdir:
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 "json_schema_from_schema_org -cachefilename " +
                 os.path.join(tmpdir, 'foo') + " dummy",
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, timeout=3, check=True)
-            schema = json.loads(cp.stdout)
+            schema = json.loads(cpi.stdout)
             jsonschema.validate(instance, schema)
 
     def test_person_1(self):
@@ -78,11 +79,11 @@ class script_json_schema_from_schema_org(unittest.TestCase):
         This test calls json_schema_from_schema_org Person
         """
         import subprocess
-        cp = subprocess.run(
+        cpi = subprocess.run(
             "json_schema_from_schema_org Person",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, timeout=3, check=True)
-        schema = json.loads(cp.stdout)
+        schema = json.loads(cpi.stdout)
         instance = dict()
         instance["$schema"] = "http://json-schema.org/draft-04/schema#"
         instance["type"] = "object"
@@ -92,44 +93,44 @@ class script_json_schema_from_schema_org(unittest.TestCase):
         with self.assertRaises(jsonschema.exceptions.ValidationError):
             jsonschema.validate(instance, schema)
         for key in [
-            "Photograph",
-            "Demand",
-            "ItemList",
-            "VirtualLocation",
-            "Offer",
-            "CreativeWork",
-            "AudioObject",
-            "Event",
-            "ContactPoint",
-            "Person",
-            "CorrectionComment",
-            "CivicStructure",
-            "PriceSpecification",
-            "ImageObject",
-            "MonetaryAmount",
-            "MediaObject",
-            "Country",
-            "Intangible",
-            "Place",
-            "Language",
-            "AdministrativeArea",
-            "StructuredValue",
-            "InteractionCounter",
-            "Brand",
-            "DefinedTerm",
-            "EducationalOrganization",
-            "Organization",
-            "Comment",
-            "ProgramMembership",
-            "QuantitativeValue",
-            "Occupation",
-            "Distance",
-            "Product",
-            "Quantity",
-            "PropertyValue",
-            "OwnershipInfo",
-            "Thing",
-            "OfferCatalog"
+                "Photograph",
+                "Demand",
+                "ItemList",
+                "VirtualLocation",
+                "Offer",
+                "CreativeWork",
+                "AudioObject",
+                "Event",
+                "ContactPoint",
+                "Person",
+                "CorrectionComment",
+                "CivicStructure",
+                "PriceSpecification",
+                "ImageObject",
+                "MonetaryAmount",
+                "MediaObject",
+                "Country",
+                "Intangible",
+                "Place",
+                "Language",
+                "AdministrativeArea",
+                "StructuredValue",
+                "InteractionCounter",
+                "Brand",
+                "DefinedTerm",
+                "EducationalOrganization",
+                "Organization",
+                "Comment",
+                "ProgramMembership",
+                "QuantitativeValue",
+                "Occupation",
+                "Distance",
+                "Product",
+                "Quantity",
+                "PropertyValue",
+                "OwnershipInfo",
+                "Thing",
+                "OfferCatalog"
         ]:
             instance["@context"][key] = "https://schema.org/" + key
         jsonschema.validate(instance, schema)

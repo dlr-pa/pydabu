@@ -25,7 +25,7 @@ try:
     from .mixin_check_nasa_ames_format import MixinCheckNasaAmesFormat
     from .mixin_check_netcdf_file import MixinCheckNetcdfFile
     from .mixin_check_file_format import MixinCheckFileFormat
-    from .mixin_common_json_format import mixin_common_json_format
+    from .mixin_common_json_format import MixinCommonJsonFormat
     from .mixin_create_data_bubble import MixinCreateDataBubble
     from .mixin_check_data_bubble import MixinCheckDataBubble
     from .mixin_listschemas import MixinListschemas
@@ -37,7 +37,7 @@ except (ModuleNotFoundError, ImportError):
     from mixin_check_nasa_ames_format import MixinCheckNasaAmesFormat
     from mixin_check_netcdf_file import MixinCheckNetcdfFile
     from mixin_check_file_format import MixinCheckFileFormat
-    from mixin_common_json_format import mixin_common_json_format
+    from mixin_common_json_format import MixinCommonJsonFormat
     from mixin_create_data_bubble import MixinCreateDataBubble
     from mixin_check_data_bubble import MixinCheckDataBubble
     from mixin_listschemas import MixinListschemas
@@ -72,7 +72,7 @@ class ScriptPydabu(
         MixinBasicSubCommands, MixinDataBubble,
         MixinAnalyseDataStructure, MixinCheckNetcdfFile,
         MixinCheckNasaAmesFormat, MixinCheckFileFormat,
-        mixin_common_json_format, MixinCreateDataBubble,
+        MixinCommonJsonFormat, MixinCreateDataBubble,
         MixinCheckDataBubble, MixinListschemas,
         MixinDataBubble2jsonld):
     """

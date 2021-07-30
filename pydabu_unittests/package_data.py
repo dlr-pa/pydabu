@@ -10,7 +10,7 @@ tests the package data of the module dabu
 import unittest
 
 
-class package_data(unittest.TestCase):
+class PackageData(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-02-04
@@ -21,6 +21,7 @@ class package_data(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
+        # pylint: disable=unused-variable
         import os.path
         import sys
         import dabu
@@ -31,11 +32,13 @@ class package_data(unittest.TestCase):
                                  'schemas',
                                  dataname)))
 
+    # pylint: disable=no-self-use
     def test_package_data_readable(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
+        # pylint: disable=unused-variable
         import json
         import jsonschema
         import pkgutil
