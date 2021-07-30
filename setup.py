@@ -1,20 +1,21 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-07-29
+:Date: 2021-07-30
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
+import distutils  # we need distutils for distutils.errors.DistutilsArgError
 import os
 
-from setuptools import setup, Command
+from setuptools import Command, setup
 
 
 class TestWithPytest(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-06-23
+    :Date: 2021-07-30
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with pytest
@@ -55,10 +56,9 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-06-23
+        :Date: 2021-07-30
         """
         import sys
-        import os.path
         if self.src == 'installed':
             pass
         elif self.src == 'local':
@@ -76,7 +76,6 @@ class TestWithPytest(Command):
             try:
                 # if available, using parallel test run
                 import xdist
-                import sys
                 if os.name == 'posix':
                     # since we are only running seconds,
                     # we use the load of the last minute:
@@ -160,7 +159,6 @@ class TestWithUnittest(Command):
         :Date: 2021-06-21
         """
         import sys
-        import os.path
         if self.src == 'installed':
             pass
         elif self.src == 'local':
@@ -176,6 +174,7 @@ class TestWithUnittest(Command):
         pydabu_unittests.module(suite)
         setup_self = self
 
+        # pylint: disable=missing-docstring
         class TestRequiredModuleImport(unittest.TestCase):
             def test_required_module_import(self):
                 import importlib
@@ -239,7 +238,7 @@ class CheckModules(Command):
 
 
 # necessary modules
-required_modules = ['argparse',
+REQUIRED_MODULES = ['argparse',
                     'base64',
                     'datetime',
                     'distutils',
@@ -259,23 +258,23 @@ required_modules = ['argparse',
                     'types',
                     'warnings']
 # optional modules
-required_modules += ['cfchecker.cfchecks', 'netCDF4']
+REQUIRED_MODULES += ['cfchecker.cfchecks', 'netCDF4']
 # optional modules to return version from module read from package metadata
-required_modules += ['pkg_resources']
+REQUIRED_MODULES += ['pkg_resources']
 # optional modules for python3 setup.py check_modules
-required_modules += ['importlib']
+REQUIRED_MODULES += ['importlib']
 # optional modules for json_schema_from_schema_org.py
-# required_modules += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
+# REQUIRED_MODULES += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
 # modules to build doc
-# required_modules += ['sphinx', 'sphinxarg', 'recommonmark']
+# REQUIRED_MODULES += ['sphinx', 'sphinxarg', 'recommonmark']
 # modules to run tests with unittest
-# required_modules += ['unittest', 'shutil']
+# REQUIRED_MODULES += ['unittest', 'shutil']
 # modules to run tests with pytest
-# required_modules += ['pytest']
+# REQUIRED_MODULES += ['pytest']
 # optional modules to run tests with pytest in parallel
-# required_modules += ['xdist']
+# REQUIRED_MODULES += ['xdist']
 # optional modules to run tests with pytest and create coverage report
-# required_modules += ['pytest_cov']
+# REQUIRED_MODULES += ['pytest_cov']
 
 setup(
     name='pydabu',
@@ -338,6 +337,6 @@ setup(
         'Topic :: System :: Archiving'],
     # cat $(find | grep "py$") | egrep -i "^[ \t]*import .*$" | \
     #   egrep -i --only-matching "import .*$" | sort -u
-    requires=required_modules,
+    requires=REQUIRED_MODULES,
     provides=['dabu']
 )
