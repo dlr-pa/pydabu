@@ -19,7 +19,7 @@ env python3 schema_org_data.py schema_org_data.test_add_property
 import unittest
 
 
-class schema_org_data_add_property(unittest.TestCase):
+class SchemaOrgDataAddProperty(unittest.TestCase):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-19
@@ -32,42 +32,42 @@ class schema_org_data_add_property(unittest.TestCase):
         """
         import dabu.compare_json_schemas
         from dabu.schema_org_data.add_property import add_property
-        a = dict()
-        b = dict()
-        add_property(a, "foo", "bar")
-        b["foo"] = "bar"
-        dabu.compare_json_schemas.compare_json_schemas(a, b)
-        add_property(a, "dict", {'k': 'v'})
-        add_property(a, "dict", {'k2': 'v2'})
-        b["dict"] = {'k': 'v', 'k2': 'v2'}
+        adict = dict()
+        bdict = dict()
+        add_property(adict, "foo", "bar")
+        bdict["foo"] = "bar"
+        dabu.compare_json_schemas.compare_json_schemas(adict, bdict)
+        add_property(adict, "dict", {'k': 'v'})
+        add_property(adict, "dict", {'k2': 'v2'})
+        bdict["dict"] = {'k': 'v', 'k2': 'v2'}
         with self.assertRaises(TypeError):
-            add_property(a, "dict", ['k2', 'v2'])
+            add_property(adict, "dict", ['k2', 'v2'])
         with self.assertRaises(TypeError):
-            add_property(a, "dict", 'k2:v2')
-        dabu.compare_json_schemas.compare_json_schemas(a, b)
-        add_property(a, "list", [1, 2])
-        b["list"] = [1, 2]
+            add_property(adict, "dict", 'k2:v2')
+        dabu.compare_json_schemas.compare_json_schemas(adict, bdict)
+        add_property(adict, "list", [1, 2])
+        bdict["list"] = [1, 2]
         with self.assertRaises(TypeError):
-            add_property(a, "list", {1: 2})
-        add_property(a, "list", [3, 4])
-        b["list"] += [3, 4]
-        add_property(a, "list", '5')
-        b["list"] += ['5']
-        add_property(a, "list", 3)
-        dabu.compare_json_schemas.compare_json_schemas(a, b)
-        add_property(a, "foo", "baz")
-        b["foo"] = ["bar", "baz"]
-        dabu.compare_json_schemas.compare_json_schemas(a, b)
-        add_property(a, "bar", "baz")
-        b["bar"] = "baz"
-        add_property(a, "bar", {'foo': 3})
-        b["bar"] = ["baz", {'foo': 3}]
-        dabu.compare_json_schemas.compare_json_schemas(a, b)
-        add_property(a, "baz", "baz")
-        b["baz"] = "baz"
-        add_property(a, "baz", ['bar', 'foo'])
-        b["baz"] = ["baz", "bar", 'foo']
-        dabu.compare_json_schemas.compare_json_schemas(a, b)
+            add_property(adict, "list", {1: 2})
+        add_property(adict, "list", [3, 4])
+        bdict["list"] += [3, 4]
+        add_property(adict, "list", '5')
+        bdict["list"] += ['5']
+        add_property(adict, "list", 3)
+        dabu.compare_json_schemas.compare_json_schemas(adict, bdict)
+        add_property(adict, "foo", "baz")
+        bdict["foo"] = ["bar", "baz"]
+        dabu.compare_json_schemas.compare_json_schemas(adict, bdict)
+        add_property(adict, "bar", "baz")
+        bdict["bar"] = "baz"
+        add_property(adict, "bar", {'foo': 3})
+        bdict["bar"] = ["baz", {'foo': 3}]
+        dabu.compare_json_schemas.compare_json_schemas(adict, bdict)
+        add_property(adict, "baz", "baz")
+        bdict["baz"] = "baz"
+        add_property(adict, "baz", ['bar', 'foo'])
+        bdict["baz"] = ["baz", "bar", 'foo']
+        dabu.compare_json_schemas.compare_json_schemas(adict, bdict)
 
 
 if __name__ == '__main__':
