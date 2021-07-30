@@ -21,27 +21,27 @@ import unittest
 
 try:
     from .data_path_class import DataPathClass
-    from .mixin_analyse_data_structure import mixin_analyse_data_structure
-    from .mixin_check_nasa_ames_format import mixin_check_nasa_ames_format
+    from .mixin_analyse_data_structure import MixinAnalyseDataStructure
+    from .mixin_check_nasa_ames_format import MixinCheckNasaAmesFormat
     from .mixin_check_netcdf_file import MixinCheckNetcdfFile
-    from .mixin_check_file_format import mixin_check_file_format
+    from .mixin_check_file_format import MixinCheckFileFormat
     from .mixin_common_json_format import mixin_common_json_format
-    from .mixin_create_data_bubble import mixin_create_data_bubble
+    from .mixin_create_data_bubble import MixinCreateDataBubble
     from .mixin_check_data_bubble import MixinCheckDataBubble
-    from .mixin_listschemas import mixin_listschemas
-    from .mixin_basic_sub_commands import mixin_basic_sub_commands
+    from .mixin_listschemas import MixinListschemas
+    from .mixin_basic_sub_commands import MixinBasicSubCommands
     from .mixin_data_bubble2jsonld import MixinDataBubble2jsonld
 except (ModuleNotFoundError, ImportError):
     from data_path_class import DataPathClass
-    from mixin_analyse_data_structure import mixin_analyse_data_structure
-    from mixin_check_nasa_ames_format import mixin_check_nasa_ames_format
+    from mixin_analyse_data_structure import MixinAnalyseDataStructure
+    from mixin_check_nasa_ames_format import MixinCheckNasaAmesFormat
     from mixin_check_netcdf_file import MixinCheckNetcdfFile
-    from mixin_check_file_format import mixin_check_file_format
+    from mixin_check_file_format import MixinCheckFileFormat
     from mixin_common_json_format import mixin_common_json_format
-    from mixin_create_data_bubble import mixin_create_data_bubble
+    from mixin_create_data_bubble import MixinCreateDataBubble
     from mixin_check_data_bubble import MixinCheckDataBubble
-    from mixin_listschemas import mixin_listschemas
-    from mixin_basic_sub_commands import mixin_basic_sub_commands
+    from mixin_listschemas import MixinListschemas
+    from mixin_basic_sub_commands import MixinBasicSubCommands
     from mixin_data_bubble2jsonld import MixinDataBubble2jsonld
 
 
@@ -69,11 +69,11 @@ class MixinDataBubble(DataPathClass):
 # pylint: disable=too-many-ancestors
 class ScriptPydabu(
         unittest.TestCase,
-        mixin_basic_sub_commands, MixinDataBubble,
-        mixin_analyse_data_structure, MixinCheckNetcdfFile,
-        mixin_check_nasa_ames_format, mixin_check_file_format,
-        mixin_common_json_format, mixin_create_data_bubble,
-        MixinCheckDataBubble, mixin_listschemas,
+        MixinBasicSubCommands, MixinDataBubble,
+        MixinAnalyseDataStructure, MixinCheckNetcdfFile,
+        MixinCheckNasaAmesFormat, MixinCheckFileFormat,
+        mixin_common_json_format, MixinCreateDataBubble,
+        MixinCheckDataBubble, MixinListschemas,
         MixinDataBubble2jsonld):
     """
     :Author: Daniel Mohr

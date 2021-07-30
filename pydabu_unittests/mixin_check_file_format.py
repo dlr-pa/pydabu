@@ -13,8 +13,14 @@ import subprocess
 
 import jsonschema
 
+try:
+    from .data_path_class import DataPathClass
+except (ModuleNotFoundError, ImportError):
+    from data_path_class import DataPathClass
 
-class mixin_check_file_format():
+
+# pylint: disable=invalid-name
+class MixinCheckFileFormat(DataPathClass):
     """
     :Author: Daniel Mohr
     :Date: 2021-02-19
@@ -47,8 +53,8 @@ class mixin_check_file_format():
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True))
         schema = json.loads(pkgutil.get_data('dabu', 'schemas/dabu.schema'))
-        for cp in cps:
-            instance = json.loads(cp.stdout)
+        for cpi in cps:
+            instance = json.loads(cpi.stdout)
             jsonschema.validate(instance, schema)
 
     def test_check_file_format_01(self):
@@ -61,12 +67,12 @@ class mixin_check_file_format():
         """
         # data bubble 01
         test_dir_path = self.test_dir_path[1]
-        cp = subprocess.run(
+        cpi = subprocess.run(
             'pydabu check_file_format -o json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
-        instance = json.loads(cp.stdout)
+        instance = json.loads(cpi.stdout)
         for filename in ['schemas/dabu.schema',
                          'schemas/dabu_requires.schema']:
             schema = json.loads(pkgutil.get_data('dabu', filename))
@@ -84,12 +90,12 @@ class mixin_check_file_format():
         """
         # data bubble 02
         test_dir_path = self.test_dir_path[2]
-        cp = subprocess.run(
+        cpi = subprocess.run(
             'pydabu check_file_format -o json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
-        instance = json.loads(cp.stdout)
+        instance = json.loads(cpi.stdout)
         for filename in ['schemas/dabu.schema',
                          'schemas/dabu_requires.schema']:
             schema = json.loads(pkgutil.get_data('dabu', filename))
@@ -105,12 +111,12 @@ class mixin_check_file_format():
         """
         # data bubble 03
         test_dir_path = self.test_dir_path[3]
-        cp = subprocess.run(
+        cpi = subprocess.run(
             'pydabu check_file_format -o json',
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
             check=True)
-        instance = json.loads(cp.stdout)
+        instance = json.loads(cpi.stdout)
         for filename in ['schemas/dabu.schema',
                          'schemas/dabu_requires.schema']:
             schema = json.loads(pkgutil.get_data('dabu', filename))
@@ -132,12 +138,12 @@ class mixin_check_file_format():
             'dabu', 'schemas/dabu_requires.schema'))
         for outputformat in ['', ' -o json', ' -o json1',
                              ' -o human_readable']:
-            cp = subprocess.run(
+            cpi = subprocess.run(
                 'pydabu check_file_format' + outputformat,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=test_dir_path, timeout=self.subprocess_timeout,
                 check=True)
-            instance = json.loads(cp.stdout)
+            instance = json.loads(cpi.stdout)
             for myschema in [schema, required_schema]:
                 jsonschema.validate(instance, myschema)
 
@@ -167,12 +173,12 @@ class mixin_check_file_format():
                     ' -skip_creating_checksums',
                     ' -checksum_from_file ' + checksum_files[test_path_n]]:
                 # check some command line parameters
-                cp = subprocess.run(
+                cpi = subprocess.run(
                     'pydabu check_file_format' + flags,
                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                     shell=True, cwd=test_dir_path,
                     timeout=self.subprocess_timeout, check=True)
-                instance = json.loads(cp.stdout)
+                instance = json.loads(cpi.stdout)
                 for myschema in [schema, required_schema]:
                     jsonschema.validate(instance, myschema)
 
@@ -201,8 +207,8 @@ class mixin_check_file_format():
             for j in range(len(instance2['data'])):
                 if (instance1['data'][i]['name'] ==
                         instance2['data'][j]['name']):
-                    i1 = i
-                    i2 = j
+                    ind1 = i
+                    ind2 = j
                     break
-            self.assertEqual(instance1['data'][i1]['checksum']['hash'],
-                             instance2['data'][i2]['checksum']['hash'])
+            self.assertEqual(instance1['data'][ind1]['checksum']['hash'],
+                             instance2['data'][ind2]['checksum']['hash'])
