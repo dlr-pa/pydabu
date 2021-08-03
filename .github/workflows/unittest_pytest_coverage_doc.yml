@@ -27,7 +27,7 @@ jobs:
     - name: run pylint (only output; skipping error)
       run: pylint -j 3 --include-naming-hint=y --good-names=i,j,k,fd $(find -name "*.py")
       continue-on-error: true
-  
+
   ubuntu-1804_test_doc:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
     runs-on: ubuntu-18.04
