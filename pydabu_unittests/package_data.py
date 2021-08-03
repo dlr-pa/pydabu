@@ -27,7 +27,7 @@ class PackageData(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        # pylint: disable=unused-variable
+        # pylint: disable=unused-variable,unused-import
         # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu
         for dataname in ['dabu.schema', 'dabu_requires.schema']:
@@ -43,7 +43,7 @@ class PackageData(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        # pylint: disable=unused-variable
+        # pylint: disable=unused-variable,unused-import
         # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu
         for dataname in ['schemas/dabu.schema',
