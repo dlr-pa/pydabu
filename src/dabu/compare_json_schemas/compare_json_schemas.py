@@ -23,7 +23,7 @@ def dict_equal(a, b):
     for key in a.keys():
         if key not in b:
             return False
-        elif isinstance(a[key], dict):
+        if isinstance(a[key], dict):
             if not dict_equal(a[key], b[key]):
                 return False
         elif isinstance(a[key], list):
@@ -146,4 +146,5 @@ def compare_json_schemas(a, b, comparefct=assertEqual):
                        e. g. self.assertEqual in unittests
     """
     compare_json_schemas_one_way(a, b, comparefct=comparefct)
+    # pylint: disable=bad-option-value,arguments-out-of-order
     compare_json_schemas_one_way(b, a, comparefct=comparefct)

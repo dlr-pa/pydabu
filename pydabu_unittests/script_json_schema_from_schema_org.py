@@ -77,6 +77,9 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
         :Date: 2021-03-18
 
         This test calls json_schema_from_schema_org Person
+
+        env python3 script_json_schema_from_schema_org.py \
+          ScriptJsonSchemaFromSchemaOrg.test_person_1
         """
         import subprocess
         cpi = subprocess.run(

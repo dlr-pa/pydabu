@@ -122,8 +122,7 @@ def _get_property(item, data, properties, prop_name,
     :Author: Daniel Mohr
     :Date: 2021-03-19
     """
-    # pylint: disable=too-many-arguments
-    # pylint: disable=too-many-branches
+    # pylint: disable=too-many-arguments,too-many-branches
     # schema.org datatypes to handle ("schema:DataType"):
     schema2json = {"Text": "string",
                    "Boolean": "boolean",
@@ -196,7 +195,7 @@ def _get_property(item, data, properties, prop_name,
                 for item_type in accept_list:
                     if item_type in schema2json:
                         create_properties_schema2json(
-                            properties, schema2json, word, prop_name,
+                            properties, schema2json, prop_name, word,
                             item_type)
                     elif item_type in handle:
                         create_properties_handle(
@@ -205,7 +204,7 @@ def _get_property(item, data, properties, prop_name,
                 item_type = accept_list[0]
                 if item_type in schema2json:
                     create_properties_schema2json(
-                        properties, schema2json, word, prop_name, item_type)
+                        properties, schema2json, prop_name, word, item_type)
                 elif item_type in handle:
                     create_properties_handle(
                         properties, prop_name, missing_words, item_type)
@@ -226,7 +225,7 @@ def get_property(schemaorg_data, properties, prop_name, missing_words,
         properties[prop_name]["$ref"] = "#/definitions/" + new_missing_word
         missing_words.append(new_missing_word)
         return None
-    elif ("@type" in data) and (data["@type"] == "rdf:Property"):
+    if ("@type" in data) and (data["@type"] == "rdf:Property"):
         if "schema:rangeIncludes" in data:
             if isinstance(data["schema:rangeIncludes"], dict):
                 if "@id" not in data["schema:rangeIncludes"]:

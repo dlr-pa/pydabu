@@ -124,8 +124,7 @@ class ExtractHashFromChecksumFile():
                     hash_info[0] = hash_info[0].decode(encoding='utf-8')
                 hash_info = tuple(hash_info)
             return hash_info
-        else:
-            return None
+        return None
 
     def _determine_hash_encode(self, hash_string, hashfilename=None):
         """

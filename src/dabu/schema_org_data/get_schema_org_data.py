@@ -51,11 +51,7 @@ def get_schema_org_data(cachefilepath='', cachefilename=''):
     cachefilenamepath = os.path.join(cachefilepath, cachefilename)
     if bool(cachefilename):  # len(cachefilename) > 0
         _, ext = os.path.splitext(cachefilenamepath)
-        ext = ext.lower()
-        if ext in opencmds:
-            open_cmd = opencmds[ext]
-        else:
-            open_cmd = opencmds['default']
+        open_cmd = opencmds.get(ext.lower(), opencmds['default'])
     if bool(cachefilename) and os.path.isfile(cachefilenamepath):
         with open_cmd(cachefilenamepath, 'rb') as fd:
             schema_org_data = json.load(fd)

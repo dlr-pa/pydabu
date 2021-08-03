@@ -36,9 +36,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
 
     :param filename: file to analyse
     """
-    # pylint: disable=too-many-locals
-    # pylint: disable=too-many-branches
-    # pylint: disable=too-many-statements
+    # pylint: disable=too-many-locals,too-many-branches,too-many-statements
     result = dict()
     checker_name = 'pydabu (nasa ames format check)'
     addresult = dict()
@@ -71,8 +69,8 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                     # NVOL: Total number of files belonging to the considered
                     #       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).
                     ivol, nvol = map(int, ivol_nvol)
-                    if ((nvol >= 1) and
-                            (ivol >= 1) and (ivol <= nvol)):
+                    # if ((nvol >= 1) and (ivol >= 1) and (ivol <= nvol)):
+                    if ((ivol >= 1) and (ivol <= nvol)):
                         addresult['IVOL'] = ivol
                         addresult['NVOL'] = nvol
                     else:

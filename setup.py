@@ -7,6 +7,7 @@
 
 import distutils  # we need distutils for distutils.errors.DistutilsArgError
 import os
+import sys
 
 from setuptools import Command, setup
 
@@ -52,7 +53,6 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        pass
 
     def run(self):
         """
@@ -60,7 +60,6 @@ class TestWithPytest(Command):
         :Date: 2021-07-30
         """
         # pylint: disable=too-many-branches
-        import sys
         if self.src == 'installed':
             pass
         elif self.src == 'local':
@@ -72,6 +71,7 @@ class TestWithPytest(Command):
         sys.path.append(os.path.abspath('.'))
         # https://docs.pytest.org/en/stable/contents.html
         # https://pytest-cov.readthedocs.io/en/latest/
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import pytest
         pyargs = []
         if self.parallel:
@@ -155,14 +155,12 @@ class TestWithUnittest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        pass
 
     def run(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-06-21
         """
-        import sys
         if self.src == 'installed':
             pass
         elif self.src == 'local':
@@ -172,6 +170,7 @@ class TestWithUnittest(Command):
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import unittest
         suite = unittest.TestSuite()
         import pydabu_unittests
@@ -218,20 +217,19 @@ class CheckModules(Command):
         :Author: Daniel Mohr
         :Date: 2027-01-08
         """
-        pass
 
     def finalize_options(self):
         """
         :Author: Daniel Mohr
         :Date: 2027-01-08
         """
-        pass
 
     def run(self):
         """
         :Author: Daniel Mohr
         :Date: 2027-01-08
         """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import importlib
         summary = ""
         i = 0

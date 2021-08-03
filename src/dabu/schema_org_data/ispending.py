@@ -35,7 +35,7 @@ def _includes(analyse_object, content):
     """
     if isinstance(analyse_object, dict):
         return _includes_dict(analyse_object, content)
-    elif isinstance(analyse_object, list):
+    if isinstance(analyse_object, list):
         return _includes_list(analyse_object, content)
     # else:
     return False

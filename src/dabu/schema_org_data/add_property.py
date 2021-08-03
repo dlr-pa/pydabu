@@ -41,7 +41,7 @@ def add_property(schema, key, value):
         elif isinstance(schema[key], list):
             if isinstance(value, dict):
                 raise TypeError('no idea how to merge dict in list')
-            elif isinstance(value, list):
+            if isinstance(value, list):
                 schema[key] = list(set(schema[key] + value))
             else:  # string, int, float, bool or None
                 if value not in schema[key]:
