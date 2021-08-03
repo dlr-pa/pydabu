@@ -86,6 +86,7 @@
 
 <span class="sd">    :param filename: file to analyse</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># pylint: disable=too-many-locals,too-many-branches,too-many-statements</span>
     <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="n">checker_name</span> <span class="o">=</span> <span class="s1">&#39;pydabu (nasa ames format check)&#39;</span>
     <span class="n">addresult</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -103,9 +104,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nlhead_ffi</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">nlhead_ffi</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="c1"># NLHEAD: Number of lines in file header</span>
             <span class="c1"># FFI: File format index</span>
-            <span class="n">nlhead</span><span class="p">,</span> <span class="n">ffi</span> <span class="o">=</span> <span class="n">nlhead_ffi</span>
-            <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;NLHEAD&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nlhead</span><span class="p">)</span>
-            <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;FFI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ffi</span><span class="p">)</span>
+            <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;NLHEAD&#39;</span><span class="p">],</span> <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;FFI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">nlhead_ffi</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
                 <span class="s1">&#39;error: &#39;</span>
@@ -119,11 +118,10 @@
                     <span class="c1">#       (between 1 and NVOL).</span>
                     <span class="c1"># NVOL: Total number of files belonging to the considered</span>
                     <span class="c1">#       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).</span>
-                    <span class="n">ivol</span><span class="p">,</span> <span class="n">nvol</span> <span class="o">=</span> <span class="n">ivol_nvol</span>
-                    <span class="k">if</span> <span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">nvol</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span>
-                            <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ivol</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ivol</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nvol</span><span class="p">))):</span>
-                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;IVOL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ivol</span><span class="p">)</span>
-                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;NVOL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nvol</span><span class="p">)</span>
+                    <span class="n">ivol</span><span class="p">,</span> <span class="n">nvol</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">ivol_nvol</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">ivol</span> <span class="o">&lt;=</span> <span class="n">nvol</span><span class="p">:</span>
+                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;IVOL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ivol</span>
+                        <span class="n">addresult</span><span class="p">[</span><span class="s1">&#39;NVOL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nvol</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
                             <span class="s1">&#39;error: do not understand IVOL and NVOL&#39;</span><span class="p">]</span>
@@ -171,7 +169,7 @@
                         <span class="n">addresult</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata_part</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;log&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="p">[</span>
-                            <span class="s1">&#39;warning: &#39;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s1">&#39;too long&#39;</span><span class="p">]</span>
+                            <span class="s1">&#39;warning: &#39;</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="s1">&#39; too long&#39;</span><span class="p">]</span>
                         <span class="n">result</span><span class="p">[</span><span class="n">checker_name</span><span class="p">][</span><span class="s1">&#39;warning&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">metadata_part</span><span class="p">[</span><span class="mi">6</span><span class="p">]):</span>  <span class="c1"># len(metadata_part[6]) &gt; 0</span>
                 <span class="n">date_rdate</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>

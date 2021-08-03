@@ -40,5 +40,3 @@ The following json schema is used in :option:`pydabu.py create_data_bubble`
 as :file:`.dabu.schema` (bold attributes are required):
 
   .. jsonschema:: ../../src/dabu/schemas/dabu_requires.schema
-
-

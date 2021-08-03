@@ -105,6 +105,7 @@
 <span class="sd">    :param result: you can give a dict, where the results are appended</span>
 <span class="sd">                   or overridden</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># pylint: disable=too-many-branches</span>
     <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="n">file_names</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># only files in the actual directory</span>
@@ -114,7 +115,7 @@
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">samefile</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
                 <span class="n">file_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
-            <span class="n">dir_names</span> <span class="o">=</span> <span class="n">dirs</span>
+            <span class="n">dir_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dirs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
                 <span class="n">all_file_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span>
