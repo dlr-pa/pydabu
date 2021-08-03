@@ -9,6 +9,7 @@ tests the script: pydabu check_data_bubble
 
 import json
 import os.path
+import shutil
 import subprocess
 import tempfile
 
@@ -42,7 +43,6 @@ class MixinCheckDataBubble(DataPathClass):
         :Author: Daniel Mohr
         :Date: 2021-03-05
         """
-        import shutil
         with tempfile.TemporaryDirectory() as tmpdir:
             for filename in ['a.na', '.checksum.sha256', 'LICENSE.txt',
                              'README.md', 'test.nc', '.dabu.json',
@@ -105,7 +105,6 @@ class MixinCheckDataBubble(DataPathClass):
         of the script 'pydabu create_data_bubble' and
         'pydabu check_data_bubble'.
         """
-        import shutil
         with tempfile.TemporaryDirectory() as tmpdir:
             for filename in ['a.na', '.checksum.sha256', 'LICENSE.txt',
                              'README.md', 'test.nc']:

@@ -27,6 +27,7 @@ def run_data_bubble2jsonld(args):
 
     :param args: namespace return from ArgumentParser.parse_args
     """
+    # pylint: disable=too-many-branches,too-many-statements
     for path in args.directory:  # for every given directory
         check_arg_file(os.path.join(path, args.dabu_instance_file[0]))
         check_arg_file(os.path.join(path, args.dabu_schema_file[0]))
@@ -60,7 +61,7 @@ def run_data_bubble2jsonld(args):
         if not run_check_data_bubble(args):
             sys.stderr.write(
                 f'your data bubble at {path} is not valid. exit.\n')
-            exit()
+            sys.exit()
         sys.stderr.write(' ok\n')
         # create json-ld output:
         # create schema

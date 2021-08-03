@@ -7,6 +7,7 @@
 
 import distutils  # we need distutils for distutils.errors.DistutilsArgError
 import os
+import sys
 
 from setuptools import Command, setup
 
@@ -40,6 +41,7 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-18
         """
+        # pylint: disable=attribute-defined-outside-init
         self.src = 'installed'
         self.coverage = False
         self.pylint = False
@@ -51,14 +53,13 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        pass
 
     def run(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-07-30
         """
-        import sys
+        # pylint: disable=too-many-branches
         if self.src == 'installed':
             pass
         elif self.src == 'local':
@@ -70,11 +71,13 @@ class TestWithPytest(Command):
         sys.path.append(os.path.abspath('.'))
         # https://docs.pytest.org/en/stable/contents.html
         # https://pytest-cov.readthedocs.io/en/latest/
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import pytest
         pyargs = []
         if self.parallel:
             try:
                 # if available, using parallel test run
+                # pylint: disable=unused-variable
                 import xdist
                 if os.name == 'posix':
                     # since we are only running seconds,
@@ -86,7 +89,7 @@ class TestWithPytest(Command):
                 else:
                     nthreads = max(2, int(0.5 * os.cpu_count()))
                 pyargs += ['-n %i' % nthreads]
-            except Exception:
+            except (ModuleNotFoundError, ImportError):
                 pass
         if self.coverage:
             coverage_dir = 'coverage_report/'
@@ -144,6 +147,7 @@ class TestWithUnittest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
+        # pylint: disable=attribute-defined-outside-init
         self.src = 'installed'
 
     def finalize_options(self):
@@ -151,14 +155,12 @@ class TestWithUnittest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
-        pass
 
     def run(self):
         """
         :Author: Daniel Mohr
         :Date: 2021-06-21
         """
-        import sys
         if self.src == 'installed':
             pass
         elif self.src == 'local':
@@ -168,14 +170,16 @@ class TestWithUnittest(Command):
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import unittest
         suite = unittest.TestSuite()
         import pydabu_unittests
         pydabu_unittests.module(suite)
         setup_self = self
 
-        # pylint: disable=missing-docstring
         class TestRequiredModuleImport(unittest.TestCase):
+            # pylint: disable=missing-docstring
+            # pylint: disable=no-self-use
             def test_required_module_import(self):
                 import importlib
                 for module in setup_self.distribution.metadata.get_requires():
@@ -209,12 +213,23 @@ class CheckModules(Command):
     user_options = []
 
     def initialize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2027-01-08
+        """
 
     def finalize_options(self):
-        pass
+        """
+        :Author: Daniel Mohr
+        :Date: 2027-01-08
+        """
 
     def run(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2027-01-08
+        """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import importlib
         summary = ""
         i = 0

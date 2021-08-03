@@ -25,6 +25,7 @@ class ExtractHashFromChecksumFile():
 
     class to extract check checksums from a file
     """
+    # pylint: disable=too-few-public-methods
     # we allow here many hash functions, but better only use common ones,
     # e. g.: md5, sha256, sha512
     # (md5 is only acceptable for very small files!)
@@ -123,8 +124,7 @@ class ExtractHashFromChecksumFile():
                     hash_info[0] = hash_info[0].decode(encoding='utf-8')
                 hash_info = tuple(hash_info)
             return hash_info
-        else:
-            return None
+        return None
 
     def _determine_hash_encode(self, hash_string, hashfilename=None):
         """

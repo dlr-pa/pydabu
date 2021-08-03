@@ -20,7 +20,7 @@ def check_netcdf_file(file, output_format='human_readable'):
 
     :param file: file to analyse
     """
-    # pylint: disable=no-member
+    # pylint: disable=no-member,bad-option-value,import-outside-toplevel
     import cfchecker.cfchecks
     import netCDF4
     result = dict()

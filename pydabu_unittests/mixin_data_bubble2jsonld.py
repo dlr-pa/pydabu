@@ -12,9 +12,9 @@ Or you can run only one test from this file, e. g.::
 """
 
 import os.path
+import shutil
 import subprocess
 import tempfile
-
 
 try:
     from .data_path_class import DataPathClass
@@ -40,7 +40,6 @@ class MixinDataBubble2jsonld(DataPathClass):
 
           pytest-3 -s -k test_data_bubble2jsonld script_pydabu.py
         """
-        import shutil
         with tempfile.TemporaryDirectory() as tmpdir:
             for filename in ['a.na', '.checksum.sha256', '.dabu.json',
                              '.dabu.schema', 'LICENSE.txt', 'README.md',

@@ -16,6 +16,7 @@ env python3 dabu_scripts_pydabu_check_arg_file_not_exists.py \
   CheckArgFileNotExists.test_check_arg_file_not_exists
 """
 
+import argparse
 import os.path
 import tempfile
 import unittest
@@ -32,7 +33,7 @@ class CheckArgFileNotExists(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-03-05
         """
-        import argparse
+        # pylint: disable=bad-option-value,import-outside-toplevel
         from dabu.scripts.pydabu import check_arg_file_not_exists as cafne
         with tempfile.TemporaryDirectory() as tmpdir:
             # pylint: disable=unused-variable

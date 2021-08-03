@@ -18,6 +18,7 @@ env python3 script_json_schema_from_schema_org.py \
 
 import json
 import os.path
+import subprocess
 import tempfile
 import unittest
 
@@ -38,7 +39,6 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
 
         This test calls json_schema_from_schema_org dummy
         """
-        import subprocess
         cpi = subprocess.run(
             "json_schema_from_schema_org dummy",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -54,7 +54,6 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
 
         This test calls json_schema_from_schema_org dummy
         """
-        import subprocess
         cpi = subprocess.run(
             "json_schema_from_schema_org -cachefilename '' dummy",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -77,8 +76,10 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
         :Date: 2021-03-18
 
         This test calls json_schema_from_schema_org Person
+
+        env python3 script_json_schema_from_schema_org.py \
+          ScriptJsonSchemaFromSchemaOrg.test_person_1
         """
-        import subprocess
         cpi = subprocess.run(
             "json_schema_from_schema_org Person",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -142,7 +143,7 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
 
         This test calls json_schema_from_schema_org Person
         """
-        import subprocess
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu.compare_json_schemas
         cp1 = subprocess.run(
             "json_schema_from_schema_org Person",

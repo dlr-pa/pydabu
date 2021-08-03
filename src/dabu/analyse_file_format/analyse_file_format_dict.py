@@ -58,6 +58,7 @@ def analyse_file_format_dict(
             if checksum is not None:
                 resitem['checksum'] = checksum
         if file_extension.lower() == ".nc":  # NetCDF file
+            # pylint: disable=broad-except
             try:
                 resitem['netcdf check'] = check_netcdf_file(filename,
                                                             output_format)

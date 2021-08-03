@@ -18,9 +18,10 @@ def add_property_to_object(
     :Author: Daniel Mohr
     :Date: 2021-03-16
     """
+    # pylint: disable=too-many-arguments
     if "@id" not in domain_includes:
         raise NotImplementedError(json.dumps(item, indent=2))
-    elif domain_includes["@id"] == "schema:" + word:
+    if domain_includes["@id"] == "schema:" + word:
         if "@id" not in item:
             raise NotImplementedError(json.dumps(item, indent=2))
         prop_name = item["@id"].split('schema:')[1]  # e. g.: additionalName

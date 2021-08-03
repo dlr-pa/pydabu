@@ -7,6 +7,7 @@
 
 import json
 import os.path
+import sys
 import warnings
 
 import jsonschema
@@ -50,7 +51,7 @@ def run_check_data_bubble(args):
             jsonschema.Draft4Validator.check_schema(schema)
         except jsonschema.exceptions.SchemaError as msg:
             print(msg)
-            exit()
+            sys.exit()
         for err in sorted(validater.iter_errors(instance), key=str):
             if bool(err.path):
                 filenameoutput = ''
