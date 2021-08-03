@@ -31,6 +31,7 @@ def create_properties_schema2json(
     :Author: Daniel Mohr
     :Date: 2021-03-19
     """
+    # pylint: disable=too-many-branches
     value = "https://schema.org/" + word
     if prop_name not in properties:
         properties[prop_name] = dict()
@@ -121,6 +122,8 @@ def _get_property(item, data, properties, prop_name,
     :Author: Daniel Mohr
     :Date: 2021-03-19
     """
+    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-branches
     # schema.org datatypes to handle ("schema:DataType"):
     schema2json = {"Text": "string",
                    "Boolean": "boolean",
@@ -137,7 +140,7 @@ def _get_property(item, data, properties, prop_name,
         schema2json["URL"] = {
             "oneOf": [{"type": "string", "format": "uri"},
                       {"type": "string", "format": "uri-reference"}]}
-    if draft in ['draft-07', '2019-09']:
+    elif draft in ['draft-07', '2019-09']:
         schema2json["Date"] = {"type": "string", "format": "date"}
         schema2json["Time"] = {"type": "string", "format": "datetime"}
         schema2json["email"] = {

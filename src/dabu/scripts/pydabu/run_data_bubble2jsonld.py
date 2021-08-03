@@ -27,6 +27,8 @@ def run_data_bubble2jsonld(args):
 
     :param args: namespace return from ArgumentParser.parse_args
     """
+    # pylint: disable=too-many-branches
+    # pylint: disable=too-many-statements
     for path in args.directory:  # for every given directory
         check_arg_file(os.path.join(path, args.dabu_instance_file[0]))
         check_arg_file(os.path.join(path, args.dabu_schema_file[0]))

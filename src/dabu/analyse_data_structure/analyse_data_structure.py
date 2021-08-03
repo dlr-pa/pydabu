@@ -55,6 +55,7 @@ def analyse_data_structure(path_name='.', result=None):
     :param result: you can give a dict, where the results are appended
                    or overridden
     """
+    # pylint: disable=too-many-branches
     if result is None:
         result = dict()
     file_names = []  # only files in the actual directory
@@ -64,7 +65,7 @@ def analyse_data_structure(path_name='.', result=None):
         if os.path.samefile(dirpath, '.'):
             for file_name in filenames:
                 file_names.append(file_name)
-            dir_names = dirs
+            dir_names.append(dirs)
         else:
             for file_name in filenames:
                 all_file_names.append(os.path.join(dirpath, file_name))

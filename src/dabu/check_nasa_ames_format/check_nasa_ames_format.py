@@ -36,6 +36,9 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
 
     :param filename: file to analyse
     """
+    # pylint: disable=too-many-locals
+    # pylint: disable=too-many-branches
+    # pylint: disable=too-many-statements
     result = dict()
     checker_name = 'pydabu (nasa ames format check)'
     addresult = dict()
@@ -53,9 +56,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
         if isinstance(nlhead_ffi, list) and len(nlhead_ffi) == 2:
             # NLHEAD: Number of lines in file header
             # FFI: File format index
-            nlhead, ffi = nlhead_ffi
-            addresult['NLHEAD'] = int(nlhead)
-            addresult['FFI'] = int(ffi)
+            addresult['NLHEAD'], addresult['FFI'] = map(int, nlhead_ffi)
         else:
             result[checker_name]['log'] += [
                 'error: '
@@ -69,11 +70,11 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                     #       (between 1 and NVOL).
                     # NVOL: Total number of files belonging to the considered
                     #       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).
-                    ivol, nvol = ivol_nvol
-                    if ((int(nvol) >= 1) and
-                            (int(ivol) >= 1) and (int(ivol) <= int(nvol))):
-                        addresult['IVOL'] = int(ivol)
-                        addresult['NVOL'] = int(nvol)
+                    ivol, nvol = map(int, ivol_nvol)
+                    if ((nvol >= 1) and
+                            (ivol >= 1) and (ivol <= nvol)):
+                        addresult['IVOL'] = ivol
+                        addresult['NVOL'] = nvol
                     else:
                         result[checker_name]['log'] += [
                             'error: do not understand IVOL and NVOL']
@@ -121,7 +122,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                         addresult[tag] = metadata_part[pos].strip()
                     else:
                         result[checker_name]['log'] += [
-                            'warning: ' + tag + 'too long']
+                            'warning: ' + tag + ' too long']
                         result[checker_name]['warning'] += 1
             if bool(metadata_part[6]):  # len(metadata_part[6]) > 0
                 date_rdate = re.findall(

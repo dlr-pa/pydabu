@@ -41,6 +41,8 @@ def my_argument_parser():
     :Email: daniel.mohr@dlr.de
     :Date: 2021-07-01 (last change).
     """
+    # pylint: disable=too-many-locals
+    # pylint: disable=too-many-statements
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
     epilog += "e. g. in bash:\n\n"

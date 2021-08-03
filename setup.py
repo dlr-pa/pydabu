@@ -40,6 +40,7 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-18
         """
+        # pylint: disable=attribute-defined-outside-init
         self.src = 'installed'
         self.coverage = False
         self.pylint = False
@@ -58,6 +59,7 @@ class TestWithPytest(Command):
         :Author: Daniel Mohr
         :Date: 2021-07-30
         """
+        # pylint: disable=too-many-branches
         import sys
         if self.src == 'installed':
             pass
@@ -75,6 +77,7 @@ class TestWithPytest(Command):
         if self.parallel:
             try:
                 # if available, using parallel test run
+                # pylint: disable=unused-variable
                 import xdist
                 if os.name == 'posix':
                     # since we are only running seconds,
@@ -86,7 +89,7 @@ class TestWithPytest(Command):
                 else:
                     nthreads = max(2, int(0.5 * os.cpu_count()))
                 pyargs += ['-n %i' % nthreads]
-            except Exception:
+            except (ModuleNotFoundError, ImportError):
                 pass
         if self.coverage:
             coverage_dir = 'coverage_report/'
@@ -144,6 +147,7 @@ class TestWithUnittest(Command):
         :Author: Daniel Mohr
         :Date: 2021-02-04
         """
+        # pylint: disable=attribute-defined-outside-init
         self.src = 'installed'
 
     def finalize_options(self):
@@ -174,8 +178,9 @@ class TestWithUnittest(Command):
         pydabu_unittests.module(suite)
         setup_self = self
 
-        # pylint: disable=missing-docstring
         class TestRequiredModuleImport(unittest.TestCase):
+            # pylint: disable=missing-docstring
+            # pylint: disable=no-self-use
             def test_required_module_import(self):
                 import importlib
                 for module in setup_self.distribution.metadata.get_requires():
@@ -209,12 +214,24 @@ class CheckModules(Command):
     user_options = []
 
     def initialize_options(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2027-01-08
+        """
         pass
 
     def finalize_options(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2027-01-08
+        """
         pass
 
     def run(self):
+        """
+        :Author: Daniel Mohr
+        :Date: 2027-01-08
+        """
         import importlib
         summary = ""
         i = 0

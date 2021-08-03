@@ -38,6 +38,7 @@ def add_word(schemaorg_data, word):
              * missing words
              * json schema describing a json-ld for the given word
     """
+    # pylint: disable=too-many-branches
     missing_words = []
     schema = dict()
     data = get_graph_item(schemaorg_data, word)
