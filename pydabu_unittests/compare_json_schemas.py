@@ -34,6 +34,7 @@ class CompareJsonSchemas(unittest.TestCase):
         env python3 compare_json_schemas.py \
           CompareJsonSchemas.test_compare_list_as_set
         """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         from dabu.compare_json_schemas.compare_json_schemas \
             import compare_list_as_set, assertEqual
         compare_list_as_set([1, 2, 3], [3, 2, 1], comparefct=assertEqual)
@@ -53,6 +54,7 @@ class CompareJsonSchemas(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-03-10
         """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu.compare_json_schemas
         dabu.compare_json_schemas.compare_json_schemas(1, 1)
         with self.assertRaises(AssertionError):
@@ -64,6 +66,7 @@ class CompareJsonSchemas(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-03-10
         """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu.compare_json_schemas
         a = {'b': 2, 'a': 1}
         b = {'a': 1, 'b': 2}
@@ -82,6 +85,7 @@ class CompareJsonSchemas(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-03-10
         """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu.compare_json_schemas
         a = [1, 2]
         b = [2, 1]
@@ -93,6 +97,7 @@ class CompareJsonSchemas(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-03-10
         """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu.compare_json_schemas
         a = {'b': [1, 2], 'a': [{'d': 2, 'c': 1}, [3, 4]]}
         b = {'a': [[4, 3], {'c': 1, 'd': 2}], 'b': [2, 1]}

@@ -79,7 +79,6 @@ class ScriptPydabu(
     :Author: Daniel Mohr
     :Date: 2021-07-21
     """
-    pass
 
 
 if __name__ == '__main__':

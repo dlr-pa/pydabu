@@ -10,6 +10,7 @@ tests the script: pydabu create_data_bubble
 import json
 import os.path
 import pkgutil
+import shutil
 import subprocess
 import tempfile
 
@@ -78,7 +79,6 @@ class MixinCreateDataBubble(DataPathClass):
 
         env python3 script_pydabu.py ScriptPydabu.test_create_data_bubble_01
         """
-        import shutil
         with tempfile.TemporaryDirectory() as tmpdir:
             for filename in ['a.na', '.checksum.sha256', 'LICENSE.txt',
                              'README.md', 'test.nc']:

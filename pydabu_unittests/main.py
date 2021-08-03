@@ -18,6 +18,7 @@ Or you can run only one test, e. g.::
 """
 
 
+import subprocess
 import unittest
 
 
@@ -33,7 +34,8 @@ class TestModuleImport(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-03-04
         """
-        # pylint: disable=unused-variable
+        # pylint: disable=unused-variable,unused-import
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu
         import dabu.analyse_data_structure
         import dabu.check_nasa_ames_format
@@ -60,7 +62,6 @@ class TestScriptsExecutable(unittest.TestCase):
 
         env python3 main.py TestScriptsExecutable.test_script_pydabu_executable
         """
-        import subprocess
         cpi = subprocess.run(
             "pydabu",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -79,7 +80,6 @@ class TestScriptsExecutable(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-07-13
         """
-        import subprocess
         # check error output
         cpi = subprocess.run(
             "json_schema_from_schema_org",

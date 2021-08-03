@@ -7,7 +7,13 @@
 tests the package data of the module dabu
 """
 
+import json
+import os.path
+import pkgutil
+import sys
 import unittest
+
+import jsonschema
 
 
 class PackageData(unittest.TestCase):
@@ -22,8 +28,7 @@ class PackageData(unittest.TestCase):
         :Date: 2021-02-04
         """
         # pylint: disable=unused-variable
-        import os.path
-        import sys
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu
         for dataname in ['dabu.schema', 'dabu_requires.schema']:
             self.assertTrue(
@@ -39,9 +44,7 @@ class PackageData(unittest.TestCase):
         :Date: 2021-02-04
         """
         # pylint: disable=unused-variable
-        import json
-        import jsonschema
-        import pkgutil
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu
         for dataname in ['schemas/dabu.schema',
                          'schemas/dabu_requires.schema']:

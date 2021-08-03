@@ -69,8 +69,7 @@ def check_nasa_ames_format(filename, output_format='human_readable'):
                     # NVOL: Total number of files belonging to the considered
                     #       dataset (i.e. with same ONAME, ORG, SNAME, MNAME).
                     ivol, nvol = map(int, ivol_nvol)
-                    # if ((nvol >= 1) and (ivol >= 1) and (ivol <= nvol)):
-                    if ((ivol >= 1) and (ivol <= nvol)):
+                    if 1 <= ivol <= nvol:
                         addresult['IVOL'] = ivol
                         addresult['NVOL'] = nvol
                     else:

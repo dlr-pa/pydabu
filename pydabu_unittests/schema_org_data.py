@@ -30,6 +30,7 @@ class SchemaOrgDataAddProperty(unittest.TestCase):
         :Author: Daniel Mohr
         :Date: 2021-03-19
         """
+        # pylint: disable=bad-option-value,import-outside-toplevel
         import dabu.compare_json_schemas
         from dabu.schema_org_data.add_property import add_property
         adict = dict()
