@@ -23,9 +23,10 @@ if [ -d coverage_report ]; then
 fi
 
 (
-cd doc
-make html
-)
+    cd doc
+    make html
+) || exit 1
+
 rsp="--archive --one-file-system --links --hard-links --sparse --checksum"
 bhp="doc/build/html"
 dd="$d/test_coverage_report"
