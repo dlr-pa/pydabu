@@ -4,3 +4,12 @@
 # But at least the values here overwrite global and system-wide definitions.
 
 pydabu_unittests/data/** -text
+.coveragerc export-ignore
+create_* export-ignore
+.gitattributes export-ignore
+.github export-ignore
+.gitignore export-ignore
+.gitlab-ci.yml export-ignore
+install* export-ignore
+.pre-commit-config.yaml export-ignore
+uninstall export-ignore
