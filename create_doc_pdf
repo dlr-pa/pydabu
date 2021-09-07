@@ -12,6 +12,6 @@ if [ $skipcp != "true" ]; then
 fi
 
 (
-cd doc
-make latexpdf && make latexpdf && cp -p build/latex/pydabu.pdf ../manual_pydabu.pdf || exit $?
-)
+    cd doc
+    make latexpdf && make latexpdf && cp -p build/latex/pydabu.pdf ../manual_pydabu.pdf || exit $?
+) || exit 1
