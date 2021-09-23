@@ -215,19 +215,19 @@ class CheckModules(Command):
     def initialize_options(self):
         """
         :Author: Daniel Mohr
-        :Date: 2027-01-08
+        :Date: 2017-01-08
         """
 
     def finalize_options(self):
         """
         :Author: Daniel Mohr
-        :Date: 2027-01-08
+        :Date: 2017-01-08
         """
 
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2027-01-08
+        :Date: 2017-01-08
         """
         # pylint: disable=bad-option-value,import-outside-toplevel
         import importlib
