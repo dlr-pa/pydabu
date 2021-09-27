@@ -135,7 +135,7 @@ jobs:
         run: |
           echo "#!/bin/sh -l" > do_test
           echo "set -e -x" >> do_test
-          echo "DEBIAN_FRONTEND=noninteractive apt-get install -q -y lsb-release python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 libudunits2-0 python3-pytest python3-pytest-cov python3-pytest-xdist python3-sphinx python3-sphinx-argparse python3-recommonmark latexmk texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra" >> do_test
+          echo "DEBIAN_FRONTEND=noninteractive apt-get install -q -y lsb-release python3-setuptools python3-wheel python3-pip python3-jsonschema python3-netcdf4 libudunits2-0 python3-pytest python3-pytest-cov python3-pytest-xdist python3-sphinx python3-sphinx-argparse python3-recommonmark latexmk texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra" >> do_test
           echo "lsb_release -a" >> do_test
           echo "env python3 -V" >> do_test
           echo "pip3 install cfchecker sphinx-jsonschema" >> do_test
