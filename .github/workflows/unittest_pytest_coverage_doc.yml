@@ -370,6 +370,7 @@ jobs:
         branch: documentation
         folder: manual_pydabu_html
     - name: tag commit with latest
+      if: ${{ github.event.pull_request.merged }}
       uses: EndBug/latest-tag@latest
     - name: create source distribution
       run: env python3 setup.py sdist --formats=gztar,zip
