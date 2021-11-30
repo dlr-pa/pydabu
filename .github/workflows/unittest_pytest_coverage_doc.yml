@@ -55,6 +55,11 @@ jobs:
       run: sudo apt-get update
     - name: install dependencies (ubuntu packages)
       run: sudo apt-get install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 libudunits2-0
+    - name: fix for installing cfchecker
+      # due to https://github.com/Unidata/cftime/issues/261 we need:
+      run: |
+        sudo apt-get install python3-setuptools python3-pip python3-cryptography python3-wheel gcc python3-dev
+        pip3 install 'cython>0.26.1' 'numpy>1.13.3'
     - name: install dependencies (cfchecker via pip)
       run: pip3 install cfchecker
     - name: check all modules available
