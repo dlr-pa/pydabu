@@ -66,7 +66,6 @@ jobs:
         # netCDF4-1.5.8 would be installed, but failed on ubuntu-18.04
         # further on https://github.com/Unidata/netcdf4-python there is no
         # version 1.5.8 available ???
-        pip3 install netCDF4==
         pip3 install netCDF4==1.5.7
         pip3 install cfchecker
     - name: check all modules available
