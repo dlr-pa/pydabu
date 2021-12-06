@@ -61,7 +61,13 @@ jobs:
         sudo apt-get install python3-setuptools python3-pip python3-cryptography python3-wheel gcc python3-dev
         pip3 install 'cython>0.26.1' 'numpy>1.13.3'
     - name: install dependencies (cfchecker via pip)
-      run: pip3 install cfchecker
+      run:
+        # cfchecker needs netCDF4
+        # netCDF4-1.5.8 would be installed, but failed on ubuntu-18.04
+        # further on https://github.com/Unidata/netcdf4-python there is no
+        # version 1.5.8 available ???
+        pip3 install netCDF4==1.5.7
+        pip3 install cfchecker
     - name: check all modules available
       run: env python3 setup.py check_modules
     - name: install pydabu
