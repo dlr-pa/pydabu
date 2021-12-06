@@ -278,7 +278,7 @@ REQUIRED_MODULES += ['cfchecker.cfchecks', 'netCDF4']
 REQUIRED_MODULES += ['pkg_resources']
 # optional modules for python3 setup.py check_modules
 REQUIRED_MODULES += ['importlib']
-# optional modules for json_schema_from_schema_org.py
+# optional modules for json_schema_from_schema_org
 # REQUIRED_MODULES += ['bz2', 'gzip', 'lzma', 'ssl', 'urllib.request']
 # modules to build doc
 # REQUIRED_MODULES += ['sphinx', 'sphinxarg', 'recommonmark']

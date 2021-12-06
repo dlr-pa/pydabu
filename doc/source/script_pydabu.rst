@@ -1,9 +1,14 @@
-command line script: :program:`pydabu.py`
-=========================================
+.. index::
+   single: pydabu
+   single: script; pydabu
+   single: command line script; pydabu
 
-.. program:: pydabu.py
+command line script: :program:`pydabu`
+======================================
 
-:program:`pydabu.py` has a few subcommands:
+.. program:: pydabu
+
+:program:`pydabu` has a few subcommands:
 
 .. option:: analyse_data_structure
 
@@ -49,7 +54,7 @@ These commands are explained in more detail in the following (help output):
 .. argparse::
    :module: dabu.scripts.pydabu.pydabu_main
    :func: my_argument_parser
-   :prog: pydabu.py
+   :prog: pydabu
 
    analyse_data_structure : @before
        see also: :ref:`analyse_data_structure_output.schema`
