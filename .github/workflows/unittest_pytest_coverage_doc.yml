@@ -54,7 +54,7 @@ jobs:
     - name: apt-get update
       run: sudo apt-get update
     - name: install dependencies (ubuntu packages)
-      run: sudo apt-get install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 libudunits2-0
+      run: sudo apt-get install python3-setuptools python3-wheel python3-jsonschema python3-netcdf4 libudunits2-0 hdf5-tools
     - name: fix for installing cfchecker
       # due to https://github.com/Unidata/cftime/issues/261 we need:
       run: |
