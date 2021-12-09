@@ -6,8 +6,6 @@
 command line script: :program:`pydabu`
 ======================================
 
-.. program:: pydabu
-
 :program:`pydabu` has a few subcommands:
 
 .. option:: analyse_data_structure

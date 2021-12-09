@@ -6,8 +6,6 @@
 command line script: :program:`json_schema_from_schema_org`
 ===========================================================
 
-.. program:: json_schema_from_schema_org
-
 .. argparse::
    :module: dabu.scripts.json_schema_from_schema_org.argument_parser
    :func: argument_parser

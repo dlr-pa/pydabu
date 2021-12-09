@@ -1,28 +1,27 @@
 # README: pydabu -- Python Data Bubble
 
-
 ## intro
 
 'pydabu' is an acronym for Python Data Bubble.
 
 Your data is nothing more than a data bubble, until it is:
 
-  * described
-  * shared
-  * published
+* described
+* shared
+* published
 
 pydabu can help you to describe your data.
 
 You can find more information on the web:
 
-  * [source code of pydabu](https://gitlab.com/dlr-pa/pydabu)
-  * documentation of pydabu is linked there
-
+* [source code of pydabu](https://gitlab.com/dlr-pa/pydabu)
+* documentation of pydabu is linked there
 
 ## install
 
-See [INSTALL.txt](doc/source/INSTALL.txt) or [INSTALL: pydabu (web)](https://dlr-pa.github.io/pydabu/INSTALL.html) for full install manual. You can find a
-very short overview in the next lines.
+See [INSTALL.txt](doc/source/INSTALL.txt) or
+[INSTALL: pydabu (web)](https://dlr-pa.github.io/pydabu/INSTALL.html) for full
+install manual. You can find a very short overview in the next lines.
 
 pydabu needs some Python modules and you can also ask the installation
 routine/script for the required Python modules:
@@ -46,7 +45,6 @@ For older versions of pip you need to choose explicit a home install:
 
     pip3 install --user .
 
-
 ## copyright + license
 
 Author: Daniel Mohr.
@@ -55,7 +53,8 @@ Date: 2021-06-24 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
-Copyright (C) 2021 Daniel Mohr and Deutsches Zentrum fuer Luft- und Raumfahrt e. V., D-51170 Koeln
+Copyright (C) 2021 Daniel Mohr and
+Deutsches Zentrum fuer Luft- und Raumfahrt e. V., D-51170 Koeln
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License as
@@ -71,11 +70,9 @@ Copyright (C) 2021 Daniel Mohr and Deutsches Zentrum fuer Luft- und Raumfahrt e.
  GNU General Public License along with this program.
  If not, see <http://www.gnu.org/licenses/>.
 
-
 ### Contact Informations
 
-  * Daniel Mohr, daniel.mohr@dlr.de
-
+* Daniel Mohr, daniel.mohr@dlr.de
 
 ### Territory
 
