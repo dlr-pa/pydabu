@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-18
+:Date: 2021-12-09
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script json_schema_from_schema_org
@@ -24,11 +24,16 @@ import unittest
 
 import jsonschema
 
+try:
+    from .data_path_class import DataPathClass
+except (ModuleNotFoundError, ImportError):
+    from data_path_class import DataPathClass
 
-class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
+
+class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase, DataPathClass):
     """
     :Author: Daniel Mohr
-    :Date: 2021-03-18
+    :Date: 2021-12-09
     """
 
     # pylint: disable=no-self-use
@@ -42,7 +47,7 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
         cpi = subprocess.run(
             "json_schema_from_schema_org dummy",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
+            shell=True, timeout=self.subprocess_timeout, check=True)
         schema = json.loads(cpi.stdout)
         instance = dict()
         jsonschema.validate(instance, schema)
@@ -57,7 +62,7 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
         cpi = subprocess.run(
             "json_schema_from_schema_org -cachefilename '' dummy",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
+            shell=True, timeout=self.subprocess_timeout, check=True)
         schema = json.loads(cpi.stdout)
         instance = dict()
         jsonschema.validate(instance, schema)
@@ -66,7 +71,7 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
                 "json_schema_from_schema_org -cachefilename " +
                 os.path.join(tmpdir, 'foo') + " dummy",
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                shell=True, timeout=3, check=True)
+                shell=True, timeout=self.subprocess_timeout, check=True)
             schema = json.loads(cpi.stdout)
             jsonschema.validate(instance, schema)
 
@@ -83,7 +88,7 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
         cpi = subprocess.run(
             "json_schema_from_schema_org Person",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
+            shell=True, timeout=self.subprocess_timeout, check=True)
         schema = json.loads(cpi.stdout)
         instance = dict()
         instance["$schema"] = "http://json-schema.org/draft-04/schema#"
@@ -148,11 +153,11 @@ class ScriptJsonSchemaFromSchemaOrg(unittest.TestCase):
         cp1 = subprocess.run(
             "json_schema_from_schema_org Person",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
+            shell=True, timeout=self.subprocess_timeout, check=True)
         cp2 = subprocess.run(
             "json_schema_from_schema_org dummy Person",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
+            shell=True, timeout=self.subprocess_timeout, check=True)
         schema1 = json.loads(cp1.stdout)
         schema2 = json.loads(cp2.stdout)
         # To compare the 2 schemas we assume all lists as sets.
