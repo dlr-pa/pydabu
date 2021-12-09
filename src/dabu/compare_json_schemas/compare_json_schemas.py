@@ -58,14 +58,14 @@ def equal_list_as_set(a, b):
     return True
 
 
-def any_element_equal_list(e, l):
+def any_element_equal_list(e, mylist):
     """
     :Author: Daniel Mohr
     :Date: 2021-03-10
 
-    checks if any element of l is in e
+    checks if any element of mylist is in e
     """
-    for el in l:
+    for el in mylist:
         if isinstance(el, dict):
             if isinstance(e, dict) and dict_equal(e, el):
                 return True

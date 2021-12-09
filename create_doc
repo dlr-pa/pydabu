@@ -3,5 +3,7 @@ set -e
 cp -p README.md doc/source/ || exit $?
 # build all documentation formats in parallel
 ./create_doc_pdf skipcp &
+pid1=$!
 ./create_doc_html skipcp &
-wait -n
+pid2=$!
+wait $pid1 $pid2 && echo -e "\n+-------+\n| ready |\n+-------+"
