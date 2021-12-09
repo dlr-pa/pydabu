@@ -9,8 +9,6 @@ stages:
 
 pre-commit_alpine:
   stage: pre
-  rules:
-    - if: $false
   image:
     # https://hub.docker.com/_/alpine
     name: alpine:latest
@@ -24,8 +22,6 @@ pre-commit_alpine:
 
 pycodestyle_alpine:
   stage: pre
-  rules:
-    - if: $false
   image:
     # https://hub.docker.com/_/alpine
     name: alpine:latest
@@ -38,8 +34,6 @@ pycodestyle_alpine:
 
 pylint_debian:
   stage: pre
-  rules:
-    - if: $false
   image:
     # https://hub.docker.com/_/debian
     name: debian:latest
