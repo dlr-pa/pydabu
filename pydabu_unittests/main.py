@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-07-13
+:Date: 2021-12-09
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 aggregation of tests
@@ -20,6 +20,11 @@ Or you can run only one test, e. g.::
 
 import subprocess
 import unittest
+
+try:
+    from .data_path_class import DataPathClass
+except (ModuleNotFoundError, ImportError):
+    from data_path_class import DataPathClass
 
 
 class TestModuleImport(unittest.TestCase):
@@ -47,10 +52,10 @@ class TestModuleImport(unittest.TestCase):
         import dabu.scripts.json_schema_from_schema_org
 
 
-class TestScriptsExecutable(unittest.TestCase):
+class TestScriptsExecutable(unittest.TestCase, DataPathClass):
     """
     :Author: Daniel Mohr
-    :Date: 2021-07-13
+    :Date: 2021-12-09
 
     env python3 main.py TestScriptsExecutable
     """
@@ -65,7 +70,7 @@ class TestScriptsExecutable(unittest.TestCase):
         cpi = subprocess.run(
             "pydabu",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=True)
+            shell=True, timeout=self.subprocess_timeout, check=True)
         # check at least minimal help output
         self.assertTrue(len(cpi.stdout) >= 1111)
         # check begin of help output
@@ -84,7 +89,7 @@ class TestScriptsExecutable(unittest.TestCase):
         cpi = subprocess.run(
             "json_schema_from_schema_org",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=False)
+            shell=True, timeout=self.subprocess_timeout, check=False)
         with self.assertRaises(subprocess.CalledProcessError):
             # parameter is necessary
             cpi.check_returncode()
@@ -97,7 +102,7 @@ class TestScriptsExecutable(unittest.TestCase):
         cpi = subprocess.run(
             "json_schema_from_schema_org -h",
             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-            shell=True, timeout=3, check=False)
+            shell=True, timeout=self.subprocess_timeout, check=False)
         self.assertTrue(len(cpi.stdout) >= 1019)
         # check begin of help output
         self.assertTrue(
