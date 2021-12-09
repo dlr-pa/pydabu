@@ -15,7 +15,7 @@ pydabu can help you to describe your data.
 You can find more information on the web:
 
 * [source code of pydabu](https://gitlab.com/dlr-pa/pydabu)
-* documentation of pydabu is linked there
+* [documentation of pydabu](https://dlr-pa.gitlab.io/pydabu)
 
 ## install
 
