@@ -1,16 +1,32 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
-    -   id: check-added-large-files
-    -   id: check-ast
-    -   id: check-executables-have-shebangs
-    -   id: check-json
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: mixed-line-ending
-    -   id: trailing-whitespace
--   repo: https://github.com/shellcheck-py/shellcheck-py
+      # https://pre-commit.com/hooks.html
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.30.0
+    hooks:
+      - id: markdownlint
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.9.0
+    hooks:
+      - id: rst-backticks
+      - id: rst-directive-colons
+      - id: rst-inline-touching-normal
+  - repo: https://github.com/myint/rstcheck
+    rev: ''
+    hooks:
+    - id: rstcheck
+  - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.8.0.1
     hooks:
-    -   id: shellcheck
+      - id: shellcheck
