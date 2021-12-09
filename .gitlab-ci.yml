@@ -180,3 +180,20 @@ pages:
       - document_pdf.svg
       - pages.svg
       - public
+
+deploy_to_github:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  image:
+    # https://hub.docker.com/_/alpine
+    name: alpine:latest
+  script:
+    - date
+    - apk add --no-cache git openssh
+    - mkdir ~/.ssh && chmod 700 ~/.ssh
+    - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+    - mv $github_deploy_key ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+    - repopath=$(mktemp -d)
+    - git clone --mirror ${CI_REPOSITORY_URL} $repopath
+    - (cd $repopath && git push --prune --mirror git@github.com:dlr-pa/pydabu.git)
