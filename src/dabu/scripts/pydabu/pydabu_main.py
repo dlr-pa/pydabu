@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-22, 2021-07-01 (last change).
+:Date: 2021-03-22, 2021-07-01, 2021-12-06 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -39,18 +39,18 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-07-01 (last change).
+    :Date: 2021-12-06 (last change).
     """
     # pylint: disable=too-many-locals,too-many-statements
     epilog = ""
     epilog += "You can few the json output for example in firefox, "
     epilog += "e. g. in bash:\n\n"
     epilog += "  output=$(tempfile --suffix='.json'); "
-    epilog += "pydabu.py analyse_data_structure -output_format json > "
+    epilog += "pydabu analyse_data_structure -output_format json > "
     epilog += "$output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "  output=$(tempfile --suffix='.json'); "
-    epilog += "pydabu.py check_netcdf_file -f $(find . -iname '*.nc') "
+    epilog += "pydabu check_netcdf_file -f $(find . -iname '*.nc') "
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
@@ -58,7 +58,7 @@ def my_argument_parser():
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
-        description='pydabu.py is a script to check a data bubble.',
+        description='pydabu is a script to check a data bubble.',
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     # parent parser to describe common argument
@@ -163,7 +163,7 @@ def my_argument_parser():
     parser_analyse_data_structure = subparsers.add_parser(
         'analyse_data_structure',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py analyse_data_structure -h',
+        help='For more help: pydabu analyse_data_structure -h',
         description='',
         epilog='',
         parents=[common_parser1, common_parser2])
@@ -171,7 +171,7 @@ def my_argument_parser():
     # subparser check_nasa_ames_format
     description = 'This command checks a file in the nasa ames format.'
     epilog = 'Example:\n\n'
-    epilog += '  pydabu.py check_nasa_ames_format -f a.na > dabu_ames.json\n'
+    epilog += '  pydabu check_nasa_ames_format -f a.na > dabu_ames.json\n'
     epilog += '  jsonschema -i dabu_ames.json '
     epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
     epilog += '  jsonschema -i dabu_ames.json '
@@ -179,7 +179,7 @@ def my_argument_parser():
     parser_check_nasa_ames_format = subparsers.add_parser(
         'check_nasa_ames_format',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py check_nasa_ames_format -h',
+        help='For more help: pydabu check_nasa_ames_format -h',
         description=description,
         epilog=epilog,
         parents=[common_parser1, common_parser3])
@@ -189,7 +189,7 @@ def my_argument_parser():
     description += 'It uses the CF Checker: '
     description += 'https://github.com/cedadev/cf-checker'
     epilog = 'Example:\n\n'
-    epilog += '  pydabu.py check_netcdf_file -f a.nc > dabu_netcdf.json\n'
+    epilog += '  pydabu check_netcdf_file -f a.nc > dabu_netcdf.json\n'
     epilog += '  jsonschema -i dabu_netcdf.json '
     epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
     epilog += '  jsonschema -i dabu_netcdf.json '
@@ -197,7 +197,7 @@ def my_argument_parser():
     parser_check_netcdf_file = subparsers.add_parser(
         'check_netcdf_file',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py check_netcdf_file -h',
+        help='For more help: pydabu check_netcdf_file -h',
         description=description,
         epilog=epilog,
         parents=[common_parser1, common_parser3])
@@ -211,18 +211,18 @@ def my_argument_parser():
     description += 'For the file extension ".nc" the command '
     description += 'check_netcdf_file is used. '
     epilog = 'Examples:\n\n'
-    epilog += '  pydabu.py check_file_format -d . > dabu.json\n'
+    epilog += '  pydabu check_file_format -d . > dabu.json\n'
     epilog += '  jsonschema -i dabu.json '
     epilog += '~/lib/python/dabu/schemas/dabu.schema\n'
     epilog += '  jsonschema -i dabu.json '
     epilog += '~/lib/python/dabu/schemas/dabu_requires.schema\n\n'
-    epilog += '  pydabu.py check_file_format -skip_creating_checksums\n\n'
-    epilog += '  pydabu.py check_file_format '
+    epilog += '  pydabu check_file_format -skip_creating_checksums\n\n'
+    epilog += '  pydabu check_file_format '
     epilog += '-checksum_from_file .checksum.sha512'
     parser_check_file_format = subparsers.add_parser(
         'check_file_format',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py check_file_format -h',
+        help='For more help: pydabu check_file_format -h',
         description=description,
         epilog=epilog,
         parents=[common_parser1, common_parser2, common_parser5])
@@ -231,13 +231,13 @@ def my_argument_parser():
     description = 'This command read the given json file and writes it '
     description += 'in a common format to stdout.'
     epilog = 'Example:\n\n'
-    epilog += '  pydabu.py common_json_format -f .dabu.json\n\n'
-    epilog += '  pydabu.py common_json_format -f .dabu.json > foo\n'
+    epilog += '  pydabu common_json_format -f .dabu.json\n\n'
+    epilog += '  pydabu common_json_format -f .dabu.json > foo\n'
     epilog += '  mv foo .dabu.json\n'
     parser_common_json_format = subparsers.add_parser(
         'common_json_format',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py common_json_format -h',
+        help='For more help: pydabu common_json_format -h',
         description=description,
         epilog=epilog,
         parents=[common_parser3, common_parser4])
@@ -250,13 +250,13 @@ def my_argument_parser():
     description += 'Also the resulting files are not a data management plan, '
     description += 'you can enhance it to become one.'
     epilog = 'Example:\n\n'
-    epilog += '  pydabu.py create_data_bubble -d mydata\n\n'
-    epilog += '  pydabu.py create_data_bubble -dir .\n'
+    epilog += '  pydabu create_data_bubble -d mydata\n\n'
+    epilog += '  pydabu create_data_bubble -dir .\n'
     epilog += '  jsonschema -i .dabu.json .dabu.schema\n'
     parser_create_data_bubble = subparsers.add_parser(
         'create_data_bubble',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py create_data_bubble -h',
+        help='For more help: pydabu create_data_bubble -h',
         description=description,
         epilog=epilog,
         parents=[common_parser2_required, common_parser4, common_parser5])
@@ -286,17 +286,17 @@ def my_argument_parser():
     # subparser check_data_bubble
     description = 'This command checks a data bubble in the given directory. '
     description += 'The data bubble should be created with '
-    description += '"pydabu.py create_data_bubble" and manually enhanced. '
+    description += '"pydabu create_data_bubble" and manually enhanced. '
     description += 'Instead of this script you can also use your preferred '
     description += 'tool to check a json instance (e. g. .dabu.json) against '
     description += 'a json schema (e. g. .dabu.schema) -- see examples.'
     epilog = 'Examples:\n\n'
-    epilog += '  pydabu.py check_data_bubble -dir mydata\n\n'
+    epilog += '  pydabu check_data_bubble -dir mydata\n\n'
     epilog += '  cd mydata && jsonschema -i .dabu.json .dabu.schema\n\n'
     parser_check_data_bubble = subparsers.add_parser(
         'check_data_bubble',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py check_data_bubble -h',
+        help='For more help: pydabu check_data_bubble -h',
         description=description,
         epilog=epilog,
         parents=[common_parser2_required, common_parser6])
@@ -304,11 +304,11 @@ def my_argument_parser():
     # subparser listschemas
     description = 'This command lists the provided and used json schemas.'
     epilog = 'Examples:\n\n'
-    epilog += '  pydabu.py listschemas\n\n'
+    epilog += '  pydabu listschemas\n\n'
     parser_listschemas = subparsers.add_parser(
         'listschemas',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py listschemas -h',
+        help='For more help: pydabu listschemas -h',
         description=description,
         epilog=epilog)
     parser_listschemas.set_defaults(func=run_listschemas)
@@ -335,23 +335,23 @@ def my_argument_parser():
     description += 'If you are fine with these new files, you should delete '
     description += 'the old ones by youself.'
     epilog = 'Examples:\n\n'
-    epilog += '  pydabu.py data_bubble2jsonld -dir .\n\n'
-    epilog += '  pydabu.py data_bubble2jsonld -dir . -author "Daniel Mohr"\n\n'
-    epilog += '  pydabu.py data_bubble2jsonld -dir . -author \''
+    epilog += '  pydabu data_bubble2jsonld -dir .\n\n'
+    epilog += '  pydabu data_bubble2jsonld -dir . -author "Daniel Mohr"\n\n'
+    epilog += '  pydabu data_bubble2jsonld -dir . -author \''
     epilog += '{"name": "Daniel Mohr", "identifier": '
     epilog += '{"propertyID": "https://orcid.org/", "name": "ORCID", '
     epilog += '"value": "0000-0002-9382-6586", '
     epilog += '"url": "https://orcid.org/0000-0002-9382-6586"}}\'\n\n'
-    epilog += '  pydabu.py data_bubble2jsonld -dir . -author '
+    epilog += '  pydabu data_bubble2jsonld -dir . -author '
     epilog += '\'[{"name": "er"}, {"name": "sie"}, {"name": "es"}]\'\n\n'
     epilog += 'Example to check the result:\n\n'
-    epilog += '  pydabu.py check_data_bubble -dir . '
+    epilog += '  pydabu check_data_bubble -dir . '
     epilog += '-dabu_instance_file .dabu.json-ld '
     epilog += '-dabu_schema_file .dabu.json-ld.schema\n\n'
     parser_data_bubble2jsonld = subparsers.add_parser(
         'data_bubble2jsonld',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        help='For more help: pydabu.py data_bubble2jsonld -h',
+        help='For more help: pydabu data_bubble2jsonld -h',
         description=description,
         epilog=epilog,
         parents=[common_parser2_required, common_parser4, common_parser6])

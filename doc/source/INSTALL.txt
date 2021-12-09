@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-07-05
+:Version: 2021-12-06
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -226,8 +226,9 @@ You can find most necessary modules in the package management of Ubuntu 18.04, e
     sudo apt install python3-sphinx python3-sphinx-argparse python3-recommonmark
     sudo apt install python3-pytest python3-pytest-cov python3-pytest-xdist
 
-The command check_netcdf_file of pydabu.py needs the package cfchecker.cfchecks
-which is not in the package management. You can install it with pip, e. g.::
+The command check_netcdf_file of :program:`pydabu` needs the package
+cfchecker.cfchecks which is not in the package management.
+You can install it with pip, e. g.::
 
     pip3 install cfchecker
 
@@ -239,8 +240,9 @@ we use sphinx-jsonschema, e. g.::
 SuSE 15.3
 ---------
 
-The command check_netcdf_file of pydabu.py needs the package cfchecker.cfchecks
-which is not in the package management. You can install it with pip, e. g.::
+The command check_netcdf_file of :program:`pydabu` needs the package
+cfchecker.cfchecks which is not in the package management.
+You can install it with pip, e. g.::
 
     pip3 install --user cfchecker
 

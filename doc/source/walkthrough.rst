@@ -77,9 +77,9 @@ Or storing big data it could look like::
   signals.pdf
   twanrc_rf_trigger_AK06FZRP.log
 
-Now let us create some description with :option:`pydabu.py create_data_bubble`::
+Now let us create some description with :option:`pydabu create_data_bubble`::
 
-  pydabu.py create_data_bubble -dir .
+  pydabu create_data_bubble -dir .
 
 Two files ".dabu.json" and ".dabu.schema" are created as a draft for you.
 In ".dabu.schema" the json schema describes the structured data stored
@@ -105,9 +105,9 @@ You can check if your json instance is valid regarding the schema
 (e. g. for "pydabu" (from above) you will not get any output)::
 
   jsonschema -i .dabu.json .dabu.schema
-  pydabu.py check_data_bubble -dir .
+  pydabu check_data_bubble -dir .
 
-At the moment the command :option:`pydabu.py check_data_bubble` gives
+At the moment the command :option:`pydabu check_data_bubble` gives
 an overview of errors/warnings. Mainly you will see missing properties,
 which are required.
 
@@ -122,7 +122,7 @@ take a while) and recreate the data bubble::
 
   $ pfu.py create_checksum -dir . -store single
   $ rm .dabu.json .dabu.schema
-  $ pydabu.py create_data_bubble -dir .
+  $ pydabu create_data_bubble -dir .
   $ jsonschema -i .dabu.json .dabu.schema
   ...
   u'license' is a required property
@@ -134,7 +134,7 @@ Now you have to add a license, e. g. write a file "LICENSE.txt"::
   $ rm .checksum.sha512 .dabu.json .dabu.schema
   $ vim LICENSE.txt
   $ pfu.py create_checksum -directory . -store single
-  $ pydabu.py create_data_bubble -dir .
+  $ pydabu create_data_bubble -dir .
   $ jsonschema -i .dabu.json .dabu.schema
 
 And all necessary (depends on ".dabu.schema") metadata is collected in

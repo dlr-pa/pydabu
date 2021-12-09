@@ -3,7 +3,7 @@
 ===============================================
    :synopsis: :mod:`dabu.scripts.pydabu.json_schema_from_schema_org` is a
               python module to store the code for the script
-              json_schema_from_schema_org.py.
+              :program:`json_schema_from_schema_org.`
 
 .. moduleauthor:: Daniel Mohr
 .. contents::
@@ -17,7 +17,7 @@ copyright + license
 ===================
 Author: Daniel Mohr
 
-Date: 2021-03-04 (last change).
+Date: 2021-03-04, 2021-12-06 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 

@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-23, 2021-07-29 (last change).
+:Date: 2021-03-23, 2021-07-29, 2021-12-06 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -23,7 +23,7 @@ def run_data_bubble2jsonld(args):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-23 (last change).
+    :Date: 2021-12-06 (last change).
 
     :param args: namespace return from ArgumentParser.parse_args
     """
@@ -53,7 +53,7 @@ def run_data_bubble2jsonld(args):
         jsonschema.Draft4Validator(schema)
         # call run_check_data_bubble:
         sys.stderr.write(
-            f'run: pydabu.py check_data_bubble -directory {path}\n')
+            f'run: pydabu check_data_bubble -directory {path}\n')
         check_data_bubble_args = types.SimpleNamespace()
         check_data_bubble_args.directory = [path]
         check_data_bubble_args.dabu_instance_file = args.dabu_instance_file

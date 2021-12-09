@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-09, 2021-07-01 (last change).
+:Date: 2021-03-09, 2021-07-01, 2021-12-06 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -16,14 +16,14 @@ def argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-07-01 (last change).
+    :Date: 2021-12-06 (last change).
     """
     epilog = ""
     epilog += "Author: Daniel Mohr\n"
     epilog += "Date: 2021-07-01\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
-    description = 'json_schema_from_schema_org.py is a script ' \
+    description = 'json_schema_from_schema_org is a script ' \
         'to define json-ld based on schema.org as a json schema.'
     parser = argparse.ArgumentParser(
         description=description,
