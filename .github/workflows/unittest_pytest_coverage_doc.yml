@@ -294,7 +294,7 @@ jobs:
   deploy_pages_create_source_distribution:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
     runs-on: ubuntu-latest
-    needs: [ubuntu-1804_test_doc, ubuntu-2004_test_doc, i386_debian_latest_test, amd64_opensuse_leap_153_test, macos-1015_test, macos-11_test, windows-2016_test, windows-2019_test]
+    needs: [ubuntu-1804_test_doc, ubuntu-2004_test_doc, i386_debian_latest_test, amd64_opensuse_leap_153_test, macos_test, windows_test]
     steps:
     - uses: actions/checkout@v2
     - name: apt-get update
