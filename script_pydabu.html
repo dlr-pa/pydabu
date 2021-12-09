@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>command line script: pydabu.py &#8212; pydabu 2021-03-05 documentation</title>
+    <title>command line script: pydabu &#8212; pydabu 2021-03-05 documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -19,7 +19,7 @@
           href="_static/opensearch.xml"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="command line script: json_schema_from_schema_org.py" href="script_json_schema_from_schema_org.html" />
+    <link rel="next" title="command line script: json_schema_from_schema_org" href="script_json_schema_from_schema_org.html" />
     <link rel="prev" title="walk-through pydabu" href="walkthrough.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -32,7 +32,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="script_json_schema_from_schema_org.html" title="command line script: json_schema_from_schema_org.py"
+          <a href="script_json_schema_from_schema_org.html" title="command line script: json_schema_from_schema_org"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="walkthrough.html" title="walk-through pydabu"
@@ -46,71 +46,71 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="command-line-script-pydabu-py">
-<h1>command line script: <strong class="program">pydabu.py</strong><a class="headerlink" href="#command-line-script-pydabu-py" title="Permalink to this headline">¶</a></h1>
-<p><strong class="program">pydabu.py</strong> has a few subcommands:</p>
+  <div class="section" id="command-line-script-pydabu">
+<span id="index-0"></span><h1>command line script: <strong class="program">pydabu</strong><a class="headerlink" href="#command-line-script-pydabu" title="Permalink to this headline">¶</a></h1>
+<p><strong class="program">pydabu</strong> has a few subcommands:</p>
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-analyse-data-structure">
-<code class="descname">analyse_data_structure</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-analyse-data-structure" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-analyse-data-structure">
+<code class="descname">analyse_data_structure</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-analyse-data-structure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Analyse the data stucture of a directory tree.</p>
 </dd></dl>
 
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-check-nasa-ames-format">
-<code class="descname">check_nasa_ames_format</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-check-nasa-ames-format" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-check-nasa-ames-format">
+<code class="descname">check_nasa_ames_format</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-check-nasa-ames-format" title="Permalink to this definition">¶</a></dt>
 <dd><p>This command checks a file in the nasa ames format.</p>
 </dd></dl>
 
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-check-netcdf-file">
-<code class="descname">check_netcdf_file</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-check-netcdf-file" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-check-netcdf-file">
+<code class="descname">check_netcdf_file</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-check-netcdf-file" title="Permalink to this definition">¶</a></dt>
 <dd><p>This command checks a file in the format netCDF.
 It uses the CF Checker: <a class="reference external" href="https://github.com/cedadev/cf-checker">https://github.com/cedadev/cf-checker</a></p>
 </dd></dl>
 
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-check-file-format">
-<code class="descname">check_file_format</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-check-file-format" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-check-file-format">
+<code class="descname">check_file_format</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-check-file-format" title="Permalink to this definition">¶</a></dt>
 <dd><p>This command checks the file formats in a directory tree.</p>
 </dd></dl>
 
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-common-json-format">
-<code class="descname">common_json_format</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-common-json-format" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-common-json-format">
+<code class="descname">common_json_format</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-common-json-format" title="Permalink to this definition">¶</a></dt>
 <dd><p>This command read the given json file and writes it in a common format to
 stdout.</p>
 </dd></dl>
 
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-create-data-bubble">
-<code class="descname">create_data_bubble</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-create-data-bubble" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-create-data-bubble">
+<code class="descname">create_data_bubble</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-create-data-bubble" title="Permalink to this definition">¶</a></dt>
 <dd><p>This command creates a data bubble in the give directory.</p>
 </dd></dl>
 
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-check-data-bubble">
-<code class="descname">check_data_bubble</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-check-data-bubble" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-check-data-bubble">
+<code class="descname">check_data_bubble</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-check-data-bubble" title="Permalink to this definition">¶</a></dt>
 <dd><p>This command checks a data bubble in the given directory.</p>
 </dd></dl>
 
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-listschemas">
-<code class="descname">listschemas</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-listschemas" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-listschemas">
+<code class="descname">listschemas</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-listschemas" title="Permalink to this definition">¶</a></dt>
 <dd><p>This command lists the provided and used json schemas.</p>
 </dd></dl>
 
 <dl class="option">
-<dt id="cmdoption-pydabu-py-arg-data-bubble2jsonld">
-<code class="descname">data_bubble2jsonld</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-py-arg-data-bubble2jsonld" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-pydabu-arg-data-bubble2jsonld">
+<code class="descname">data_bubble2jsonld</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-pydabu-arg-data-bubble2jsonld" title="Permalink to this definition">¶</a></dt>
 <dd><p>This command reads the data bubble (.dabu.json and .dabu.schema) and
 creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 </dd></dl>
 
 <p>These commands are explained in more detail in the following (help output):</p>
-<p>pydabu.py is a script to check a data bubble.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
-                 <span class="p">{</span><span class="n">analyse_data_structure</span><span class="p">,</span><span class="n">check_nasa_ames_format</span><span class="p">,</span><span class="n">check_netcdf_file</span><span class="p">,</span><span class="n">check_file_format</span><span class="p">,</span><span class="n">common_json_format</span><span class="p">,</span><span class="n">create_data_bubble</span><span class="p">,</span><span class="n">check_data_bubble</span><span class="p">,</span><span class="n">listschemas</span><span class="p">,</span><span class="n">data_bubble2jsonld</span><span class="p">}</span>
-                 <span class="o">...</span>
+<p>pydabu is a script to check a data bubble.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">pydabu</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
+              <span class="p">{</span><span class="n">analyse_data_structure</span><span class="p">,</span><span class="n">check_nasa_ames_format</span><span class="p">,</span><span class="n">check_netcdf_file</span><span class="p">,</span><span class="n">check_file_format</span><span class="p">,</span><span class="n">common_json_format</span><span class="p">,</span><span class="n">create_data_bubble</span><span class="p">,</span><span class="n">check_data_bubble</span><span class="p">,</span><span class="n">listschemas</span><span class="p">,</span><span class="n">data_bubble2jsonld</span><span class="p">}</span>
+              <span class="o">...</span>
 </pre></div>
 </div>
 <div class="section" id="Positional Arguments">
@@ -132,9 +132,8 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 <div class="section" id="analyse_data_structure">
 <h3>analyse_data_structure<a class="headerlink" href="#analyse_data_structure" title="Permalink to this headline">¶</a></h3>
 <p>see also: analyse_data_structure_output.schema</p>
-<p>For more help: pydabu.py analyse_data_structure -h</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">analyse_data_structure</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span>
-                                 <span class="p">[</span><span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]]</span>
+<p>For more help: pydabu analyse_data_structure -h</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">analyse_data_structure</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments">
@@ -161,7 +160,7 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 <div class="section" id="check_nasa_ames_format">
 <h3>check_nasa_ames_format<a class="headerlink" href="#check_nasa_ames_format" title="Permalink to this headline">¶</a></h3>
 <p>This command checks a file in the nasa ames format.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">check_nasa_ames_format</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span> <span class="o">-</span><span class="n">file</span> <span class="n">f</span> <span class="p">[</span><span class="n">f</span> <span class="o">...</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">check_nasa_ames_format</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span> <span class="o">-</span><span class="n">file</span> <span class="n">f</span> <span class="p">[</span><span class="n">f</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments_repeat1">
@@ -186,7 +185,7 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 <div class="section" id="check_netcdf_file">
 <h3>check_netcdf_file<a class="headerlink" href="#check_netcdf_file" title="Permalink to this headline">¶</a></h3>
 <p>This command checks a file in the format netCDF. It uses the CF Checker: <a class="reference external" href="https://github.com/cedadev/cf-checker">https://github.com/cedadev/cf-checker</a></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">check_netcdf_file</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span> <span class="o">-</span><span class="n">file</span> <span class="n">f</span> <span class="p">[</span><span class="n">f</span> <span class="o">...</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">check_netcdf_file</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span> <span class="o">-</span><span class="n">file</span> <span class="n">f</span> <span class="p">[</span><span class="n">f</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments_repeat2">
@@ -212,8 +211,8 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 <h3>check_file_format<a class="headerlink" href="#check_file_format" title="Permalink to this headline">¶</a></h3>
 <p>see also: dabu.schema</p>
 <p>This command checks the file formats. In a first step the data structure is analysed like the command “analyse_data_structure” does. Each file is checked by a tool choosen by the file extension. For the file extension “.nc” the command check_netcdf_file is used.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">check_file_format</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]]</span>
-                            <span class="p">[</span><span class="o">-</span><span class="n">skip_creating_checksums</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">checksum_from_file</span> <span class="n">f</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">check_file_format</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]]</span>
+                         <span class="p">[</span><span class="o">-</span><span class="n">skip_creating_checksums</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">checksum_from_file</span> <span class="n">f</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments_repeat3">
@@ -250,7 +249,7 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 <div class="section" id="common_json_format">
 <h3>common_json_format<a class="headerlink" href="#common_json_format" title="Permalink to this headline">¶</a></h3>
 <p>This command read the given json file and writes it in a common format to stdout.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">common_json_format</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">file</span> <span class="n">f</span> <span class="p">[</span><span class="n">f</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">indent</span> <span class="n">i</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">common_json_format</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">file</span> <span class="n">f</span> <span class="p">[</span><span class="n">f</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">indent</span> <span class="n">i</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments_repeat4">
@@ -275,10 +274,9 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 <h3>create_data_bubble<a class="headerlink" href="#create_data_bubble" title="Permalink to this headline">¶</a></h3>
 <p>see also: dabu.schema and dabu_requires.schema</p>
 <p>This command creates a data bubble in the give directory. The data is generated with the command “check_file_format” from the data in the directory. Also the resulting files are not a data management plan, you can enhance it to become one.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">create_data_bubble</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">indent</span> <span class="n">i</span><span class="p">]</span>
-                             <span class="p">[</span><span class="o">-</span><span class="n">skip_creating_checksums</span><span class="p">]</span>
-                             <span class="p">[</span><span class="o">-</span><span class="n">checksum_from_file</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">dabu_instance_file</span> <span class="n">f</span><span class="p">]</span>
-                             <span class="p">[</span><span class="o">-</span><span class="n">dabu_schema_file</span> <span class="n">f</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">create_data_bubble</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">indent</span> <span class="n">i</span><span class="p">]</span>
+                          <span class="p">[</span><span class="o">-</span><span class="n">skip_creating_checksums</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">checksum_from_file</span> <span class="n">f</span><span class="p">]</span>
+                          <span class="p">[</span><span class="o">-</span><span class="n">dabu_instance_file</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">dabu_schema_file</span> <span class="n">f</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments_repeat5">
@@ -323,9 +321,9 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 </div>
 <div class="section" id="check_data_bubble">
 <h3>check_data_bubble<a class="headerlink" href="#check_data_bubble" title="Permalink to this headline">¶</a></h3>
-<p>This command checks a data bubble in the given directory. The data bubble should be created with “pydabu.py create_data_bubble” and manually enhanced. Instead of this script you can also use your preferred tool to check a json instance (e. g. .dabu.json) against a json schema (e. g. .dabu.schema) – see examples.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">check_data_bubble</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">dabu_instance_file</span> <span class="n">f</span><span class="p">]</span>
-                            <span class="p">[</span><span class="o">-</span><span class="n">dabu_schema_file</span> <span class="n">f</span><span class="p">]</span>
+<p>This command checks a data bubble in the given directory. The data bubble should be created with “pydabu create_data_bubble” and manually enhanced. Instead of this script you can also use your preferred tool to check a json instance (e. g. .dabu.json) against a json schema (e. g. .dabu.schema) – see examples.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">check_data_bubble</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">dabu_instance_file</span> <span class="n">f</span><span class="p">]</span>
+                         <span class="p">[</span><span class="o">-</span><span class="n">dabu_schema_file</span> <span class="n">f</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments_repeat6">
@@ -357,7 +355,7 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 <h3>listschemas<a class="headerlink" href="#listschemas" title="Permalink to this headline">¶</a></h3>
 <p>see also: Provided and used json schemas</p>
 <p>This command lists the provided and used json schemas.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">listschemas</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">listschemas</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">output_format</span> <span class="n">f</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments_repeat7">
@@ -379,11 +377,11 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 <div class="section" id="data_bubble2jsonld">
 <h3>data_bubble2jsonld<a class="headerlink" href="#data_bubble2jsonld" title="Permalink to this headline">¶</a></h3>
 <p>This command reads the data bubble (.dabu.json and .dabu.schema) and creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema). If you are fine with these new files, you should delete the old ones by youself.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span><span class="o">.</span><span class="n">py</span> <span class="n">data_bubble2jsonld</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">indent</span> <span class="n">i</span><span class="p">]</span>
-                             <span class="p">[</span><span class="o">-</span><span class="n">dabu_instance_file</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">dabu_schema_file</span> <span class="n">f</span><span class="p">]</span>
-                             <span class="p">[</span><span class="o">-</span><span class="n">dabu_jsonld_instance_file</span> <span class="n">f</span><span class="p">]</span>
-                             <span class="p">[</span><span class="o">-</span><span class="n">dabu_jsonld_schema_file</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">vocabulary</span> <span class="n">v</span><span class="p">]</span>
-                             <span class="p">[</span><span class="o">-</span><span class="n">cachefilename</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">cachefilepath</span> <span class="n">p</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">author</span> <span class="n">p</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydabu</span> <span class="n">data_bubble2jsonld</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">-</span><span class="n">directory</span> <span class="n">d</span> <span class="p">[</span><span class="n">d</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">indent</span> <span class="n">i</span><span class="p">]</span>
+                          <span class="p">[</span><span class="o">-</span><span class="n">dabu_instance_file</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">dabu_schema_file</span> <span class="n">f</span><span class="p">]</span>
+                          <span class="p">[</span><span class="o">-</span><span class="n">dabu_jsonld_instance_file</span> <span class="n">f</span><span class="p">]</span>
+                          <span class="p">[</span><span class="o">-</span><span class="n">dabu_jsonld_schema_file</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">vocabulary</span> <span class="n">v</span><span class="p">]</span>
+                          <span class="p">[</span><span class="o">-</span><span class="n">cachefilename</span> <span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">cachefilepath</span> <span class="n">p</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">author</span> <span class="n">p</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="section" id="Named Arguments_repeat8">
@@ -450,8 +448,8 @@ creates a json-ld data bubble (.dabu.json-ld and .dabu.json-ld.schema).</p>
 </div>
 <p><p>You can few the json output for example in firefox, e. g. in bash:</p>
 <blockquote>
-<div><p>output=$(tempfile –suffix=’.json’); pydabu.py analyse_data_structure -output_format json &gt; $output &amp;&amp; firefox $output; sleep 3; rm $output</p>
-<p>output=$(tempfile –suffix=’.json’); pydabu.py check_netcdf_file -f $(find . -iname ‘<a href="#id1"><span class="problematic" id="id2">*</span></a>.nc’) -output_format json &gt; $output &amp;&amp; firefox $output; sleep 3; rm $output</p>
+<div><p>output=$(tempfile –suffix=’.json’); pydabu analyse_data_structure -output_format json &gt; $output &amp;&amp; firefox $output; sleep 3; rm $output</p>
+<p>output=$(tempfile –suffix=’.json’); pydabu check_netcdf_file -f $(find . -iname ‘<a href="#id1"><span class="problematic" id="id2">*</span></a>.nc’) -output_format json &gt; $output &amp;&amp; firefox $output; sleep 3; rm $output</p>
 </div></blockquote>
 <p>Author: Daniel Mohr
 Date: 2021-07-01
@@ -470,18 +468,18 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
                         title="previous chapter">walk-through pydabu</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="script_json_schema_from_schema_org.html"
-                        title="next chapter">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></p>
+                        title="next chapter">command line script: <strong class="program">json_schema_from_schema_org</strong></a></p>
 <h3><a href="index.html">Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="README.html">README: pydabu – Python Data Bubble</a></li>
 <li class="toctree-l1"><a class="reference internal" href="INSTALL.html">INSTALL: pydabu – Python data bubble</a></li>
 <li class="toctree-l1"><a class="reference internal" href="walkthrough.html">walk-through pydabu</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">command line script: <strong class="program">pydabu.py</strong></a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">command line script: <strong class="program">pydabu</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Positional Arguments">Positional Arguments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Sub-commands:">Sub-commands:</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org.py</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="script_json_schema_from_schema_org.html">command line script: <strong class="program">json_schema_from_schema_org</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="schemas.html">Provided and used json schemas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_dabu.html">python module: <code class="docutils literal notranslate"><span class="pre">dabu</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="test_coverage_report/index.html">test coverage report</a></li>
@@ -521,7 +519,7 @@ License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="script_json_schema_from_schema_org.html" title="command line script: json_schema_from_schema_org.py"
+          <a href="script_json_schema_from_schema_org.html" title="command line script: json_schema_from_schema_org"
              >next</a> |</li>
         <li class="right" >
           <a href="walkthrough.html" title="walk-through pydabu"
