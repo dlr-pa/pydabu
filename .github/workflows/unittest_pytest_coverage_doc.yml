@@ -43,6 +43,8 @@ jobs:
 
   ubuntu-1804_test_doc:
     # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
+    # drop support for ubuntu-18.04
+    continue-on-error: true
     runs-on: ubuntu-18.04
     needs: [pep8_check, pre-commit]
     steps:
