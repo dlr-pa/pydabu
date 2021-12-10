@@ -192,11 +192,9 @@ pages:
       - public
 
 deploy_to_github:
-  rules:
-    - if: $false
   stage: deploy
-  #rules:
-  #  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   image:
     # https://hub.docker.com/_/alpine
     name: alpine:latest
