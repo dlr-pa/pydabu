@@ -13,10 +13,10 @@ include doc/source/walkthrough.rst
 include install2home
 include LICENSE.txt
 include manual_pydabu.pdf
-include pydabu_unittests/data/data_bubble/00/*
-include pydabu_unittests/data/data_bubble/01/*
-include pydabu_unittests/data/data_bubble/02/*
-include pydabu_unittests/data/data_bubble/03/*
-include pydabu_unittests/data/data_bubble/04/*
-include pydabu_unittests/*.py
+include tests/data/data_bubble/00/*
+include tests/data/data_bubble/01/*
+include tests/data/data_bubble/02/*
+include tests/data/data_bubble/03/*
+include tests/data/data_bubble/04/*
+include tests/*.py
 include README.md

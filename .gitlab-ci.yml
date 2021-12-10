@@ -157,6 +157,22 @@ ubuntu-2004_test_doc:
     # build doc
     - ./create_doc
 
+i386_debian_latest_test:
+  stage: build_test
+  image:
+    # https://hub.docker.com/_/debian
+    name: i386/debian:latest
+  script:
+    - tests/docker_test_scripts/do_test_i386-debian-latest
+
+opensuse_leap_153_test:
+  stage: build_test
+  image:
+    # https://hub.docker.com/r/opensuse/leap
+    name: opensuse/leap:15.3
+  script:
+    - tests/docker_test_scripts/do_test_opensuse_leap-15.3
+
 pages:
   stage: deploy
   image:
@@ -176,9 +192,11 @@ pages:
       - public
 
 deploy_to_github:
-  stage: deploy
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $false
+  stage: deploy
+  #rules:
+  #  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   image:
     # https://hub.docker.com/_/alpine
     name: alpine:latest

@@ -3,7 +3,7 @@
 # can therefore overwrite the values here.
 # But at least the values here overwrite global and system-wide definitions.
 
-pydabu_unittests/data/** -text
+tests/data/** -text
 .coveragerc export-ignore
 create_* export-ignore
 .gitattributes export-ignore
