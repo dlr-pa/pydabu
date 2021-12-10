@@ -192,8 +192,6 @@ pages:
       - public
 
 deploy_to_github:
-  rules:
-    - if: $false
   stage: deploy
   #rules:
   #  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
