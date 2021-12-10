@@ -291,10 +291,10 @@ REQUIRED_MODULES += ['importlib']
 # optional modules to run tests with pytest and create coverage report
 # REQUIRED_MODULES += ['pytest_cov']
 
-long_description_filename = 'README.md'
+LONG_DESCRIPTION_FILENAME = 'README.md'
 if os.path.isfile('README.rst'):
-    long_description_filename = 'README.rst'
-with open(long_description_filename) as file:
+    LONG_DESCRIPTION_FILENAME = 'README.rst'
+with open(LONG_DESCRIPTION_FILENAME) as file:
     long_description = file.read()
 
 setup(
