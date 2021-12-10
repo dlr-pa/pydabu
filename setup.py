@@ -291,6 +291,12 @@ REQUIRED_MODULES += ['importlib']
 # optional modules to run tests with pytest and create coverage report
 # REQUIRED_MODULES += ['pytest_cov']
 
+long_description_filename = 'README.md'
+if os.path.isfile('README.rst'):
+    long_description_filename = 'README.rst'
+with open(long_description_filename) as file:
+    long_description = file.read()
+
 setup(
     name='pydabu',
     version='2021.12.10',
@@ -299,14 +305,14 @@ setup(
         'run_unittest': TestWithUnittest,
         'run_pytest': TestWithPytest},
     description='software to check a data bubble.',
-    long_description='',
+    long_description=long_description,
     keywords=['data managment', 'metadata', 'data management plan'],
     author='Daniel Mohr',
     author_email='daniel.mohr@dlr.de',
     maintainer='Daniel Mohr',
     maintainer_email='daniel.mohr@dlr.de',
-    url='',
-    download_url='',
+    url='https://dlr-pa.gitlab.io/pydabu/',
+    download_url='https://gitlab.com/dlr-pa/pydabu',
     package_dir={'': 'src'},
     packages=[
         'dabu',
