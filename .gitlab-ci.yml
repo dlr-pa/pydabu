@@ -84,6 +84,14 @@ build_pages:
       - pages.svg
       - public
 
+check_source_distribution:
+  stage: build_test
+  image:
+    # https://hub.docker.com/_/ubuntu
+    name: ubuntu:20.04
+  script:
+    - tests/docker_test_scripts/do_test_check_source_distribution
+
 ubuntu-1804_test_doc:
   stage: build_test
   image:
