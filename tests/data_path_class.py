@@ -17,7 +17,7 @@ class DataPathClass():
     :Date: 2021-07-30
     """
     try:
-        datapath = sys.modules['pydabu_unittests'].__file__
+        datapath = sys.modules['tests'].__file__
     except KeyError:
         datapath = ''
     test_dir_path = []

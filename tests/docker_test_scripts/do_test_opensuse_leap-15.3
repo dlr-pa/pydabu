@@ -1,0 +1,39 @@
+#!/bin/sh -l
+set -e -x
+date
+
+echo "#######################"
+
+zypper refresh
+zypper --non-interactive install lsb-release python3 python3-jsonschema python3-pip python3-setuptools python3-wheel udunits2-devel which
+
+echo "#######################"
+
+uname -a
+lsb_release -a
+lscpu
+env python3 -V
+cat /etc/os-release
+
+echo "#######################"
+
+pip3 install netCDF4 cfchecker
+env python3 setup.py check_modules
+pip3 install .
+
+echo "#######################"
+
+which pydabu
+pydabu
+which json_schema_from_schema_org
+json_schema_from_schema_org -h
+
+echo "#######################"
+
+env python3 setup.py run_unittest
+
+echo "#######################"
+
+zypper --non-interactive install python3-pytest python3-pytest-cov python3-pytest-xdist
+
+env python3 setup.py run_pytest --parallel --coverage

@@ -125,16 +125,16 @@ def module(suite):
     loader = unittest.defaultTestLoader
     suite.addTest(loader.loadTestsFromTestCase(TestModuleImport))
     # dabu.schemas
-    suite.addTest(loader.loadTestsFromName('pydabu_unittests.package_data'))
+    suite.addTest(loader.loadTestsFromName('tests.package_data'))
     # dabu.scripts.pydabu.check_arg_file_not_exists.py
     suite.addTest(loader.loadTestsFromName(
-        'pydabu_unittests.dabu_scripts_pydabu_check_arg_file_not_exists'))
+        'tests.dabu_scripts_pydabu_check_arg_file_not_exists'))
     # dabu.compare_json_schemas
     suite.addTest(
-        loader.loadTestsFromName('pydabu_unittests.compare_json_schemas'))
+        loader.loadTestsFromName('tests.compare_json_schemas'))
     # dabut.schema_org_data
     suite.addTest(
-        loader.loadTestsFromName('pydabu_unittests.schema_org_data'))
+        loader.loadTestsFromName('tests.schema_org_data'))
 
 
 def scripts(suite):
@@ -150,11 +150,11 @@ def scripts(suite):
     loader = unittest.defaultTestLoader
     suite.addTest(loader.loadTestsFromTestCase(TestScriptsExecutable))
     # pydabu
-    suite.addTest(loader.loadTestsFromName('pydabu_unittests.script_pydabu'))
+    suite.addTest(loader.loadTestsFromName('tests.script_pydabu'))
     # json_schema_from_schema_org
     suite.addTest(
         loader.loadTestsFromName(
-            'pydabu_unittests.script_json_schema_from_schema_org'))
+            'tests.script_json_schema_from_schema_org'))
 
 
 if __name__ == '__main__':

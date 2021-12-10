@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-07-30
+:Date: 2021-12-10
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -106,17 +106,17 @@ class TestWithPytest(Command):
         if self.pytestverbose:
             pyargs += ['--verbose']
         if self.src == 'installed':
-            pyargs += ['pydabu_unittests/main.py']
-        pyargs += ['pydabu_unittests/package_data.py']
+            pyargs += ['tests/main.py']
+        pyargs += ['tests/package_data.py']
         pyargs += [
-            'pydabu_unittests/dabu_scripts_pydabu_check_arg_file_not_exists.py'
+            'tests/dabu_scripts_pydabu_check_arg_file_not_exists.py'
         ]
-        pyargs += ['pydabu_unittests/compare_json_schemas.py']
-        pyargs += ['pydabu_unittests/schema_org_data.py']
+        pyargs += ['tests/compare_json_schemas.py']
+        pyargs += ['tests/schema_org_data.py']
         if self.src == 'installed':
-            pyargs += ['pydabu_unittests/script_pydabu.py']
+            pyargs += ['tests/script_pydabu.py']
             pyargs += \
-                ['pydabu_unittests/script_json_schema_from_schema_org.py']
+                ['tests/script_json_schema_from_schema_org.py']
         pyplugins = []
         print('call: pytest', ' '.join(pyargs))
         sys.exit(pytest.main(pyargs, pyplugins))
@@ -173,8 +173,8 @@ class TestWithUnittest(Command):
         # pylint: disable=bad-option-value,import-outside-toplevel
         import unittest
         suite = unittest.TestSuite()
-        import pydabu_unittests
-        pydabu_unittests.module(suite)
+        import tests
+        tests.module(suite)
         setup_self = self
 
         class TestRequiredModuleImport(unittest.TestCase):
@@ -188,7 +188,7 @@ class TestWithUnittest(Command):
         suite.addTest(loader.loadTestsFromTestCase(
             TestRequiredModuleImport))
         if self.src == 'installed':
-            pydabu_unittests.scripts(suite)
+            tests.scripts(suite)
         if unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful():
             sys.exit(0)
         else:
@@ -293,7 +293,7 @@ REQUIRED_MODULES += ['importlib']
 
 setup(
     name='pydabu',
-    version='2021.07.29',
+    version='2021.12.10',
     cmdclass={
         'check_modules': CheckModules,
         'run_unittest': TestWithUnittest,
