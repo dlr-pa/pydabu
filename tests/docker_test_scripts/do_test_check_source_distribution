@@ -20,22 +20,22 @@ ls -lah dist/pydabu-*
 sdist=$(pwd)/$(ls dist/pydabu-*.tar.gz)
 bdist_wheel=$(pwd)/$(ls dist/pydabu-*.whl)
 echo "#######################"
-cd $(mktemp -d)
+cd "$(mktemp -d)"
 pip3 uninstall --yes pydabu
-pip3 install $sdist
+pip3 install "$sdist"
 echo "######"
 pydabu
 echo "######"
-tar xzf $sdist
+tar xzf "$sdist"
 cd pydabu-*
 env python3 setup.py run_unittest
 echo "#######################"
-cd $(mktemp -d)
+cd "$(mktemp -d)"
 pip3 uninstall --yes pydabu
-pip3 install $bdist_wheel
+pip3 install "$bdist_wheel"
 echo "######"
 json_schema_from_schema_org -h
 echo "######"
-tar xzf $sdist
+tar xzf "$sdist"
 cd pydabu-*
 env python3 setup.py run_pytest --parallel --coverage

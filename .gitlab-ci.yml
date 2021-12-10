@@ -91,7 +91,6 @@ check_source_distribution:
     name: ubuntu:20.04
   script:
     - tests/docker_test_scripts/do_test_check_source_distribution
-    
 
 ubuntu-1804_test_doc:
   stage: build_test
