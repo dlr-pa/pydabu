@@ -295,7 +295,7 @@ LONG_DESCRIPTION_FILENAME = 'README.md'
 if os.path.isfile('README.rst'):
     LONG_DESCRIPTION_FILENAME = 'README.rst'
 with open(LONG_DESCRIPTION_FILENAME) as file:
-    long_description = file.read()
+    LONG_DESCRIPTION = file.read()
 
 setup(
     name='pydabu',
@@ -305,7 +305,7 @@ setup(
         'run_unittest': TestWithUnittest,
         'run_pytest': TestWithPytest},
     description='software to check a data bubble.',
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     keywords=['data managment', 'metadata', 'data management plan'],
     author='Daniel Mohr',
     author_email='daniel.mohr@dlr.de',
