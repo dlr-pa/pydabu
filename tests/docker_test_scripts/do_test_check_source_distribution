@@ -1,0 +1,41 @@
+#!/bin/sh -l
+set -e -x
+date
+echo "#######################"
+apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -q -y latexmk libudunits2-0 make pandoc python3-jsonschema python3-netcdf4 python3-pip python3-pytest python3-pytest-cov python3-pytest-xdist python3-recommonmark python3-setuptools python3-sphinx python3-sphinx-argparse python3-wheel texlive-fonts-recommended texlive-latex-extra texlive-latex-recommended
+pip3 install cfchecker sphinx-jsonschema rst2html
+echo "#######################"
+env python3 setup.py check_modules
+pip3 install .
+echo "#######################"
+env python3 setup.py run_pytest --parallel --coverage
+echo "#######################"
+./create_doc_pdf
+pandoc -o README.rst README.md
+env python3 setup.py --long-description | rst2html --strict > README.html
+env python3 setup.py sdist --formats=gztar
+env python3 setup.py bdist_wheel --universal
+ls -lah dist/pydabu-*
+sdist=$(pwd)/$(ls dist/pydabu-*.tar.gz)
+bdist_wheel=$(pwd)/$(ls dist/pydabu-*.whl)
+echo "#######################"
+cd "$(mktemp -d)"
+pip3 uninstall --yes pydabu
+pip3 install "$sdist"
+echo "######"
+pydabu
+echo "######"
+tar xzf "$sdist"
+cd pydabu-*
+env python3 setup.py run_unittest
+echo "#######################"
+cd "$(mktemp -d)"
+pip3 uninstall --yes pydabu
+pip3 install "$bdist_wheel"
+echo "######"
+json_schema_from_schema_org -h
+echo "######"
+tar xzf "$sdist"
+cd pydabu-*
+env python3 setup.py run_pytest --parallel --coverage

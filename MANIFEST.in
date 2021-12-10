@@ -20,3 +20,4 @@ include tests/data/data_bubble/03/*
 include tests/data/data_bubble/04/*
 include tests/*.py
 include README.md
+include README.rst
