@@ -49,11 +49,11 @@ For older versions of pip you need to choose explicit a home install:
 
 Author: Daniel Mohr.
 
-Date: 2021-12-10 (last change).
+Date: 2022-06-24 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
-Copyright (C) 2021 Daniel Mohr and
+Copyright (C) 2021, 2022 Daniel Mohr and
 Deutsches Zentrum fuer Luft- und Raumfahrt e. V., D-51170 Koeln
 
  This program is free software; you can redistribute it and/or
