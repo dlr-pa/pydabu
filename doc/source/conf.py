@@ -74,7 +74,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'pydabu'
-copyright = '2021, Daniel Mohr'
+copyright = '2021, 2022, Daniel Mohr'
 author = 'Daniel Mohr'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -82,7 +82,7 @@ author = 'Daniel Mohr'
 # built documents.
 #
 # The short X.Y version.
-version = '2021-03-05'
+version = '2022-06-24'
 # The full version, including alpha/beta/rc tags.
 release = version
 
