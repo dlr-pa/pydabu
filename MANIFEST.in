@@ -13,11 +13,15 @@ include doc/source/walkthrough.rst
 include install2home
 include LICENSE.txt
 include manual_pydabu.pdf
+include README.md
+include src/dabu/*.py
+include src/dabu/*/*.py
+include src/dabu/*/*/*.py
+include src/dabu/schemas/*
 include tests/data/data_bubble/00/*
 include tests/data/data_bubble/01/*
 include tests/data/data_bubble/02/*
 include tests/data/data_bubble/03/*
 include tests/data/data_bubble/04/*
+include tests/docker_test_scripts/*
 include tests/*.py
-include README.md
-include README.rst
