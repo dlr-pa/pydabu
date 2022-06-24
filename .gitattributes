@@ -2,14 +2,21 @@
 # $GIT_DIR/info/attributes has the highest precedence and
 # can therefore overwrite the values here.
 # But at least the values here overwrite global and system-wide definitions.
+#
+# e. g.: git archive --format=tar HEAD | (cd /tmp/a/ && tar xf -)
 
-tests/data/** -text
-.coveragerc export-ignore
-create_* export-ignore
-.gitattributes export-ignore
 .github export-ignore
+.coveragerc export-ignore
+.gitattributes export-ignore
 .gitignore export-ignore
 .gitlab-ci.yml export-ignore
-install* export-ignore
 .pre-commit-config.yaml export-ignore
+.rstcheck.cfg export-ignore
+create_doc export-ignore
+create_doc_html export-ignore
+create_doc_pdf export-ignore
+create_source_distribution export-ignore
+install2home export-ignore
+pylintrc export-ignore
 uninstall export-ignore
+tests/data/** -text
