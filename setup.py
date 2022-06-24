@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-12-10
+:Date: 2022-06-24
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -299,7 +299,7 @@ with open(LONG_DESCRIPTION_FILENAME) as file:
 
 setup(
     name='pydabu',
-    version='2021.12.10',
+    version='2022.06.24',
     cmdclass={
         'check_modules': CheckModules,
         'run_unittest': TestWithUnittest,
