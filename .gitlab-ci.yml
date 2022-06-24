@@ -165,6 +165,49 @@ ubuntu-2004_test_doc:
     # build doc
     - ./create_doc
 
+ubuntu-2204_test_doc:
+  stage: build_test
+  image:
+    # https://hub.docker.com/_/ubuntu
+    name: ubuntu:22.04
+  script:
+    - date
+    - apt-get update
+    # get and install necessary packages:
+    - $APT_GET_INSTALL git libudunits2-0 python3-jsonschema python3-netcdf4 python3-pip python3-setuptools python3-wheel
+    # install dependencies (cfchecker via pip)
+    - pip3 install cfchecker
+    # check all modules available
+    - env python3 setup.py check_modules
+    # install pydabu and check .gitattributes
+    - mkdir archive
+    - git archive --format=tar HEAD | (cd archive && tar xf -)
+    - (cd archive && pip3 install .)
+    - which pydabu
+    - rm -r archive
+    - pip3 uninstall -y pydabu
+    - mkdir archive
+    - git archive --format=zip --prefix=pydabu/ HEAD > archive/pydabu.zip
+    - (cd archive && pip3 install pydabu.zip)
+    # run pydabu
+    - which pydabu
+    - pydabu
+    # run json_schema_from_schema_org
+    - which json_schema_from_schema_org
+    - json_schema_from_schema_org -h
+    # unittest
+    - env python3 setup.py run_unittest
+    # install dependencies for pytest (ubuntu packages)
+    - $APT_GET_INSTALL python3-pytest python3-pytest-cov python3-pytest-xdist
+    # pytest
+    - env python3 setup.py run_pytest --parallel --coverage
+    # install dependencies for documentation (ubuntu packages)
+    - $APT_GET_INSTALL latexmk make python3-recommonmark python3-sphinx python3-sphinx-argparse rsync texlive-fonts-recommended texlive-latex-extra texlive-latex-recommended
+    # install dependencies for documentation (sphinx-jsonschema via pip)
+    - pip3 install sphinx-jsonschema
+    # build doc
+    - ./create_doc
+
 i386_debian_latest_test:
   stage: build_test
   image:
