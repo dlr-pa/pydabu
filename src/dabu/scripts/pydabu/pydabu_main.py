@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-22, 2021-07-01, 2021-12-06 (last change).
+:Date: 2021-03-22, 2021-07-01, 2021-12-06, 2022-06-24 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -39,7 +39,7 @@ def my_argument_parser():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-12-06 (last change).
+    :Date: 2022-06-24 (last change).
     """
     # pylint: disable=too-many-locals,too-many-statements
     epilog = ""
@@ -54,7 +54,7 @@ def my_argument_parser():
     epilog += "-output_format json > $output && firefox $output; "
     epilog += "sleep 3; rm $output\n\n"
     epilog += "Author: Daniel Mohr\n"
-    epilog += "Date: 2021-07-01\n"
+    epilog += "Date: 2022-06-24\n"
     epilog += "License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007."
     epilog += "\n\n"
     parser = argparse.ArgumentParser(
@@ -250,7 +250,7 @@ def my_argument_parser():
     description += 'Also the resulting files are not a data management plan, '
     description += 'you can enhance it to become one.'
     epilog = 'Example:\n\n'
-    epilog += '  pydabu create_data_bubble -d mydata\n\n'
+    epilog += '  pydabu create_data_bubble -di mydata\n\n'
     epilog += '  pydabu create_data_bubble -dir .\n'
     epilog += '  jsonschema -i .dabu.json .dabu.schema\n'
     parser_create_data_bubble = subparsers.add_parser(
