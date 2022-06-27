@@ -450,9 +450,8 @@ def pydabu_main():
     # parse arguments
     args = parser.parse_args()
     if args.subparser_name is not None:
-        print('foo')
         ret = args.func(args)  # call the programs
-        if ret == False:
+        if ret is False:
             # run_check_data_bubble returns False on error
             sys.exit(1)
         # else:
