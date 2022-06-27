@@ -41,7 +41,7 @@ class MixinCheckDataBubble(DataPathClass):
     def test_check_data_bubble_01(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-03-05
+        :Date: 2021-03-05, 2022-06-27
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             for filename in ['a.na', '.checksum.sha256', 'LICENSE.txt',
@@ -94,7 +94,9 @@ class MixinCheckDataBubble(DataPathClass):
                 'pydabu check_data_bubble -directory .',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
-                timeout=self.subprocess_timeout, check=True)
+                timeout=self.subprocess_timeout, check=False)
+            with self.assertRaises(subprocess.CalledProcessError):
+                cpi.check_returncode()
 
     def test_create_check_data_bubble(self):
         """
