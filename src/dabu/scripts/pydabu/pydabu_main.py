@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-22, 2021-07-01, 2021-12-06, 2022-06-24 (last change).
+:Date: 2021-03-22, 2021-07-01, 2021-12-06, 2022-06-27 (last change).
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -9,6 +9,7 @@ import argparse
 import getpass
 import os.path
 import tempfile
+import sys
 
 from .check_arg_file import check_arg_file
 from .check_arg_file_not_exists import check_arg_file_not_exists
@@ -442,13 +443,21 @@ def pydabu_main():
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-01-25 (last change).
+    :Date: 2021-01-25, 2022-06-27 (last change).
     """
     # command line arguments:
     parser = my_argument_parser()
     # parse arguments
     args = parser.parse_args()
     if args.subparser_name is not None:
-        args.func(args)  # call the programs
+        ret = args.func(args)  # call the programs
+        if ret is False:
+            # run_check_data_bubble returns False on error
+            sys.exit(1)
+        # else:
+        #   run_check_data_bubble returns True on success
+        #   other progams return nothing (None) at the moment
+        #   if there was no error/program break we can exit with 0
+        sys.exit(0)
     else:  # no sub command given
         parser.print_help()
