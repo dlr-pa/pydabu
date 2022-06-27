@@ -74,8 +74,8 @@ build_pages:
     # create badges, which could be used in gitlab:
     # see https://github.com/jongracecox/anybadge for available colors
     - pip3 install anybadge
-    - anybadge -l "document as" -v html -f pages.svg -c fuchsia -o
-    - anybadge -l "document as" -v pdf -f document_pdf.svg -c orange -o
+    - anybadge -l "documentation as" -v html -f pages.svg -c fuchsia -o
+    - anybadge -l "documentation as" -v pdf -f document_pdf.svg -c orange -o
   # store data as artifacts (e. g. used by pages):
   artifacts:
     expire_in: 1 hrs
