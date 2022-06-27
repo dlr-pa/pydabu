@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2021-03-05, 2021-07-30
+:Date: 2021-03-05, 2021-07-30, 2022-06-27
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
 tests the script: pydabu check_data_bubble
@@ -22,7 +22,7 @@ except (ModuleNotFoundError, ImportError):
 class MixinCheckDataBubble(DataPathClass):
     """
     :Author: Daniel Mohr
-    :Date: 2021-07-30
+    :Date: 2021-07-30, 2022-06-27
     """
 
     def test_check_data_bubble_00(self):
@@ -99,7 +99,7 @@ class MixinCheckDataBubble(DataPathClass):
     def test_create_check_data_bubble(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-03-05
+        :Date: 2021-03-05, 2022-06-27
 
         This test uses the data in 'data/data_bubble' to test the output
         of the script 'pydabu create_data_bubble' and
@@ -110,13 +110,19 @@ class MixinCheckDataBubble(DataPathClass):
                              'README.md', 'test.nc']:
                 shutil.copyfile(os.path.join(self.test_dir_path[4], filename),
                                 os.path.join(tmpdir, filename))
+            cpi = subprocess.run(
+                'pydabu check_data_bubble -directory .',
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                shell=True, cwd=tmpdir,
+                timeout=self.subprocess_timeout, check=False)
+            self.assertEqual(cpi.returncode, 1)
             subprocess.run(
                 'pydabu create_data_bubble -directory . ' +
                 '-checksum_from_file .checksum.sha256',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir, timeout=self.subprocess_timeout,
                 check=True)
-            subprocess.run(
+            cpi = subprocess.run(
                 'pydabu check_data_bubble -directory .',
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 shell=True, cwd=tmpdir,
