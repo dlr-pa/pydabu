@@ -212,6 +212,7 @@ jobs:
             beta: true
     continue-on-error: ${{ matrix.deprecated || matrix.beta }}
     runs-on: ${{ matrix.os }}
+    needs: [pep8_check, pre-commit]
     steps:
     - uses: actions/checkout@v2
     - name: check python version
