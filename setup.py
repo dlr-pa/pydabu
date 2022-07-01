@@ -1,7 +1,7 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2022-06-27
+:Date: 2022-07-01
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
@@ -204,7 +204,7 @@ class CheckModules(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-08
+    :Date: 2017-01-08, 2022-07-01
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     checking for modules need to run the software
@@ -227,7 +227,7 @@ class CheckModules(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2017-01-08
+        :Date: 2017-01-08, 2022-07-01
         """
         # pylint: disable=bad-option-value,import-outside-toplevel
         import importlib
@@ -250,6 +250,10 @@ class CheckModules(Command):
         print(
             "\nSummary\n%d modules are not available (not unique)\n%s\n" % (
                 i, summary))
+        if i > 0:
+            sys.exit(1)
+        else:
+            sys.exit(0)
 
 
 # necessary modules
@@ -299,7 +303,7 @@ with open(LONG_DESCRIPTION_FILENAME) as file:
 
 setup(
     name='pydabu',
-    version='2022.06.27',
+    version='2022.07.01',
     cmdclass={
         'check_modules': CheckModules,
         'run_unittest': TestWithUnittest,
