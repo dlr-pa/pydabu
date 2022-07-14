@@ -55,7 +55,7 @@ look like::
   LICENSE.txt
   manual_pydabu.pdf
   PKG-INFO
-  pydabu_unittests/
+  tests/
   README.md
   setup.py
   src/

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>dabu.compare_json_schemas.compare_json_schemas &#8212; pydabu 2021-03-05 documentation</title>
+    <title>dabu.compare_json_schemas.compare_json_schemas &#8212; pydabu 2022-06-24 documentation</title>
     <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/language_data.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within pydabu 2021-03-05 documentation"
+          title="Search within pydabu 2022-06-24 documentation"
           href="../../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -29,7 +29,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2022-06-24 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -100,14 +100,14 @@
     <span class="k">return</span> <span class="kc">True</span>
 
 
-<span class="k">def</span> <span class="nf">any_element_equal_list</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">any_element_equal_list</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">mylist</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :Author: Daniel Mohr</span>
 <span class="sd">    :Date: 2021-03-10</span>
 
-<span class="sd">    checks if any element of l is in e</span>
+<span class="sd">    checks if any element of mylist is in e</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">mylist</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dict_equal</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">el</span><span class="p">):</span>
                 <span class="k">return</span> <span class="kc">True</span>
@@ -235,12 +235,12 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pydabu 2022-06-24 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2021, Daniel Mohr.
+        &#169; Copyright 2021, 2022, Daniel Mohr.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>

@@ -230,6 +230,7 @@ The command check_netcdf_file of :program:`pydabu` needs the package
 cfchecker.cfchecks which is not in the package management.
 You can install it with pip, e. g.::
 
+    sudo apt install libudunits2-0
     pip3 install cfchecker
 
 To build the documentation you do not only need the above packages. In addition

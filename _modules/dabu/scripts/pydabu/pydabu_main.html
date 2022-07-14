@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>dabu.scripts.pydabu.pydabu_main &#8212; pydabu 2021-03-05 documentation</title>
+    <title>dabu.scripts.pydabu.pydabu_main &#8212; pydabu 2022-06-24 documentation</title>
     <link rel="stylesheet" href="../../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/language_data.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within pydabu 2021-03-05 documentation"
+          title="Search within pydabu 2022-06-24 documentation"
           href="../../../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -29,7 +29,7 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">pydabu 2022-06-24 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>  
@@ -43,7 +43,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">:Author: Daniel Mohr</span>
 <span class="sd">:Email: daniel.mohr@dlr.de</span>
-<span class="sd">:Date: 2021-03-22, 2021-07-01, 2021-12-06 (last change).</span>
+<span class="sd">:Date: 2021-03-22, 2021-07-01, 2021-12-06, 2022-06-27 (last change).</span>
 <span class="sd">:License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -51,6 +51,7 @@
 <span class="kn">import</span> <span class="nn">getpass</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="kn">from</span> <span class="nn">.check_arg_file</span> <span class="k">import</span> <span class="n">check_arg_file</span>
 <span class="kn">from</span> <span class="nn">.check_arg_file_not_exists</span> <span class="k">import</span> <span class="n">check_arg_file_not_exists</span>
@@ -81,7 +82,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :Author: Daniel Mohr</span>
 <span class="sd">    :Email: daniel.mohr@dlr.de</span>
-<span class="sd">    :Date: 2021-12-06 (last change).</span>
+<span class="sd">    :Date: 2022-06-24 (last change).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># pylint: disable=too-many-locals,too-many-statements</span>
     <span class="n">epilog</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -96,7 +97,7 @@
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;-output_format json &gt; $output &amp;&amp; firefox $output; &quot;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;sleep 3; rm $output</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;Author: Daniel Mohr</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;Date: 2021-07-01</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;Date: 2022-06-24</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.&quot;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
@@ -292,7 +293,7 @@
     <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;Also the resulting files are not a data management plan, &#39;</span>
     <span class="n">description</span> <span class="o">+=</span> <span class="s1">&#39;you can enhance it to become one.&#39;</span>
     <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;Example:</span><span class="se">\n\n</span><span class="s1">&#39;</span>
-    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu create_data_bubble -d mydata</span><span class="se">\n\n</span><span class="s1">&#39;</span>
+    <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu create_data_bubble -di mydata</span><span class="se">\n\n</span><span class="s1">&#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  pydabu create_data_bubble -dir .</span><span class="se">\n</span><span class="s1">&#39;</span>
     <span class="n">epilog</span> <span class="o">+=</span> <span class="s1">&#39;  jsonschema -i .dabu.json .dabu.schema</span><span class="se">\n</span><span class="s1">&#39;</span>
     <span class="n">parser_create_data_bubble</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
@@ -484,14 +485,22 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :Author: Daniel Mohr</span>
 <span class="sd">    :Email: daniel.mohr@dlr.de</span>
-<span class="sd">    :Date: 2021-01-25 (last change).</span>
+<span class="sd">    :Date: 2021-01-25, 2022-06-27 (last change).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># command line arguments:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">my_argument_parser</span><span class="p">()</span>
     <span class="c1"># parse arguments</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">subparser_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>  <span class="c1"># call the programs</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>  <span class="c1"># call the programs</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="c1"># run_check_data_bubble returns False on error</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#   run_check_data_bubble returns True on success</span>
+        <span class="c1">#   other progams return nothing (None) at the moment</span>
+        <span class="c1">#   if there was no error/program break we can exit with 0</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># no sub command given</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span></div>
 </pre></div>
@@ -539,12 +548,12 @@
         <li class="right" >
           <a href="../../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../../index.html">pydabu 2021-03-05 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">pydabu 2022-06-24 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2021, Daniel Mohr.
+        &#169; Copyright 2021, 2022, Daniel Mohr.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
