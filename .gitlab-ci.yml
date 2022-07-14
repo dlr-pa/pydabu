@@ -76,6 +76,7 @@ build_pages:
     - pip3 install anybadge
     - anybadge -l "documentation as" -v html -f pages.svg -c fuchsia -o
     - anybadge -l "documentation as" -v pdf -f document_pdf.svg -c orange -o
+    - anybadge -l "source" -v code -f source_code.svg -c lightgrey -o
   # store data as artifacts (e. g. used by pages):
   artifacts:
     expire_in: 1 hrs
@@ -83,6 +84,7 @@ build_pages:
       - document_pdf.svg
       - pages.svg
       - public
+      - source_code.svg
 
 check_source_distribution:
   stage: build_test
@@ -241,6 +243,7 @@ pages:
       - document_pdf.svg
       - pages.svg
       - public
+      - source_code.svg
 
 deploy_to_github:
   stage: deploy
