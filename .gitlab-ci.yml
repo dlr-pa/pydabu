@@ -94,6 +94,14 @@ check_source_distribution:
   script:
     - tests/docker_test_scripts/do_test_check_source_distribution
 
+check_source_distribution:
+  stage: build_test
+  image:
+    # https://hub.docker.com/_/ubuntu
+    name: ubuntu:22.04
+  script:
+    - tests/docker_test_scripts/do_test_check_source_distribution
+
 ubuntu-1804_test_doc:
   stage: build_test
   image:
@@ -218,13 +226,13 @@ i386_debian_latest_test:
   script:
     - tests/docker_test_scripts/do_test_i386-debian-latest
 
-opensuse_leap_153_test:
+opensuse_leap_154_test:
   stage: build_test
   image:
     # https://hub.docker.com/r/opensuse/leap
-    name: opensuse/leap:15.3
+    name: opensuse/leap:15.4
   script:
-    - tests/docker_test_scripts/do_test_opensuse_leap-15.3
+    - tests/docker_test_scripts/do_test_opensuse_leap-15.4
 
 pages:
   stage: deploy

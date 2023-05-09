@@ -1,6 +1,7 @@
 #!/bin/sh -l
 set -e -x
 date
+cat /etc/os-release
 echo "#######################"
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -q -y latexmk libudunits2-0 make pandoc python3-jsonschema python3-netcdf4 python3-pip python3-pytest python3-pytest-cov python3-pytest-xdist python3-recommonmark python3-setuptools python3-sphinx python3-sphinx-argparse python3-wheel texlive-fonts-recommended texlive-latex-extra texlive-latex-recommended
