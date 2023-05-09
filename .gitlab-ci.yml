@@ -86,7 +86,7 @@ build_pages:
       - public
       - source_code.svg
 
-check_source_distribution:
+check_source_distribution-ubuntu-2004:
   stage: build_test
   image:
     # https://hub.docker.com/_/ubuntu
@@ -94,7 +94,7 @@ check_source_distribution:
   script:
     - tests/docker_test_scripts/do_test_check_source_distribution
 
-check_source_distribution:
+check_source_distribution-ubuntu-2204:
   stage: build_test
   image:
     # https://hub.docker.com/_/ubuntu
