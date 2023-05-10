@@ -2,7 +2,7 @@
 INSTALL: pydabu -- Python data bubble
 ======================================
 
-:Version: 2021-12-06
+:Version: 2023-05-10
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
 
@@ -31,8 +31,25 @@ Modules
 pydabu needs the following Python modules (most of them are standard and
 already in your Python installation from a package management)
 
- * argparse
- * distutils
+* argparse
+* base64
+* datetime
+* getpass
+* hashlib
+* json
+* jsonschema
+* logging
+* os
+* os.path
+* pkgutil
+* re
+* setuptools
+* subprocess
+* sys
+* tempfile
+* time
+* types
+* warnings
 
 and the own modules which comes with this package. Most of the modules
 are only necessary at runtime and only in some components.
@@ -52,8 +69,8 @@ which are not available.
 
 The following modules are optional:
 
-  * cfchecker.cfchecks
-  * netCDF4
+* cfchecker.cfchecks
+* netCDF4
 
 
 unittests
@@ -80,8 +97,11 @@ After installation you can run these tests on the scripts as well
 (see :ref:`after you install.pytest`).
 
 
-install by setup.py with distutils
-==================================
+install by setup.py using pip
+=============================
+
+You can use the Python package manager system pip. This allows you to
+handle dependencies, too.
 
 global-install
 --------------
@@ -89,11 +109,11 @@ To install this software global to / the following steps are to perform::
 
   tar xzf pydabu-*.tar.*
   cd pydabu-*/
-  env python3 setup.py install
+  pip3 install --system .
 
-You can also store the installed files, e. g.::
+Or you can directly install from the internet::
 
-  env python3 setup.py install --record installed_files.txt
+  pip3 install --system https://gitlab.com/dlr-pa/pydabu/-/archive/master/pydabu-master.zip
 
 Then you can uninstall with this information.
 
@@ -104,67 +124,19 @@ To install this software to your $HOME the following steps are to perform::
 
   tar xzf pydabu-*.tar.*
   cd pydabu-*/
-  env python3 setup.py install --home=~
+  pip3 install --user .
 
-You can also store the installed files, e. g.::
+Or you can directly install from the internet::
 
-  env python3 setup.py install --home=~ --record installed_files.txt
+  pip3 install --user https://gitlab.com/dlr-pa/pydabu/-/archive/master/pydabu-master.zip
 
 Then you can uninstall with this information.
 
 
-uninstall (distutils)
----------------------
+uninstall
+---------
 
-If you have done the above installation and recorded the installed files,
-you can just remove them to uninstall, e. g.::
-
-  cat installed_files.txt | xargs rm -rf
-
-In principle there is a problem with extraordinary file names, e. g. if
-spaces are part of. This should not be the case here.
-
-
-hints (distutils)
------------------
-
-Keep in mind to have the right paths.
-
-  For the above installation to $HOME the software installs in::
-
-    ~/bin
-    ~/lib/python
-
-  Please make sure to have these paths in $PATH and $PYTHONPATH, respectively.
-  For example::
-
-    export PATH=$PATH:~/bin
-    export PYTHONPATH=~/lib/python
-
-
-install with pip
-================
-
-You can also use the Python package manager system pip. This allows you to
-handle dependencies, too.
-
-
-install (pip)
--------------
-
-You can use pip to install::
-
-  pip3 install .
-
-For older versions of pip you need to choose explicit a home install::
-
-  pip3 install --user .
-
-
-uninstall (pip)
----------------
-
-You can use pip to uninstall::
+If you have done the above installation you can use pip to uninstall::
 
   pip3 uninstall pydabu
 
@@ -216,15 +188,13 @@ This command has a few interesting parameters, e. g.::
 hints
 =====
 
-Ubuntu 18.04
-------------
+Ubuntu 20.04 and 22.04
+----------------------
 
-You can find most necessary modules in the package management of Ubuntu 18.04, e. g. ::
+You can find most necessary modules in the package management of Ubuntu 20.04,
+e. g. ::
 
-    sudo apt install python3-jsonschema
-    sudo apt install python3-netcdf4
-    sudo apt install python3-sphinx python3-sphinx-argparse python3-recommonmark
-    sudo apt install python3-pytest python3-pytest-cov python3-pytest-xdist
+    sudo apt install python3-jsonschema python3-netcdf4 python3-pip python3-setuptools python3-wheel
 
 The command check_netcdf_file of :program:`pydabu` needs the package
 cfchecker.cfchecks which is not in the package management.
@@ -236,16 +206,27 @@ You can install it with pip, e. g.::
 To build the documentation you do not only need the above packages. In addition
 we use sphinx-jsonschema, e. g.::
 
+    sudo apt install latexmk make python3-recommonmark python3-sphinx python3-sphinx-argparse rsync texlive-fonts-recommended texlive-latex-extra texlive-latex-recommended
     pip3 install sphinx-jsonschema
 
-SuSE 15.3
----------
+For unning the tests with `pytest` you need::
+
+    sudo apt install python3-pytest python3-pytest-cov python3-pytest-xdist
+
+
+openSUSE Leap 15.4 and 15.5
+---------------------------
+
+To use :program:`pydabu` you need from the package management::
+
+    zypper --non-interactive install gcc lsb-release netcdf-devel python3 python3-devel python3-jsonschema python3-numpy python3-pip python3-setuptools python3-wheel udunits2-devel
 
 The command check_netcdf_file of :program:`pydabu` needs the package
 cfchecker.cfchecks which is not in the package management.
 You can install it with pip, e. g.::
 
-    pip3 install --user cfchecker
+    pip3 install --user netCDF4 cfchecker
 
-But you need udunits2 from the package managment from SuSE to use cfunits,
-which is required by cfchecker.
+For unning the tests with `pytest` you need::
+
+    zypper --non-interactive install python3-pytest python3-pytest-cov python3-pytest-xdist

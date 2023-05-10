@@ -1,11 +1,11 @@
 """
 :Author: Daniel Mohr
 :Email: daniel.mohr@dlr.de
-:Date: 2022-07-01
+:Date: 2023-05-09
 :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 """
 
-import distutils  # we need distutils for distutils.errors.DistutilsArgError
+import argparse
 import os
 import sys
 
@@ -16,7 +16,7 @@ class TestWithPytest(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-07-30
+    :Date: 2023-05-09
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with pytest
@@ -57,7 +57,7 @@ class TestWithPytest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-07-30
+        :Date: 2023-05-09
         """
         # pylint: disable=too-many-branches
         if self.src == 'installed':
@@ -65,7 +65,7 @@ class TestWithPytest(Command):
         elif self.src == 'local':
             sys.path.insert(0, os.path.abspath('src'))
         else:
-            raise distutils.core.DistutilsArgError(
+            raise argparse.ArgumentTypeError(
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))
@@ -88,7 +88,7 @@ class TestWithPytest(Command):
                     nthreads = max(2, nthreads)  # at least two threads
                 else:
                     nthreads = max(2, int(0.5 * os.cpu_count()))
-                pyargs += ['-n %i' % nthreads]
+                pyargs += [f'-n {nthreads}']
             except (ModuleNotFoundError, ImportError):
                 pass
         if self.coverage:
@@ -126,7 +126,7 @@ class TestWithUnittest(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@dlr.de
-    :Date: 2021-03-05
+    :Date: 2023-05-09
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     running automatic tests with unittest
@@ -159,14 +159,14 @@ class TestWithUnittest(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2021-06-21
+        :Date: 2023-05-09
         """
         if self.src == 'installed':
             pass
         elif self.src == 'local':
             sys.path.insert(0, os.path.abspath('src'))
         else:
-            raise distutils.core.DistutilsArgError(
+            raise argparse.ArgumentTypeError(
                 "error in command line: " +
                 "value for option 'src' is not 'installed' or 'local'")
         sys.path.append(os.path.abspath('.'))
@@ -204,7 +204,7 @@ class CheckModules(Command):
     """
     :Author: Daniel Mohr
     :Email: daniel.mohr@gmx.de
-    :Date: 2017-01-08, 2022-07-01
+    :Date: 2017-01-08, 2022-07-01, 2023-05-09
     :License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007.
 
     checking for modules need to run the software
@@ -227,7 +227,7 @@ class CheckModules(Command):
     def run(self):
         """
         :Author: Daniel Mohr
-        :Date: 2017-01-08, 2022-07-01
+        :Date: 2017-01-08, 2022-07-01, 2023-05-09
         """
         # pylint: disable=bad-option-value,import-outside-toplevel
         import importlib
@@ -245,11 +245,10 @@ class CheckModules(Command):
                     print("  loaded.")
             except ImportError:
                 i += 1
-                summary += "module '%s' is not available\n" % module
-                print("module '%s' is not available <---WARNING---" % module)
-        print(
-            "\nSummary\n%d modules are not available (not unique)\n%s\n" % (
-                i, summary))
+                summary += f"module '{module}' is not available\n"
+                print(f"module '{module}' is not available <---WARNING---")
+        print(f"\nSummary\n{i} modules are not available (not unique)\n" +
+              f"{summary}\n")
         if i > 0:
             sys.exit(1)
         else:
@@ -260,7 +259,6 @@ class CheckModules(Command):
 REQUIRED_MODULES = ['argparse',
                     'base64',
                     'datetime',
-                    'distutils',
                     'getpass',
                     'hashlib',
                     'json',
@@ -270,6 +268,7 @@ REQUIRED_MODULES = ['argparse',
                     'os.path',
                     'pkgutil',
                     're',
+                    'setuptools',
                     'subprocess',
                     'sys',
                     'tempfile',
@@ -303,7 +302,7 @@ with open(LONG_DESCRIPTION_FILENAME) as file:
 
 setup(
     name='pydabu',
-    version='2022.07.01',
+    version='2023.05.09',
     cmdclass={
         'check_modules': CheckModules,
         'run_unittest': TestWithUnittest,
