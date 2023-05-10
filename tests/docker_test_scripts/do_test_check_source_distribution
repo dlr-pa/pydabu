@@ -18,8 +18,8 @@ env python3 setup.py --long-description | rst2html --strict > README.html
 env python3 setup.py sdist --formats=gztar
 env python3 setup.py bdist_wheel --universal
 ls -lah dist/pydabu-*
-sdist=$(pwd)/$(ls -1 dist/pydabu-*.tar.gz | tail -n 1)
-bdist_wheel=$(pwd)/$(ls -1 dist/pydabu-*.whl | tail -n 1)
+sdist=$(pwd)/$(find dist -maxdepth 1 -name "pydabu-*.tar.gz" | tail -n 1)
+bdist_wheel=$(pwd)/$(find dist -maxdepth 1 -name "pydabu-*.whl" | tail -n 1)
 echo "#######################"
 cd "$(mktemp -d)"
 pip3 uninstall --yes pydabu
