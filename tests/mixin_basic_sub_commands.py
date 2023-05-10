@@ -35,6 +35,8 @@ class MixinBasicSubCommands(DataPathClass):
 
         You can run onyl this test, e. g.::
 
+          env python3 script_pydabu.py ScriptPydabu.test_basic_sub_commands
+
           pytest-3 -k test_basic_sub_commands script_pydabu.py
         """
         # check basic sub-commands
