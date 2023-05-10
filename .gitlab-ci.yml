@@ -14,6 +14,7 @@ pre-commit_alpine:
     name: alpine:latest
   script:
     - date
+    - cat /etc/os-release
     - apk add --no-cache bash gcc git libc-dev npm py3-pip python3-dev
     - pip install pre-commit
     # run pre-commit
@@ -27,6 +28,7 @@ pycodestyle_alpine:
     name: alpine:latest
   script:
     - date
+    - cat /etc/os-release
     - apk add --no-cache py3-pycodestyle
     # check PEP 8 code style (pycodestyle was formerly called pep8)
     - pycodestyle --version
@@ -39,6 +41,7 @@ pylint_debian:
     name: debian:latest
   script:
     - date
+    - cat /etc/os-release
     - apt-get update
     - $APT_GET_INSTALL libudunits2-0 pylint3 python3-jsonschema python3-netcdf4 python3-pip python3-pytest python3-pytest-cov python3-pytest-xdist python3-recommonmark
     # install dependencies (cfchecker via pip)
@@ -57,6 +60,7 @@ build_pages:
     name: debian:latest
   script:
     - date
+    - cat /etc/os-release
     - apt-get update
     # get and install necessary packages:
     # python3-sphinx-argparse is buggy on debian:latest
@@ -109,6 +113,7 @@ ubuntu-2004_test_doc:
     name: ubuntu:20.04
   script:
     - date
+    - cat /etc/os-release
     - apt-get update
     # get and install necessary packages:
     - $APT_GET_INSTALL libudunits2-0 python3-jsonschema python3-netcdf4 python3-pip python3-setuptools python3-wheel
@@ -144,6 +149,7 @@ ubuntu-2204_test_doc:
     name: ubuntu:22.04
   script:
     - date
+    - cat /etc/os-release
     - apt-get update
     # get and install necessary packages:
     - $APT_GET_INSTALL git libudunits2-0 python3-jsonschema python3-netcdf4 python3-pip python3-setuptools python3-wheel
@@ -204,6 +210,30 @@ opensuse_leap_155_test:
   script:
     - tests/docker_test_scripts/do_test_opensuse_leap
 
+debian-latest_install_from_internet:
+  stage: build_test
+  # since we do not test the actual commit, this could fail:
+  allow_failure: true
+  image:
+    # https://hub.docker.com/_/debian
+    name: debian:latest
+  script:
+    - date
+    - cat /etc/os-release
+    - apt-get update
+    # get and install necessary packages for installation:
+    - $APT_GET_INSTALL python3-pip
+    # install pydabu from the internet
+    - pip3 install --system https://gitlab.com/dlr-pa/pydabu/-/archive/master/pydabu-master.zip
+    # get and install necessary packages:
+    - $APT_GET_INSTALL libudunits2-0 python3-jsonschema python3-netcdf4
+    - pip3 install cfchecker
+    # run pydabu
+    - which pydabu
+    - pydabu -h
+    # unittest
+    - env python3 setup.py run_unittest
+
 pages:
   stage: deploy
   image:
@@ -232,6 +262,7 @@ deploy_to_github:
     name: alpine:latest
   script:
     - date
+    - cat /etc/os-release
     - apk add --no-cache git openssh
     - mkdir ~/.ssh && chmod 700 ~/.ssh
     - ssh-keyscan -H github.com >> ~/.ssh/known_hosts
