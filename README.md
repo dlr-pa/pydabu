@@ -49,7 +49,7 @@ For older versions of pip you need to choose explicit a home install:
 
 Author: Daniel Mohr.
 
-Date: 2023-05-09 (last change).
+Date: 2023-05-10 (last change).
 
 License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
@@ -72,7 +72,8 @@ Deutsches Zentrum fuer Luft- und Raumfahrt e. V., D-51170 Koeln
 
 ### Contact Informations
 
-* Daniel Mohr, daniel.mohr@dlr.de
+Best way should be to create a
+[new issue](https://gitlab.com/dlr-pa/pydabu/-/issues/new).
 
 ### Territory
 
