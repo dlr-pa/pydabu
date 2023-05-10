@@ -12,7 +12,6 @@ dpkg --print-architecture
 lsb_release -a
 lscpu
 env python3 -V
-cat /etc/os-release
 echo "#######################"
 DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -q -y build-essential python3-dev
 pip3 install cfchecker

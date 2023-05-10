@@ -232,7 +232,15 @@ opensuse_leap_154_test:
     # https://hub.docker.com/r/opensuse/leap
     name: opensuse/leap:15.4
   script:
-    - tests/docker_test_scripts/do_test_opensuse_leap-15.4
+    - tests/docker_test_scripts/do_test_opensuse_leap
+
+opensuse_leap_155_test:
+  stage: build_test
+  image:
+    # https://hub.docker.com/r/opensuse/leap
+    name: opensuse/leap:15.5
+  script:
+    - tests/docker_test_scripts/do_test_opensuse_leap
 
 pages:
   stage: deploy
